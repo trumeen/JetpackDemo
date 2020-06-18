@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="itemData"
+            type="com.galanz.myapplication.ui.main.Person" />
+
+        <variable
+            name="viewModel"
+            type="com.galanz.myapplication.ui.main.MainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:imgUrl="@{itemData.liveImg}"
+            app:placeholder="@{@drawable/ic_launcher_foreground}"
+            app:radius="@{@dimen/dp_10}" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:onClick="@{()->itemData.updateName()}"
+            android:text="@{itemData.liveName}" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@{String.valueOf(itemData.liveAge)}" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:onClick="@{()->viewModel.addData(itemData)}"
+            android:text="ADD"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+</layout>
