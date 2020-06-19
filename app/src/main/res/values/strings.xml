@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="loading">加载中……</string>
+    <string name="network_connection_failed">网络连接失败</string>
+    <string name="network_request_timeout">网络连接超时</string>
+    <string name="api_data_parse_error">数据解析失败</string>
+    <string name="discovery">发现</string>
+    <string name="recommend">推荐</string>
+    <string name="daily">日报</string>
+    <string name="title_home">首页</string>
+    <string name="menu_community">社区</string>
+    <string name="title_dashboard">我的</string>
+    <string name="title_notifications">通知</string>
 </resources>
