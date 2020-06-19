@@ -6,11 +6,11 @@
 
         <variable
             name="itemData"
-            type="com.galanz.myapplication.ui.main.Person" />
+            type="io.github.trumeen.ui.main.Person" />
 
         <variable
             name="viewModel"
-            type="com.galanz.myapplication.ui.main.MainViewModel" />
+            type="io.github.trumeen.ui.main.MainViewModel" />
     </data>
 
     <LinearLayout
