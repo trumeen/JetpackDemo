@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.trumeen.R
+import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.base.BaseVmFragment
+import io.github.trumeen.ui.main.SampleAdapter
+import kotlinx.android.synthetic.main.fragment_recommend.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +39,7 @@ class RecommendFragment : BaseVmFragment<EyepetizerRecommendViewModel>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mViewModel.getData()
+
     }
 
     companion object {
