@@ -5,10 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ObservableArrayList
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.base.BaseVmFragment
-import io.github.trumeen.ui.main.SampleAdapter
+import io.github.trumeen.ui.main.MultipleTypeAdapter
 import kotlinx.android.synthetic.main.fragment_recommend.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +23,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class RecommendFragment : BaseVmFragment<EyepetizerRecommendViewModel>() {
+
+    var sampleAdapter:RecommendAdapter<RecommendItemBean>? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +41,21 @@ class RecommendFragment : BaseVmFragment<EyepetizerRecommendViewModel>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        mViewModel.itemDataSet.value = ObservableArrayList()
+
+        sampleAdapter = RecommendAdapter(
+            mViewModel.itemDataSet.value!!
+        )
+        recycler_view.adapter = sampleAdapter
+
         mViewModel.getData()
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        sampleAdapter?.setLifecycleDestroyed()
     }
 
     companion object {

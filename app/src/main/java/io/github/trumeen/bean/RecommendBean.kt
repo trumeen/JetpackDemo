@@ -1,12 +1,11 @@
 package io.github.trumeen.bean
 
-import com.chad.library.adapter.base.entity.MultiItemEntity
 
 
 data class RecommendBean(
     val adExist: Boolean,
     val count: Int,
-    val item: List<RecommendItemBean>,
+    val itemList: List<RecommendItemBean>,
     val nextPageUrl: String,
     val total: Int
 )
@@ -16,27 +15,11 @@ data class RecommendItemBean(
     val id: Int,
     val tag: Any,
     val type: String
-): MultiItemEntity {
-
-     val TYPE_TEXT_CARD = -100
-     val  TYPE_FOLLOW_CARD= -99
-     val TYPE_INFORMATION_CARD = -98
-     val TYPE_VIDEO_SMALL_CARD = -97
-     val TYPE_UGC_SELECTED_CARD_COLLECTION = -96
-     val TYPE_BRIEF_CARD = -95
-    override val itemType: Int
-        get() = when(type){
-            "text_card"-> TYPE_TEXT_CARD
-            "follow_card"-> TYPE_FOLLOW_CARD
-            "information_card"-> TYPE_INFORMATION_CARD
-            "video_small_card"-> TYPE_VIDEO_SMALL_CARD
-            "ugc_selected_card_collection"-> TYPE_UGC_SELECTED_CARD_COLLECTION
-            else->TYPE_BRIEF_CARD
-        }
-}
+)
 
 data class RecommendData(
     val actionUrl: String,
+    val image:String,
     val ad: Boolean,
     val adTrack: Any,
     val author: Author,

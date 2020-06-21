@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    <variable
+        name="recommendItem"
+        type="io.github.trumeen.bean.RecommendItemBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:paddingBottom="@dimen/dp_12"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp_22"
+            android:textColor="@color/text_black"
+            android:text="@{recommendItem.data.text}"
+            tools:text="每日开眼精选"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:drawableEnd="@drawable/ic_enter_blue"
+            android:drawablePadding="@dimen/dp_5"
+            android:id="@+id/textView2"
+            android:textColor="@color/text_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp_16"
+            android:text="@{recommendItem.data.rightText}"
+            android:layout_marginEnd="@dimen/dp_15"
+            tools:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

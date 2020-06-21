@@ -20,8 +20,6 @@ class SampleAdapter<T>(
     RecyclerView.Adapter<SampleAdapter.SampleViewHolder>() {
     private val viewHolders: MutableList<SampleViewHolder> = mutableListOf()
 
-
-
     init {
         datas.addOnListChangedCallback(object :
             ObservableList.OnListChangedCallback<ObservableArrayList<T>>() {

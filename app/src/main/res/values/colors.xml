@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text_7d">#7d7d7d</color>
+    <color name="text_blue">#1A58E3</color>
+    <color name="line_ed">#ededed</color>
+    <color name="bg_shape_black">#99000000</color>
+    <color name="color_8b">#8b8b8b</color>
+    <color name="blue_refresh">#4688d4</color>
+</resources>

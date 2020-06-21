@@ -1,8 +1,8 @@
 package io.github.trumeen.net
 
-import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.PathUtils
 import io.github.trumeen.BuildConfig
+import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.bean.RecommendBean
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -92,7 +92,7 @@ interface VideoApi {
         @Url url: String, @Query("page") page: Int = 0,
         @Query("isOldUser") isOldUser: Boolean = true,
         @Query("udid") uuid: String = "74b07e6bb02b436b92387a6a8a37d7f4414c1434",
-        @Query("vc") vc: Int = 591,
+        @Query("vc") vc: Int = 6030015,
         @Query("vn") vn: String = "6.2.1",
         @Query("size") size: String = "1080X2208",
         @Query("deviceModel") deviceModel: String = "PCT-AL10",
