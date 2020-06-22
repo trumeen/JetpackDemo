@@ -8,7 +8,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "25.0.3"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "io.github.trumeen"
         minSdkVersion 21
@@ -71,4 +71,5 @@ dependencies {
     }
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.youth.banner:banner:2.0.11'
 }

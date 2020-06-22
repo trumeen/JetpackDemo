@@ -12,19 +12,9 @@ import io.github.trumeen.ui.base.BaseVmFragment
 import io.github.trumeen.ui.main.MultipleTypeAdapter
 import kotlinx.android.synthetic.main.fragment_recommend.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RecommendFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RecommendFragment : BaseVmFragment<EyepetizerRecommendViewModel>() {
 
-    var sampleAdapter:RecommendAdapter<RecommendItemBean>? =null
+    var sampleAdapter: RecommendAdapter<RecommendItemBean>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +62,7 @@ class RecommendFragment : BaseVmFragment<EyepetizerRecommendViewModel>() {
         fun newInstance() =
             RecommendFragment()
                 .apply {
-            }
+                }
     }
 
     override fun viewModelClass(): Class<EyepetizerRecommendViewModel> {

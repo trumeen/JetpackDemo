@@ -24,6 +24,10 @@ class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
     val TEXT_CARD_WITH_RIGHT_LEFT_TITLE = 7
     val TEXT_CARD_WITH_TAG_ID = 8
     val TOPIC_BRIEF_CARD = 9
+    val TEXT_CARD_FOOTER = 10
+    val HORIZONTAL_SCROLL_CARD = 11
+    val SPECIAL_SQUARE_CARD_COLLECTION = 12
+    val COLUMN_CARD_LIST = 13
 
 
     override fun onCreateViewHolder(
@@ -57,6 +61,17 @@ class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
                 DataBindingUtil.inflate<ViewDataBinding>(
                     LayoutInflater.from(parent.context),
                     R.layout.item_recommend_text_with_tag_layout,
+                    parent,
+                    false
+                ), BR.recommendItem
+            )
+        )
+
+        addType(
+            TEXT_CARD_FOOTER, Pair(
+                DataBindingUtil.inflate<ViewDataBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_recommend_text_footer_layout,
                     parent,
                     false
                 ), BR.recommendItem
@@ -135,12 +150,40 @@ class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
                 ), BR.recommendItem
             )
         )
+
+        addType(
+            HORIZONTAL_SCROLL_CARD, Pair(
+                DataBindingUtil.inflate<ViewDataBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_recommend_horizontal_scroll_layout,
+                    parent,
+                    false
+                ), BR.recommendItem
+            )
+        )
+
+        addType(
+            SPECIAL_SQUARE_CARD_COLLECTION, Pair(
+                DataBindingUtil.inflate<ViewDataBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_recommend_special_square_layout,
+                    parent,
+                    false
+                ), BR.recommendItem
+            )
+        )
+
+        addType(
+            COLUMN_CARD_LIST, Pair(
+                DataBindingUtil.inflate<ViewDataBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_recommend_column_card_layout,
+                    parent,
+                    false
+                ), BR.recommendItem
+            )
+        )
         return super.onCreateViewHolder(parent, viewType)
-    }
-
-    override fun onBindViewHolder(holder: SampleAdapter.SampleViewHolder, position: Int) {
-        super.onBindViewHolder(holder, position)
-
     }
 
 
@@ -150,7 +193,10 @@ class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
                 when (datas[position].data.dataType) {
                     "TextCardWithRightAndLeftTitle" -> TEXT_CARD_WITH_RIGHT_LEFT_TITLE
                     "TextCardWithTagId" -> TEXT_CARD_WITH_TAG_ID
-                    "TextCard" -> TEXT_CARD
+                    "TextCard" -> when (datas[position].data.type) {
+                        "footer3", "footer2" -> TEXT_CARD_FOOTER
+                        else -> TEXT_CARD
+                    }
                     else -> TEXT_CARD
                 }
             }
@@ -166,6 +212,9 @@ class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
                     else -> BRIEF_CARD
                 }
             }
+            "horizontalScrollCard" -> HORIZONTAL_SCROLL_CARD
+            "specialSquareCardCollection" -> SPECIAL_SQUARE_CARD_COLLECTION
+            "columnCardList" -> COLUMN_CARD_LIST
             else -> TEXT_CARD
         }
     }
