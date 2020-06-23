@@ -31,12 +31,10 @@ object BindingUtils {
         radius: Float = 0f,
         placeholder: Drawable? = null
     ) {
-        println("img url is empty :$url")
         if (TextUtils.isEmpty(url)) {
             println("img url is empty")
             return
         }
-
         imageView.load(url) {
             placeholder?.let {
                 placeholder(it)
@@ -78,11 +76,15 @@ object BindingUtils {
         banner: Banner<RecommendItemBean, ImageBannerAdapter>,
         items: List<RecommendItemBean>
     ) {
-        val datas: ObservableArrayList<RecommendItemBean> = ObservableArrayList()
-        datas.addAll(items)
-        banner.setBannerGalleryEffect(10, 5, 1f)
-        banner.isAutoLoop(false)
-        banner.adapter = ImageBannerAdapter(datas)
+        if(banner.adapter==null){
+            val datas: ObservableArrayList<RecommendItemBean> = ObservableArrayList()
+            datas.addAll(items)
+            banner.setBannerGalleryEffect(10, 5, 1f)
+            banner.isAutoLoop(false)
+            banner.adapter = ImageBannerAdapter(datas)
+        }else{
+            println("已设置adapter")
+        }
 
     }
 
@@ -92,15 +94,43 @@ object BindingUtils {
         recyclerView: RecyclerView,
         items: List<RecommendItemBean>
     ) {
-        val date = ObservableArrayList<RecommendItemBean>()
-        date.addAll(items)
-        val layoutManger = GridLayoutManager(recyclerView.context, 2)
-        layoutManger.orientation = GridLayoutManager.HORIZONTAL
-        recyclerView.layoutManager = layoutManger
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(2, 10))
-        recyclerView.adapter = SampleAdapter(
-            date, R.layout.item_square_card_layout,
-            BR.recommendItem
-        )
+        if(recyclerView.adapter==null){
+            val date = ObservableArrayList<RecommendItemBean>()
+            date.addAll(items)
+            val layoutManger = GridLayoutManager(recyclerView.context, 2)
+            layoutManger.orientation = GridLayoutManager.HORIZONTAL
+            recyclerView.layoutManager = layoutManger
+            recyclerView.addItemDecoration(GridSpacingItemDecoration(1, 10,GridLayoutManager.HORIZONTAL))
+            recyclerView.adapter = SampleAdapter(
+                date, R.layout.item_square_card_layout,
+                BR.recommendItem
+            )
+        }else{
+            println("已设置adapter")
+        }
+
+    }
+
+    @BindingAdapter("app:bindCollectionGrid")
+    @JvmStatic
+    fun bindCollectionGrid(
+        recyclerView: RecyclerView,
+        items: List<RecommendItemBean>
+    ) {
+        if(recyclerView.adapter==null){
+            val date = ObservableArrayList<RecommendItemBean>()
+            date.addAll(items)
+            val layoutManger = GridLayoutManager(recyclerView.context, 2)
+            layoutManger.orientation = GridLayoutManager.VERTICAL
+            recyclerView.layoutManager = layoutManger
+            recyclerView.addItemDecoration(GridSpacingItemDecoration(1, 10))
+            recyclerView.adapter = SampleAdapter(
+                date, R.layout.item_collection_card_layout,
+                BR.recommendItem
+            )
+        }else{
+            println("已设置adapter")
+        }
+
     }
 }

@@ -2,9 +2,11 @@ package io.github.trumeen.ui.eyepetizer.fragment.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ObservableArrayList
+import androidx.recyclerview.widget.RecyclerView
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.base.BaseVmFragment

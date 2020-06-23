@@ -14,7 +14,6 @@ class EyepetizerDiscoveryViewModel : BaseViewModel() {
         launch(block = {
             val recommendList = VideoApi.get("http://baobab.kaiyanapp.com/api/v5/")
                 .getRecommendList("http://baobab.kaiyanapp.com/api/v7/index/tab/discovery")
-            println("recommendList:$recommendList")
             itemDataSet.value?.addAll(recommendList.itemList)
         }, error = {
             println("异常:${it.message}")

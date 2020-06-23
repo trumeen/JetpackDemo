@@ -11,7 +11,7 @@ import com.blankj.utilcode.util.LogUtils
 class GridSpacingItemDecoration(
     var defaultSpanCount: Int = 2,
     var spacing: Int = 0,
-    var includeEdge: Boolean = false
+    var orientation: Int = GridLayoutManager.VERTICAL
 ) : RecyclerView.ItemDecoration() {
 
 
@@ -26,24 +26,76 @@ class GridSpacingItemDecoration(
             view.layoutParams as GridLayoutManager.LayoutParams
         val spanIndex = lp.spanIndex
         val spanSize = lp.spanSize
-        val spanCount = defaultSpanCount / spanSize
-        val column = spanIndex / spanSize // item column
+        val childCount = parent.adapter?.itemCount
+        if ((position / defaultSpanCount + 1) * defaultSpanCount != childCount) {
 
-        if((position%defaultSpanCount+1)*defaultSpanCount !=parent.childCount){
-            when(spanIndex){
-                0 -> {
-                    outRect.top = spacing
-                    outRect.right = spacing
+            if (orientation == GridLayoutManager.HORIZONTAL) {
+                when (spanIndex) {
+                    0 -> {
+                        outRect.top = spacing
+                        outRect.right = spacing
+                        outRect.bottom = spacing
+                        outRect.left = 0
+                    }
+                    1 -> {
+                        outRect.top = 0
+                        outRect.bottom = spacing
+                        outRect.right = spacing
+                        outRect.left = 0
+                    }
                 }
-                1->{
-                    outRect.top = spacing
-                    outRect.bottom = spacing
-                    outRect.right = spacing
+            } else {
+                when (spanIndex) {
+                    0 -> {
+                        outRect.top = spacing
+                        outRect.right = spacing
+                        outRect.bottom = 0
+                        outRect.left = 0
+                    }
+                    1 -> {
+                        outRect.top = spacing
+                        outRect.bottom = 0
+                        outRect.right = 0
+                        outRect.left = 0
+                    }
                 }
             }
-        }
 
-        LogUtils.d("position:$position spanIndex:$spanIndex spanSize:$spanSize spanCount:$spanCount column:$column outRect:${outRect.left} ${outRect.top} ${outRect.right} ${outRect.bottom}")
+
+        } else {
+            if (orientation == GridLayoutManager.HORIZONTAL) {
+                when (spanIndex) {
+                    0 -> {
+                        outRect.top = spacing
+                        outRect.right = 0
+                        outRect.bottom = spacing
+                        outRect.left = 0
+                    }
+                    1 -> {
+                        outRect.top = 0
+                        outRect.bottom = spacing
+                        outRect.right = 0
+                        outRect.left = 0
+                    }
+                }
+            } else {
+                when (spanIndex) {
+                    0 -> {
+                        outRect.top = spacing
+                        outRect.right = spacing
+                        outRect.bottom = 0
+                        outRect.left = 0
+                    }
+                    1 -> {
+                        outRect.top = spacing
+                        outRect.bottom = 0
+                        outRect.right = 0
+                        outRect.left = 0
+                    }
+                }
+            }
+
+        }
     }
 
 }
