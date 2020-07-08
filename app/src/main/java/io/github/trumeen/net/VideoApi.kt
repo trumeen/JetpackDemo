@@ -57,35 +57,6 @@ interface VideoApi {
                 .build()
                 .create(VideoApi::class.java)
         }
-
-
-        fun getXml(): VideoApi {
-            val SIZE_OF_CACHE = 100 * 1024 * 1024.toLong() // 10 MiB
-            val cacheFile: String = PathUtils.getExternalAppCachePath()
-            val file = File(cacheFile)
-            if (!file.exists()) {
-                file.mkdirs()
-            }
-            val cache = Cache(file, SIZE_OF_CACHE)
-            val clientBuilder = OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .addNetworkInterceptor(CacheControl.REWRITE_RESPONSE_INTERCEPTOR) //有网络时的拦截器
-                .addInterceptor(CacheControl.REWRITE_RESPONSE_INTERCEPTOR_OFFLINE)//没网络时的拦截器
-                .cache(cache)
-            if (BuildConfig.DEBUG) {
-                val loggingInterceptor = HttpLoggingInterceptor()
-                loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-                clientBuilder.addInterceptor(loggingInterceptor)
-            }
-            return Retrofit.Builder()
-                .client(clientBuilder.build())
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-//                .addCallAdapterFactory(LiveDataCallAdapterFactory())
-                //.addConverterFactory(Base64GsonConverterFacctory.create(Gson()))
-                .baseUrl("http://sscj8.com/")
-                .build()
-                .create(VideoApi::class.java)
-        }
     }
 
     @GET("")

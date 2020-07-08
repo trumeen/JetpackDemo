@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ObservableArrayList
+import androidx.lifecycle.lifecycleScope
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.base.BaseVmFragment
 import io.github.trumeen.ui.main.MultipleTypeAdapter
 import kotlinx.android.synthetic.main.fragment_recommend.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class RecommendFragment : BaseVmFragment<EyepetizerRecommendViewModel>() {
 
@@ -31,16 +34,23 @@ class RecommendFragment : BaseVmFragment<EyepetizerRecommendViewModel>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+       /*
+       LiveData 实现方式 未实现分页加载 需要使用adapter去实现
         mViewModel.itemDataSet.value = ObservableArrayList()
-
         sampleAdapter = RecommendAdapter(
             mViewModel.itemDataSet.value!!
         )
         recycler_view.adapter = sampleAdapter
-
         mViewModel.getData()
-
+        */
+        //使用paging3 实现分页加载
+        val recommendPagingAdapter = RecommendPagingAdapter()
+        recycler_view.adapter = recommendPagingAdapter
+        lifecycleScope.launch {
+            mViewModel.getPagingData("http://baobab.kaiyanapp.com/api/v5/index/tab/allRec").collectLatest {
+                recommendPagingAdapter.submitData(it)
+            }
+        }
     }
 
     override fun onDestroy() {
