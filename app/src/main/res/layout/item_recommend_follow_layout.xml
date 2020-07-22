@@ -10,6 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:onClick="@{(view) -> recommendItem::goToPage(view.context,this.data.actionUrl)}"
         android:paddingStart="@dimen/dp_15"
         android:paddingEnd="@dimen/dp_15"
         android:layout_width="match_parent"

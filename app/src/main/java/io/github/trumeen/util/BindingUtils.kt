@@ -1,7 +1,10 @@
 package io.github.trumeen.util
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.text.TextUtils
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -76,13 +79,13 @@ object BindingUtils {
         banner: Banner<RecommendItemBean, ImageBannerAdapter>,
         items: List<RecommendItemBean>
     ) {
-        if(banner.adapter==null){
+        if (banner.adapter == null) {
             val datas: ObservableArrayList<RecommendItemBean> = ObservableArrayList()
             datas.addAll(items)
             banner.setBannerGalleryEffect(10, 5, 1f)
             banner.isAutoLoop(false)
             banner.adapter = ImageBannerAdapter(datas)
-        }else{
+        } else {
             println("已设置adapter")
         }
 
@@ -94,18 +97,24 @@ object BindingUtils {
         recyclerView: RecyclerView,
         items: List<RecommendItemBean>
     ) {
-        if(recyclerView.adapter==null){
+        if (recyclerView.adapter == null) {
             val date = ObservableArrayList<RecommendItemBean>()
             date.addAll(items)
             val layoutManger = GridLayoutManager(recyclerView.context, 2)
             layoutManger.orientation = GridLayoutManager.HORIZONTAL
             recyclerView.layoutManager = layoutManger
-            recyclerView.addItemDecoration(GridSpacingItemDecoration(1, 10,GridLayoutManager.HORIZONTAL))
+            recyclerView.addItemDecoration(
+                GridSpacingItemDecoration(
+                    1,
+                    10,
+                    GridLayoutManager.HORIZONTAL
+                )
+            )
             recyclerView.adapter = SampleAdapter(
                 date, R.layout.item_square_card_layout,
                 BR.recommendItem
             )
-        }else{
+        } else {
             println("已设置adapter")
         }
 
@@ -117,7 +126,7 @@ object BindingUtils {
         recyclerView: RecyclerView,
         items: List<RecommendItemBean>
     ) {
-        if(recyclerView.adapter==null){
+        if (recyclerView.adapter == null) {
             val date = ObservableArrayList<RecommendItemBean>()
             date.addAll(items)
             val layoutManger = GridLayoutManager(recyclerView.context, 2)
@@ -128,9 +137,19 @@ object BindingUtils {
                 date, R.layout.item_collection_card_layout,
                 BR.recommendItem
             )
-        }else{
+        } else {
             println("已设置adapter")
         }
 
     }
+
+    @BindingAdapter("app:gotoPage")
+    @JvmStatic
+    fun goToPage(view: View, url: String?) {
+        if(url.isNullOrEmpty()){
+            return
+        }
+        view.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
 }

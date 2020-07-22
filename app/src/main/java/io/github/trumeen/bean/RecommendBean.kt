@@ -1,5 +1,8 @@
 package io.github.trumeen.bean
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 
 
 data class RecommendBean(
@@ -9,17 +12,22 @@ data class RecommendBean(
     val nextPageUrl: String,
     val total: Int
 )
+
 data class RecommendItemBean(
     val adIndex: Int,
     val `data`: RecommendData,
     val id: Int,
     val tag: Any,
     val type: String
-)
+) {
+    fun goToPage(context: Context, url: String?) {
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+}
 
 data class RecommendData(
     val actionUrl: String,
-    val image:String,
+    val image: String,
     val ad: Boolean,
     val adTrack: Any,
     val author: Author,
