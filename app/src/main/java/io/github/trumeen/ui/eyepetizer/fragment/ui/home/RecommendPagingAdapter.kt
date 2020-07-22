@@ -27,6 +27,7 @@ class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA
     val HORIZONTAL_SCROLL_CARD = 11
     val SPECIAL_SQUARE_CARD_COLLECTION = 12
     val COLUMN_CARD_LIST = 13
+    val FOOT_VIEW = 14
 
 
     override fun onCreateViewHolder(
@@ -182,11 +183,24 @@ class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA
                 ), BR.recommendItem
             )
         )
+
+        addType(
+            FOOT_VIEW, Pair(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_foot_view, parent, false
+                ), BR.recommendItem
+            )
+        )
+
         return super.onCreateViewHolder(parent, viewType)
     }
 
 
     override fun getItemViewType(position: Int): Int {
+        if (position == itemCount - 1) {
+            return FOOT_VIEW
+        }
         val item = getItem(position)
         item?.run {
             return when (type) {
@@ -220,6 +234,11 @@ class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA
             }
         }
         return TEXT_CARD
+    }
+
+    override fun getItemCount(): Int {
+        val itemCount = super.getItemCount()
+        return if (itemCount > 0) itemCount + 1 else itemCount
     }
 
     companion object {

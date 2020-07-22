@@ -14,6 +14,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.Url
 import java.io.File
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -62,6 +63,20 @@ interface VideoApi {
     @GET("")
     suspend fun getRecommendList(
         @Url url: String, @Query("page") page: Int = 0,
+        @Query("isOldUser") isOldUser: Boolean = true,
+        @Query("udid") uuid: String = "74b07e6bb02b436b92387a6a8a37d7f4414c1434",
+        @Query("vc") vc: Int = Random.nextInt(1, 1000000),
+        @Query("vn") vn: String = "6.2.1",
+        @Query("size") size: String = "1080X2208",
+        @Query("deviceModel") deviceModel: String = "PCT-AL10",
+        @Query("first_channel") first_channel: String = "eyepetizer_yingyongbao_market",
+        @Query("last_channel") last_channel: String = "eyepetizer_yingyongbao_market",
+        @Query("system_version_code") system_version_code: Int = 29
+    ): RecommendBean
+
+    @GET("")
+    suspend fun getDailyList(
+        @Url url: String, @Query("date") date: Long = Calendar.getInstance().timeInMillis,
         @Query("isOldUser") isOldUser: Boolean = true,
         @Query("udid") uuid: String = "74b07e6bb02b436b92387a6a8a37d7f4414c1434",
         @Query("vc") vc: Int = Random.nextInt(1, 1000000),

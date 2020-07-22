@@ -6,13 +6,16 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import io.github.trumeen.ui.main.SampleAdapter
 
-open class MultipleTypePagingAdapter<T:Any>(diffCallback: DiffUtil.ItemCallback<T>):PagingDataAdapter<T, SampleAdapter.SampleViewHolder>(diffCallback) {
+open class MultipleTypePagingAdapter<T : Any>(diffCallback: DiffUtil.ItemCallback<T>) :
+    PagingDataAdapter<T, SampleAdapter.SampleViewHolder>(diffCallback) {
     val bindings = HashMap<Int, Pair<ViewDataBinding, Int>>()
     private val viewHolders: MutableList<SampleAdapter.SampleViewHolder> = mutableListOf()
 
     override fun onBindViewHolder(holder: SampleAdapter.SampleViewHolder, position: Int) {
-        holder.getBinding()
-            .setVariable(bindings[getItemViewType(position)]!!.second, getItem(position))
+        if (position < itemCount-1) {
+            holder.getBinding()
+                .setVariable(bindings[getItemViewType(position)]!!.second, getItem(position))
+        }
         holder.getBinding().executePendingBindings()
     }
 
@@ -28,7 +31,7 @@ open class MultipleTypePagingAdapter<T:Any>(diffCallback: DiffUtil.ItemCallback<
         return element
     }
 
-    fun addType(viewType: Int, binding: Pair<ViewDataBinding, Int>){
+    fun addType(viewType: Int, binding: Pair<ViewDataBinding, Int>) {
         bindings[viewType] = binding
     }
 

@@ -55,9 +55,9 @@ abstract class MultipleTypeAdapter<T>(open var datas: ObservableArrayList<T>) :
         })
     }
 
-     fun addType(viewType: Int, binding: Pair<ViewDataBinding, Int>){
-         bindings[viewType] = binding
-     }
+    fun addType(viewType: Int, binding: Pair<ViewDataBinding, Int>) {
+        bindings[viewType] = binding
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -87,8 +87,14 @@ abstract class MultipleTypeAdapter<T>(open var datas: ObservableArrayList<T>) :
     }
 
     override fun onBindViewHolder(holder: SampleAdapter.SampleViewHolder, position: Int) {
-        holder.getBinding()
-            .setVariable(bindings[getItemViewType(position)]!!.second, datas[position])
+        if (position >= datas.size) {
+            /*holder.getBinding()
+                .setVariable(bindings[getItemViewType(position)]!!.second, )*/
+        } else {
+            holder.getBinding()
+                .setVariable(bindings[getItemViewType(position)]!!.second, datas[position])
+        }
+
         holder.getBinding().executePendingBindings()
     }
 
