@@ -3,7 +3,9 @@ package io.github.trumeen.bean
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import io.github.trumeen.ui.eyepetizer.video.VideoPlayerActivity
 
+public const val VIDEO_ID: String = "videoId"
 
 data class RecommendBean(
     val adExist: Boolean,
@@ -21,7 +23,17 @@ data class RecommendItemBean(
     val type: String
 ) {
     fun goToPage(context: Context, url: String?) {
+        println("context:$context url:$url")
+        if (url.isNullOrBlank()) {
+            return
+        }
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    fun goToVideoPage(context: Context, videoId: Int) {
+        val videoIntent = Intent(context, VideoPlayerActivity::class.java)
+        videoIntent.putExtra(VIDEO_ID, videoId)
+        context.startActivity(videoIntent)
     }
 }
 

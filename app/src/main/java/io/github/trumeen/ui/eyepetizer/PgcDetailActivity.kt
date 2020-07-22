@@ -8,5 +8,8 @@ class PgcDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pgc_detail)
+        println("data:${intent.data}")
+        println("lastPathSegment:${intent?.data?.lastPathSegment}")
+
     }
 }

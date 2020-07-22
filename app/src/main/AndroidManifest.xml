@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.eyepetizer.video.VideoPlayerActivity"></activity>
         <activity android:name=".ui.eyepetizer.PgcDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -25,10 +26,9 @@
                     android:pathPrefix="/detail"
                     android:scheme="eyepetizer" />
             </intent-filter>
-
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.MainActivity2"></activity>
+        <activity android:name=".ui.MainActivity2" />
         <activity android:name=".ui.eyepetizer.EyepettizerMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
