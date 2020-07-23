@@ -3,9 +3,11 @@ package io.github.trumeen.bean
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Parcelable
 import io.github.trumeen.ui.eyepetizer.video.VideoPlayerActivity
+import kotlinx.android.parcel.Parcelize
 
-public const val VIDEO_ID: String = "videoId"
+const val VIDEO_INFO: String = "videoInfo"
 
 data class RecommendBean(
     val adExist: Boolean,
@@ -30,9 +32,20 @@ data class RecommendItemBean(
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
-    fun goToVideoPage(context: Context, videoId: Int) {
+    fun goToVideoPage(context: Context, videoInfo: DataX) {
+
         val videoIntent = Intent(context, VideoPlayerActivity::class.java)
-        videoIntent.putExtra(VIDEO_ID, videoId)
+        videoIntent.putExtra(
+            VIDEO_INFO, VideoInfoBean(
+                videoInfo.id,
+                videoInfo.cover.detail,
+                videoInfo.title,
+                videoInfo.description,
+                videoInfo.category,
+                videoInfo.consumption,
+                videoInfo.author
+            )
+        )
         context.startActivity(videoIntent)
     }
 }
@@ -115,8 +128,8 @@ data class RecommendData(
     val webUrl: WebUrlX
 )
 
+@Parcelize
 data class Author(
-    val adTrack: Any,
     val approvedNotReadyVideoCount: Int,
     val description: String,
     val expert: Boolean,
@@ -130,14 +143,15 @@ data class Author(
     val recSort: Int,
     val shield: Shield,
     val videoNum: Int
-)
+) : Parcelable
 
+@Parcelize
 data class Consumption(
     val collectionCount: Int,
     val realCollectionCount: Int,
     val replyCount: Int,
     val shareCount: Int
-)
+) : Parcelable
 
 data class Content(
     val adIndex: Int,
@@ -179,31 +193,33 @@ data class Header(
     val topShow: Boolean
 )
 
+@Parcelize
 data class Follow(
     val followed: Boolean,
     val itemId: Int,
     val itemType: String
-)
+) : Parcelable
 
+@Parcelize
 data class Shield(
     val itemId: Int,
     val itemType: String,
     val shielded: Boolean
-)
+) : Parcelable
 
 data class DataX(
     val ad: Boolean,
     val adTrack: List<Any>,
     val addWatermark: Boolean,
     val area: String,
-    val author: AuthorX,
+    val author: Author,
     val brandWebsiteInfo: Any,
     val campaign: Any,
     val category: String,
     val checkStatus: String,
     val city: String,
     val collected: Boolean,
-    val consumption: ConsumptionX,
+    val consumption: Consumption,
     val cover: Cover,
     val createTime: Long,
     val dataType: String,

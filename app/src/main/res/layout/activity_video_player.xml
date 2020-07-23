@@ -1,19 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.eyepetizer.video.VideoPlayerActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:textColor="@color/text_black"
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="viewModel"
+            type="io.github.trumeen.ui.eyepetizer.video.VideoPlayerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_alpha102_black"
+        tools:context=".ui.eyepetizer.video.VideoPlayerActivity">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_180"
+            app:imgUrl="@{viewModel.videoInfo.coverUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_13"
+            android:text="@{viewModel.videoInfo.title}"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_13"
+            android:text="@{viewModel.videoInfo.category}"
+            android:textColor="@color/color_grey_secondary"
+            android:textSize="@dimen/dp_12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_13"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_13"
+            android:text="@{viewModel.videoInfo.description}"
+            android:textColor="@color/color_grey_secondary"
+            android:textSize="@dimen/dp_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            tools:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_13"
+            android:drawableStart="@drawable/ic_detail_like"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@{String.valueOf(viewModel.videoInfo.consumption.collectionCount)}"
+            android:textColor="@color/color_grey_secondary"
+            android:textSize="@dimen/dp_12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            tools:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:drawableStart="@drawable/ic_detail_share"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@{String.valueOf(viewModel.videoInfo.consumption.shareCount)}"
+            android:textColor="@color/color_grey_secondary"
+            android:textSize="@dimen/dp_12"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            tools:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:drawableStart="@drawable/ic_detail_download"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@string/cache"
+            android:textColor="@color/color_grey_secondary"
+            android:textSize="@dimen/dp_12"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
+            android:drawableStart="@drawable/icon_collect"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@string/collect"
+            android:textColor="@color/color_grey_secondary"
+            android:textSize="@dimen/dp_12"
+            app:layout_constraintStart_toEndOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_13"
+            android:layout_marginTop="@dimen/dp_20"
+            app:imgUrl="@{viewModel.videoInfo.author.icon}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            app:radius="@{@dimen/dp_50}"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_3"
+            android:text="@{viewModel.videoInfo.author.name}"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_12"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:text="@{viewModel.videoInfo.author.description}"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_13"
+            android:background="@drawable/shape_bg_text"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_2"
+            android:paddingEnd="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="@string/add_follow"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

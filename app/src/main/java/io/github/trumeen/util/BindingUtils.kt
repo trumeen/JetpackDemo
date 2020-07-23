@@ -30,7 +30,7 @@ object BindingUtils {
     @JvmStatic
     fun setImg(
         imageView: ImageView,
-        url: String,
+        url: String?,
         radius: Float = 0f,
         placeholder: Drawable? = null
     ) {
