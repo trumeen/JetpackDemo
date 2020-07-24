@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class VideoInfoBean(
     val videoId: Int,
+    val playUrl:String,
     val coverUrl: String,
     val title: String,
     val description: String,

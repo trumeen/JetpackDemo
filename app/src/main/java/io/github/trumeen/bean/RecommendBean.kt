@@ -38,6 +38,7 @@ data class RecommendItemBean(
         videoIntent.putExtra(
             VIDEO_INFO, VideoInfoBean(
                 videoInfo.id,
+                videoInfo.playUrl,
                 videoInfo.cover.detail,
                 videoInfo.title,
                 videoInfo.description,

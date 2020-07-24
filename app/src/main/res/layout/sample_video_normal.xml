@@ -133,7 +133,7 @@
     <LinearLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/back_tiny"
         android:layout_toRightOf="@+id/back_tiny"
@@ -142,20 +142,37 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:paddingLeft="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/video_back" />
-
-        <TextView
-            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_action_detail_back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="10dp"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
+
+        <ImageView
+            android:scaleType="centerInside"
+            android:id="@+id/iv_like"
+            android:src="@drawable/ic_detail_like"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"/>
+
+        <ImageView
+            android:scaleType="centerInside"
+            android:id="@+id/iv_share"
+            android:src="@drawable/ic_detail_share"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"/>
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:src="@drawable/ic_menu_more_white"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"/>
     </LinearLayout>
 
     <RelativeLayout

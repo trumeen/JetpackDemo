@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.trumeen.R
 import io.github.trumeen.ui.base.BaseVmFragment
+import io.github.trumeen.ui.eyepetizer.EyepettizerMainActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -59,6 +60,10 @@ class HomeFragment : BaseVmFragment<EyepetizerHomeViewModel>() {
                     2->tab.text = getString(R.string.daily)
                 }
             }).attach()
+
+        imageView.setOnClickListener {
+            (activity as EyepettizerMainActivity).test()
+        }
     }
 
 

@@ -853,5 +853,8 @@
     <string name="week_ago_format">%d 周前</string>
     <string name="wifi_auto_play">- Wi-Fi 关注页自动播放 -</string>
     <string name="yesterday">昨天</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_calendar">漫日历</string>
 
 </resources>

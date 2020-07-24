@@ -549,4 +549,7 @@
     <!--    竖直方向可点击的安全区域-->
     <dimen name="vertical_safe_size">520dp</dimen>
     <dimen name="dp_242">242dp</dimen>
+
+    <dimen name="design_bottom_navigation_active_text_size">14dp</dimen>
+    <dimen name="design_bottom_navigation_text_size">14dp</dimen>
 </resources>
