@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="io.github.trumeen.ui.eyepetizer.EyepettizerViewModel" />
@@ -21,6 +23,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:background="?android:attr/windowBackground"
+            android:visibility="@{viewModel.MBottomButtonState?View.VISIBLE:View.GONE}"
             app:itemIconTint="@color/selector_tab_color"
             app:itemTextColor="@color/selector_tab_color"
             app:labelVisibilityMode="labeled"

@@ -11,7 +11,7 @@ import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.base.MultipleTypePagingAdapter
 import io.github.trumeen.ui.main.SampleAdapter
 
-class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA_COMPARATOR) {
+open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA_COMPARATOR) {
 
     val TEXT_CARD = 0
     val FOLLOW_CARD = 1
@@ -28,6 +28,11 @@ class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA
     val SPECIAL_SQUARE_CARD_COLLECTION = 12
     val COLUMN_CARD_LIST = 13
     val FOOT_VIEW = 14
+    val ROAMING_CALENDAR_DAILY_CARD = 15
+    val ROAMING_CALENDAR_WEEKLY_CARD = 16
+    val VIDEO_BEAN_FOR_CLIENT = 17
+    val UGC_VIDEO_BEAN = 17
+    val UGC_PICTURE_BEAN = 18
 
 
     override fun onCreateViewHolder(
@@ -84,6 +89,39 @@ class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA
                 DataBindingUtil.inflate<ViewDataBinding>(
                     LayoutInflater.from(parent.context),
                     R.layout.item_recommend_follow_layout,
+                    parent,
+                    false
+                ), BR.recommendItem
+            )
+        )
+
+        addType(
+            VIDEO_BEAN_FOR_CLIENT, Pair(
+                DataBindingUtil.inflate<ViewDataBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_recommend_follow_layout,
+                    parent,
+                    false
+                ), BR.recommendItem
+            )
+        )
+
+        addType(
+            UGC_VIDEO_BEAN, Pair(
+                DataBindingUtil.inflate<ViewDataBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_recommend_ugc_video_layout,
+                    parent,
+                    false
+                ), BR.recommendItem
+            )
+        )
+
+        addType(
+            UGC_PICTURE_BEAN, Pair(
+                DataBindingUtil.inflate<ViewDataBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_recommend_ugc_video_layout,
                     parent,
                     false
                 ), BR.recommendItem
@@ -193,6 +231,24 @@ class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA
             )
         )
 
+        addType(
+            ROAMING_CALENDAR_DAILY_CARD, Pair(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_roaming_calendr_daily_card_layout, parent, false
+                ), BR.recommendItem
+            )
+        )
+
+        addType(
+            ROAMING_CALENDAR_WEEKLY_CARD, Pair(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_roaming_calendr_weekly_card_layout, parent, false
+                ), BR.recommendItem
+            )
+        )
+
         return super.onCreateViewHolder(parent, viewType)
     }
 
@@ -230,6 +286,21 @@ class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA
                 "horizontalScrollCard" -> HORIZONTAL_SCROLL_CARD
                 "specialSquareCardCollection" -> SPECIAL_SQUARE_CARD_COLLECTION
                 "columnCardList" -> COLUMN_CARD_LIST
+                "roamingCalendarDailyCard" -> ROAMING_CALENDAR_DAILY_CARD
+                "roamingCalendarWeeklyCard" -> ROAMING_CALENDAR_WEEKLY_CARD
+                "communityColumnsCard" -> {
+                    when (data.dataType) {
+                        "FollowCard" -> {
+                            when (data.content.data.dataType) {
+                                "VideoBeanForClient" -> VIDEO_BEAN_FOR_CLIENT
+                                "UgcVideoBean" -> UGC_VIDEO_BEAN
+                                "UgcPictureBean" -> UGC_PICTURE_BEAN
+                                else -> TEXT_CARD
+                            }
+                        }
+                        else -> TEXT_CARD
+                    }
+                }
                 else -> TEXT_CARD
             }
         }
@@ -242,7 +313,7 @@ class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA
     }
 
     companion object {
-        private val DATA_COMPARATOR = object : DiffUtil.ItemCallback<RecommendItemBean>() {
+        val DATA_COMPARATOR = object : DiffUtil.ItemCallback<RecommendItemBean>() {
             override fun areItemsTheSame(
                 oldItem: RecommendItemBean,
                 newItem: RecommendItemBean

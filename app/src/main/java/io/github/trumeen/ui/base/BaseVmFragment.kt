@@ -31,7 +31,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : BaseFragment() {
         }
     }
 
-    private fun initViewModel() {
+    protected  open fun initViewModel() {
         mViewModel = ViewModelProvider(this).get(viewModelClass())
     }
 

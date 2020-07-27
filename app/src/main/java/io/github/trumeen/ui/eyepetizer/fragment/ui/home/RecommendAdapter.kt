@@ -11,7 +11,7 @@ import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.main.MultipleTypeAdapter
 import io.github.trumeen.ui.main.SampleAdapter
 
-class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
+open class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
         MultipleTypeAdapter<RecommendItemBean>(mDatas) {
 
     val TEXT_CARD = 0

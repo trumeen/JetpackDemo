@@ -5,10 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.R
 import io.github.trumeen.ui.base.BaseVmFragment
+import kotlinx.android.synthetic.main.fragment_calendar.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -19,9 +25,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CalendarFragment : BaseVmFragment<CalendarViewModel>() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private val calendarAdapter = CalendarAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +38,24 @@ class CalendarFragment : BaseVmFragment<CalendarViewModel>() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false)
+
+    override fun layoutRes(): Int {
+        return R.layout.fragment_calendar
+    }
+
+    override fun initData() {
+        lifecycleScope.launch {
+            mViewModel.getPagingData().collectLatest {
+                calendarAdapter.submitData(it)
+            }
+        }
+    }
+
+    override fun initView() {
+        recycler_view.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
+        recycler_view.adapter = calendarAdapter
     }
 
     companion object {

@@ -12,6 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.Url
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
@@ -70,6 +71,18 @@ interface VideoApi {
 
     @GET("v2/replies")
     suspend fun getVideoReplies(@Query("videoId") videoId: Int): RecommendBean
+
+
+    @GET("v7/roamingCalendar/index")
+    suspend fun getCalendarData(
+        @Query("date") date: String = SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().timeInMillis)
+    ): RecommendBean
+
+
+    @GET("")
+    suspend fun getCalendarNextData(
+        @Url url: String
+    ): RecommendBean
 
 
 }

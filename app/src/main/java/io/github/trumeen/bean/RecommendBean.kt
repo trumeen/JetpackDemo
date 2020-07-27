@@ -53,7 +53,12 @@ data class RecommendItemBean(
 
 data class RecommendData(
     val actionUrl: String,
+    val weeklyDestination: String,
+    val dailyDestination: String,
+    val recReason: String,
+    val posterTitle: String,
     val image: String,
+    val imageUrl: String,
     val ad: Boolean,
     val adTrack: Any,
     val author: Author,
