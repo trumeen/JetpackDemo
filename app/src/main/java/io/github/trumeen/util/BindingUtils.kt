@@ -5,9 +5,9 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.TextUtils
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableArrayList
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,7 +22,7 @@ import io.github.trumeen.extension.toMinutes
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.main.SampleAdapter
 import io.github.trumeen.view.GridSpacingItemDecoration
-import java.lang.StringBuilder
+
 
 object BindingUtils {
 
@@ -146,10 +146,19 @@ object BindingUtils {
     @BindingAdapter("app:gotoPage")
     @JvmStatic
     fun goToPage(view: View, url: String?) {
-        if(url.isNullOrEmpty()){
+        if (url.isNullOrEmpty()) {
             return
         }
         view.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    @BindingAdapter("layout_constraintDimensionRatio")
+    @JvmStatic
+    fun setConstraintDimensionRatio(view: View, ratio: String) {
+        val params =
+            view.layoutParams as ConstraintLayout.LayoutParams
+        params.dimensionRatio = ratio
+        view.layoutParams = params
     }
 
 }
