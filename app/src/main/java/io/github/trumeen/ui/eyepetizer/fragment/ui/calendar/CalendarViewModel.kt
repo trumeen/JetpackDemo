@@ -13,6 +13,8 @@ class CalendarViewModel : BaseViewModel() {
 
     var mCalendarData: MutableLiveData<ArrayList<RecommendItemBean>> = MutableLiveData()
 
+    val backState: MutableLiveData<Boolean> = MutableLiveData(false)
+
 
     init {
         mCalendarData.value = ArrayList()

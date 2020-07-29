@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.chad.library.BR
 import com.youth.banner.Banner
 import io.github.trumeen.R
@@ -22,6 +25,7 @@ import io.github.trumeen.extension.toMinutes
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.main.SampleAdapter
 import io.github.trumeen.view.GridSpacingItemDecoration
+import io.github.trumeen.view.RoundedCornerCenterCrop
 
 
 object BindingUtils {
@@ -38,10 +42,12 @@ object BindingUtils {
             println("img url is empty")
             return
         }
+
         imageView.load(url) {
             placeholder?.let {
                 placeholder(it)
             }
+            crossfade(true)
             transformations(
                 RoundedCornersTransformation(
                     radius,
@@ -50,7 +56,9 @@ object BindingUtils {
                     radius
                 )
             )
+
         }
+//        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 
     @BindingAdapter("app:minutesText")
@@ -155,9 +163,17 @@ object BindingUtils {
     @BindingAdapter("layout_constraintDimensionRatio")
     @JvmStatic
     fun setConstraintDimensionRatio(view: View, ratio: String) {
+        var setRatio = ratio
+        val map = ratio.split(":").map {
+            it.toInt()
+        }
+        if (map[0] / map[1].toFloat() >= 1.8) {
+            setRatio = "1:1"
+        }
+        println("setRatio:$setRatio")
         val params =
             view.layoutParams as ConstraintLayout.LayoutParams
-        params.dimensionRatio = ratio
+        params.dimensionRatio = setRatio
         view.layoutParams = params
     }
 

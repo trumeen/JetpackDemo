@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.R
 import io.github.trumeen.ui.base.BaseVmFragment
@@ -56,6 +57,10 @@ class CalendarFragment : BaseVmFragment<CalendarViewModel>() {
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
         recycler_view.adapter = calendarAdapter
+
+        iv_back.setOnClickListener {
+            back()
+        }
     }
 
     companion object {
