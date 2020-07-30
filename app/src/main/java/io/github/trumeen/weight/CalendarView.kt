@@ -31,9 +31,10 @@ class CalendarView : View {
         }
     }
 
+    private var mDownX: Float = 0f
+    private lateinit var mChoosePaint: Paint
     private var mContext: Context? = null
     private var mCanvas: Canvas? = null
-    private var mHasDrawIconAndLabel: Boolean = false
     private var mWidth: Int = 0
     private lateinit var mTextPaint: Paint
     private var format = SimpleDateFormat("MMMM", Locale.ENGLISH)
@@ -49,15 +50,17 @@ class CalendarView : View {
     private val mPaddingEnd = 100f
     private var mVelocityTracker: VelocityTracker
     private lateinit var mConfiguration: ViewConfiguration
+    private val mCurrentDay: Date
 
     init {
         initPaint()
         mVelocityTracker = VelocityTracker.obtain()
+        mCurrentDay = mCalendar.time
     }
 
     private fun initPaint() {
         mTextPaint = Paint()
-
+        mChoosePaint = Paint()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -69,13 +72,11 @@ class CalendarView : View {
     }
 
     override fun onDraw(canvas: Canvas?) {
-
         mCanvas = canvas
         drawWeekText(canvas)
         drawIcon(canvas)
-        drawDateText(canvas)
+        drawDate(canvas)
         drawMonthText(canvas)
-        println("mCurrentWeekNum:${mWeekNum} mStartScrollX:${mWeekStartX} mWidth:$mWidth")
         if (mWeekStartX.toInt() == mWidth + mPaddingStart.toInt()) {
             mWeekNum--
             mWeekStartX = 100f
@@ -88,13 +89,14 @@ class CalendarView : View {
     }
 
     private fun drawMonthText(canvas: Canvas?) {
+        mTextPaint.textAlign = Paint.Align.LEFT
         mCalendar.set(Calendar.WEEK_OF_YEAR, mWeekNum)
         mCalendar.set(Calendar.DAY_OF_WEEK, mCalendar.firstDayOfWeek)
         val date = mCalendar.time
         mTextPaint.textSize = 100f
         mTextPaint.typeface = resources.getFont(R.font.lobster_1_4)
         mTextPaint.color = resources.getColor(R.color.colorAccent)
-        canvas?.drawText(format.format(date), mPaddingStart, 200f, mTextPaint)
+        canvas?.drawText(format.format(date), mPaddingStart - 50, 200f, mTextPaint)
     }
 
     private fun drawIcon(canvas: Canvas?) {
@@ -109,9 +111,10 @@ class CalendarView : View {
     private val mWeekTexts = arrayOf("日", "一", "二", "三", "四", "五", "六")
 
     private fun drawWeekText(canvas: Canvas?) {
+        mTextPaint.textAlign = Paint.Align.CENTER
         mTextPaint.textSize = 50f
         mTextPaint.typeface = resources.getFont(R.font.fzlantingheis_db1_gb_regular)
-        mTextPaint.color = resources.getColor(R.color.colorPrimary)
+        mTextPaint.color = resources.getColor(R.color.text_black)
         canvas?.let {
             mWeekTexts.forEachIndexed { index: Int, s: String ->
                 it.drawText(s, mLabelStartX + (100 + mWeekSpace) * index, mWeekStartY, mTextPaint)
@@ -121,21 +124,18 @@ class CalendarView : View {
 
     private var mWeekNum = mCalendar.get(Calendar.WEEK_OF_YEAR)
 
-    private fun drawDateText(canvas: Canvas?) {
+    private fun drawDate(canvas: Canvas?) {
         var weeksInWeekYear = mCalendar.firstDayOfWeek
-        mTextPaint.textSize = 100f
-        mTextPaint.typeface = resources.getFont(R.font.lobster_1_4)
-        mTextPaint.color = resources.getColor(R.color.colorAccent)
+        mTextPaint.textSize = 60f
+        mTextPaint.typeface = resources.getFont(R.font.fzlantingheis_db1_gb_regular)
+        mTextPaint.color = resources.getColor(R.color.text_black)
         mCalendar.set(Calendar.WEEK_OF_YEAR, mWeekNum)
         (0..6).forEach { index ->
             mCalendar.set(Calendar.DAY_OF_WEEK, weeksInWeekYear + index)
             canvas?.let {
-                it.drawText(
-                    mCalendar.get(Calendar.DAY_OF_MONTH).toString(),
-                    mWeekStartX + (mPaddingStart + mWeekSpace) * index,
-                    mWeekStartY + 200,
-                    mTextPaint
-                )
+                val x = mWeekStartX + (mPaddingStart + mWeekSpace) * index
+                val y = mWeekStartY + 100
+                drawDataText(it, x, y)
             }
         }
 
@@ -144,12 +144,9 @@ class CalendarView : View {
         (0..6).forEach { index ->
             mCalendar.set(Calendar.DAY_OF_WEEK, weeksInWeekYear + (6 - index))
             canvas?.let {
-                it.drawText(
-                    mCalendar.get(Calendar.DAY_OF_MONTH).toString(),
-                    mWeekStartX - 200 - (mPaddingStart + mWeekSpace) * index - mPaddingEnd,
-                    mWeekStartY + 200,
-                    mTextPaint
-                )
+                val x = mWeekStartX - 200 - (mPaddingStart + mWeekSpace) * index - mPaddingEnd
+                val y = mWeekStartY + 100
+                drawDataText(it, x, y)
             }
         }
 
@@ -158,13 +155,26 @@ class CalendarView : View {
         (0..6).forEach { index ->
             mCalendar.set(Calendar.DAY_OF_WEEK, weeksInWeekYear + index)
             canvas?.let {
-                it.drawText(
-                    mCalendar.get(Calendar.DAY_OF_MONTH).toString(),
-                    mWeekStartX + mWidth + (mPaddingStart + mWeekSpace) * index,
-                    mWeekStartY + 200,
-                    mTextPaint
-                )
+                val x = mWeekStartX + mWidth + (mPaddingStart + mWeekSpace) * index
+                val y = mWeekStartY + 100
+                drawDataText(it, x, y)
             }
+        }
+    }
+
+    private fun drawDataText(canvas: Canvas, x: Float, y: Float) {
+        canvas.run {
+            mChoosePaint.color = resources.getColor(R.color.Yellow)
+            if (isTheSameDay(mCurrentDay, mCalendar.time)) {
+                drawCircle(x, y - 30, 60f, mChoosePaint)
+            }
+            mTextPaint.textAlign = Paint.Align.CENTER
+            drawText(
+                mCalendar.get(Calendar.DAY_OF_MONTH).toString(),
+                x,
+                y - 8,
+                mTextPaint
+            )
         }
     }
 
@@ -172,10 +182,12 @@ class CalendarView : View {
     private var mStartScrollY = 0f
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        println("event-->$event")
         mVelocityTracker.addMovement(event)
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 mStartScrollX = event.x
+                mDownX = event.x
                 mStartScrollY = event.y
             }
             MotionEvent.ACTION_MOVE -> {
@@ -187,97 +199,102 @@ class CalendarView : View {
                 }
             }
             MotionEvent.ACTION_UP -> {
-                mVelocityTracker.computeCurrentVelocity(
-                    1000,
-                    mConfiguration.scaledMaximumFlingVelocity.toFloat()
-                )
-                println("mVelocityTracker:${mVelocityTracker.xVelocity}")
-                if (abs(mWeekStartX) < mWidth / 2 && abs(mVelocityTracker.xVelocity) < 2000) {
-                    val start = mWeekStartX.toInt()
-                    mCalendar.set(Calendar.WEEK_OF_YEAR, mWeekNum)
-                    mCalendar.set(Calendar.DAY_OF_WEEK, mCalendar.firstDayOfWeek)
-                    GlobalScope.launch {
-                        withContext(Dispatchers.IO) {
-                            if (start > mPaddingStart) {
-                                (start downTo mPaddingStart.toInt() step 10).forEach {
-                                    mWeekStartX = it.toFloat()
-                                    delay(5)
-                                    postInvalidate()
-                                }
-                            } else if (start < mPaddingStart.toInt()) {
-                                (start..100 step 10).forEach {
-                                    mWeekStartX = it.toFloat()
-                                    delay(5)
-                                    postInvalidate()
-                                }
-                            }
-                            if (mWeekStartX.toInt() != mPaddingStart.toInt()) {
-                                mWeekStartX = mPaddingStart
-                                postInvalidate()
-                            }
-                        }
-                    }
-
+                val fl = (event.x - mDownX)
+                if (abs(fl) <= ViewConfiguration.get(mContext).scaledTouchSlop) {
+                    //点击事件
+                    println("点击事件")
                 } else {
-                    if (mWeekStartX > 0 || mVelocityTracker.xVelocity < 0) {
-                        val end = mWidth + mPaddingStart.toInt()
+                    mVelocityTracker.computeCurrentVelocity(
+                        1000,
+                        mConfiguration.scaledMaximumFlingVelocity.toFloat()
+                    )
+                    if (abs(mWeekStartX) < mWidth / 2 && abs(mVelocityTracker.xVelocity) < 2000) {
                         val start = mWeekStartX.toInt()
+                        mCalendar.set(Calendar.WEEK_OF_YEAR, mWeekNum)
+                        mCalendar.set(Calendar.DAY_OF_WEEK, mCalendar.firstDayOfWeek)
                         GlobalScope.launch {
                             withContext(Dispatchers.IO) {
-                                var delet = abs(start - end) / 200
-                                if(delet==0){
-                                    delet = 1
-                                }
-                                if (start > end) {
-                                    (start downTo end step delet * 10).forEach {
+                                if (start > mPaddingStart) {
+                                    (start downTo mPaddingStart.toInt() step 10).forEach {
                                         mWeekStartX = it.toFloat()
-                                        delay(10)
+                                        delay(5)
                                         postInvalidate()
                                     }
-                                } else if (start < end) {
-                                    (start..end step delet * 10).forEach {
+                                } else if (start < mPaddingStart.toInt()) {
+                                    (start..100 step 10).forEach {
                                         mWeekStartX = it.toFloat()
-                                        delay(10)
+                                        delay(5)
                                         postInvalidate()
                                     }
                                 }
-                                if (mWeekStartX.toInt() != end) {
-                                    mWeekStartX = end.toFloat()
+                                if (mWeekStartX.toInt() != mPaddingStart.toInt()) {
+                                    mWeekStartX = mPaddingStart
                                     postInvalidate()
                                 }
                             }
                         }
 
                     } else {
-                        val end = -mWidth + mPaddingStart.toInt()
-                        val start = mWeekStartX.toInt()
-                        GlobalScope.launch {
-                            withContext(Dispatchers.IO) {
-                                var delet = abs(start - end) / 200
-                                if(delet==0){
-                                    delet = 1
-                                }
-                                if (start > end) {
-                                    (start downTo end step delet * 10).forEach {
-                                        mWeekStartX = it.toFloat()
-                                        delay(10)
+                        if (mWeekStartX > 0 || mVelocityTracker.xVelocity < 0) {
+                            val end = mWidth + mPaddingStart.toInt()
+                            val start = mWeekStartX.toInt()
+                            GlobalScope.launch {
+                                withContext(Dispatchers.IO) {
+                                    var delet = abs(start - end) / 200
+                                    if (delet == 0) {
+                                        delet = 1
+                                    }
+                                    if (start > end) {
+                                        (start downTo end step delet * 10).forEach {
+                                            mWeekStartX = it.toFloat()
+                                            delay(10)
+                                            postInvalidate()
+                                        }
+                                    } else if (start < end) {
+                                        (start..end step delet * 10).forEach {
+                                            mWeekStartX = it.toFloat()
+                                            delay(10)
+                                            postInvalidate()
+                                        }
+                                    }
+                                    if (mWeekStartX.toInt() != end) {
+                                        mWeekStartX = end.toFloat()
                                         postInvalidate()
                                     }
-                                } else if (start < end) {
-                                    (start..end step delet * 10).forEach {
-                                        mWeekStartX = it.toFloat()
-                                        delay(10)
+                                }
+                            }
+
+                        } else {
+                            val end = -mWidth + mPaddingStart.toInt()
+                            val start = mWeekStartX.toInt()
+                            GlobalScope.launch {
+                                withContext(Dispatchers.IO) {
+                                    var delet = abs(start - end) / 200
+                                    if (delet == 0) {
+                                        delet = 1
+                                    }
+                                    if (start > end) {
+                                        (start downTo end step delet * 10).forEach {
+                                            mWeekStartX = it.toFloat()
+                                            delay(10)
+                                            postInvalidate()
+                                        }
+                                    } else if (start < end) {
+                                        (start..end step delet * 10).forEach {
+                                            mWeekStartX = it.toFloat()
+                                            delay(10)
+                                            postInvalidate()
+                                        }
+                                    }
+                                    if (mWeekStartX.toInt() != end) {
+                                        mWeekStartX = end.toFloat()
                                         postInvalidate()
                                     }
-                                }
-                                if (mWeekStartX.toInt() != end) {
-                                    mWeekStartX = end.toFloat()
-                                    postInvalidate()
                                 }
                             }
                         }
-                    }
 
+                    }
                 }
             }
 
@@ -292,6 +309,17 @@ class CalendarView : View {
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         mVelocityTracker.recycle()
+    }
+
+    private fun isTheSameDay(day1: Date, day2: Date): Boolean {
+        val calendar1 = Calendar.getInstance()
+        calendar1.time = day1
+        val calendar2 = Calendar.getInstance()
+        calendar2.time = day2
+        return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)
+                && calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)
+                && calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH)
+
     }
 
 
