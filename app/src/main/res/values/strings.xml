@@ -857,5 +857,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_calendar">漫日历</string>
     <string name="pictureFormate">%1$d:%2$d</string>
+    <string name="format_week">%1$d年第%2$d周</string>
 
 </resources>

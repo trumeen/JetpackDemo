@@ -3,6 +3,7 @@ package io.github.trumeen.weight
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.VelocityTracker
@@ -13,6 +14,7 @@ import io.github.trumeen.R
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.math.abs
 
 class CalendarView : View {
@@ -31,6 +33,7 @@ class CalendarView : View {
         }
     }
 
+    private var mChooseDate: Date?=null
     private var mDownX: Float = 0f
     private lateinit var mChoosePaint: Paint
     private var mContext: Context? = null
@@ -56,6 +59,8 @@ class CalendarView : View {
         initPaint()
         mVelocityTracker = VelocityTracker.obtain()
         mCurrentDay = mCalendar.time
+        mChooseDate = mCurrentDay
+
     }
 
     private fun initPaint() {
@@ -77,6 +82,7 @@ class CalendarView : View {
         drawIcon(canvas)
         drawDate(canvas)
         drawMonthText(canvas)
+        drawSelectDate()
         if (mWeekStartX.toInt() == mWidth + mPaddingStart.toInt()) {
             mWeekNum--
             mWeekStartX = 100f
@@ -124,17 +130,27 @@ class CalendarView : View {
 
     private var mWeekNum = mCalendar.get(Calendar.WEEK_OF_YEAR)
 
+    private val mItems = HashMap<Date,Rect>()
+
     private fun drawDate(canvas: Canvas?) {
         var weeksInWeekYear = mCalendar.firstDayOfWeek
         mTextPaint.textSize = 60f
         mTextPaint.typeface = resources.getFont(R.font.fzlantingheis_db1_gb_regular)
         mTextPaint.color = resources.getColor(R.color.text_black)
         mCalendar.set(Calendar.WEEK_OF_YEAR, mWeekNum)
+        mItems.clear()
         (0..6).forEach { index ->
             mCalendar.set(Calendar.DAY_OF_WEEK, weeksInWeekYear + index)
             canvas?.let {
                 val x = mWeekStartX + (mPaddingStart + mWeekSpace) * index
-                val y = mWeekStartY + 100
+                val y = mWeekStartY + 150
+                val rect = Rect(
+                    (x - 50 - mWeekSpace / 2).toInt(),
+                    (y - 100).toInt(),
+                    (x + 50 + mWeekSpace / 2).toInt(),
+                    (y + 50).toInt()
+                )
+                mItems[mCalendar.time] = rect
                 drawDataText(it, x, y)
             }
         }
@@ -145,7 +161,7 @@ class CalendarView : View {
             mCalendar.set(Calendar.DAY_OF_WEEK, weeksInWeekYear + (6 - index))
             canvas?.let {
                 val x = mWeekStartX - 200 - (mPaddingStart + mWeekSpace) * index - mPaddingEnd
-                val y = mWeekStartY + 100
+                val y = mWeekStartY + 150
                 drawDataText(it, x, y)
             }
         }
@@ -156,7 +172,7 @@ class CalendarView : View {
             mCalendar.set(Calendar.DAY_OF_WEEK, weeksInWeekYear + index)
             canvas?.let {
                 val x = mWeekStartX + mWidth + (mPaddingStart + mWeekSpace) * index
-                val y = mWeekStartY + 100
+                val y = mWeekStartY + 150
                 drawDataText(it, x, y)
             }
         }
@@ -166,7 +182,15 @@ class CalendarView : View {
         canvas.run {
             mChoosePaint.color = resources.getColor(R.color.Yellow)
             if (isTheSameDay(mCurrentDay, mCalendar.time)) {
+                mChoosePaint.color = resources.getColor(R.color.Yellow)
                 drawCircle(x, y - 30, 60f, mChoosePaint)
+            }else {
+                mChooseDate?.let {
+                    if(isTheSameDay(it,mCalendar.time)){
+                        mChoosePaint.color = resources.getColor(R.color.bg_blue)
+                        drawCircle(x, y - 30, 60f, mChoosePaint)
+                    }
+                }
             }
             mTextPaint.textAlign = Paint.Align.CENTER
             drawText(
@@ -176,6 +200,31 @@ class CalendarView : View {
                 mTextPaint
             )
         }
+    }
+
+    private fun drawSelectDate(){
+        mChooseDate?.let {
+            val calendar = Calendar.getInstance().apply {
+                time = mChooseDate
+            }
+            val weekString = String.format(
+                resources.getString(R.string.format_week),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.WEEK_OF_YEAR)
+            )
+            mTextPaint.textSize = 50f
+            mTextPaint.textAlign = Paint.Align.CENTER
+            mCanvas?.run {
+                drawText(weekString,mWidth/2f,mWeekStartY+350,mTextPaint)
+                mTextPaint.textSize = 400f
+                drawText(calendar.get(Calendar.DAY_OF_MONTH).toString(),mWidth/2f,mWeekStartY+700,mTextPaint)
+                mTextPaint.textSize = 100f
+                drawText(format.format(calendar.time), mWidth/2f, mWeekStartY+850, mTextPaint)
+            }
+
+
+        }
+
     }
 
     private var mStartScrollX = 0f
@@ -203,6 +252,13 @@ class CalendarView : View {
                 if (abs(fl) <= ViewConfiguration.get(mContext).scaledTouchSlop) {
                     //点击事件
                     println("点击事件")
+                    mItems.forEach { (t, u) ->
+                        if (u.contains(event.x.toInt(),event.y.toInt())){
+                            mChooseDate = t
+                            invalidate()
+                        }
+                    }
+
                 } else {
                     mVelocityTracker.computeCurrentVelocity(
                         1000,
