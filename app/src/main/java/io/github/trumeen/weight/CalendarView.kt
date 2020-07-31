@@ -31,9 +31,11 @@ class CalendarView : View {
             mScroller = Scroller(it)
             mConfiguration = ViewConfiguration.get(it)
         }
+        mVelocityTracker = VelocityTracker.obtain()
     }
 
-    private var mChooseDate: Date?=null
+    private var mSelectedListener: DateSelectedListener? = null
+    private var mChooseDate: Date? = null
     private var mDownX: Float = 0f
     private lateinit var mChoosePaint: Paint
     private var mContext: Context? = null
@@ -51,13 +53,12 @@ class CalendarView : View {
     private lateinit var mScroller: Scroller
     private val mPaddingStart = 100f
     private val mPaddingEnd = 100f
-    private var mVelocityTracker: VelocityTracker
+    private lateinit var mVelocityTracker: VelocityTracker
     private lateinit var mConfiguration: ViewConfiguration
     private val mCurrentDay: Date
 
     init {
         initPaint()
-        mVelocityTracker = VelocityTracker.obtain()
         mCurrentDay = mCalendar.time
         mChooseDate = mCurrentDay
 
@@ -130,7 +131,7 @@ class CalendarView : View {
 
     private var mWeekNum = mCalendar.get(Calendar.WEEK_OF_YEAR)
 
-    private val mItems = HashMap<Date,Rect>()
+    private val mItems = HashMap<Date, Rect>()
 
     private fun drawDate(canvas: Canvas?) {
         var weeksInWeekYear = mCalendar.firstDayOfWeek
@@ -184,9 +185,9 @@ class CalendarView : View {
             if (isTheSameDay(mCurrentDay, mCalendar.time)) {
                 mChoosePaint.color = resources.getColor(R.color.Yellow)
                 drawCircle(x, y - 30, 60f, mChoosePaint)
-            }else {
+            } else {
                 mChooseDate?.let {
-                    if(isTheSameDay(it,mCalendar.time)){
+                    if (isTheSameDay(it, mCalendar.time)) {
                         mChoosePaint.color = resources.getColor(R.color.bg_blue)
                         drawCircle(x, y - 30, 60f, mChoosePaint)
                     }
@@ -202,7 +203,7 @@ class CalendarView : View {
         }
     }
 
-    private fun drawSelectDate(){
+    private fun drawSelectDate() {
         mChooseDate?.let {
             val calendar = Calendar.getInstance().apply {
                 time = mChooseDate
@@ -215,11 +216,16 @@ class CalendarView : View {
             mTextPaint.textSize = 50f
             mTextPaint.textAlign = Paint.Align.CENTER
             mCanvas?.run {
-                drawText(weekString,mWidth/2f,mWeekStartY+350,mTextPaint)
+                drawText(weekString, mWidth / 2f, mWeekStartY + 350, mTextPaint)
                 mTextPaint.textSize = 400f
-                drawText(calendar.get(Calendar.DAY_OF_MONTH).toString(),mWidth/2f,mWeekStartY+700,mTextPaint)
+                drawText(
+                    calendar.get(Calendar.DAY_OF_MONTH).toString(),
+                    mWidth / 2f,
+                    mWeekStartY + 700,
+                    mTextPaint
+                )
                 mTextPaint.textSize = 100f
-                drawText(format.format(calendar.time), mWidth/2f, mWeekStartY+850, mTextPaint)
+                drawText(format.format(calendar.time), mWidth / 2f, mWeekStartY + 850, mTextPaint)
             }
 
 
@@ -232,7 +238,7 @@ class CalendarView : View {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         println("event-->$event")
-        mVelocityTracker.addMovement(event)
+        mVelocityTracker?.addMovement(event)
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 mStartScrollX = event.x
@@ -253,8 +259,9 @@ class CalendarView : View {
                     //点击事件
                     println("点击事件")
                     mItems.forEach { (t, u) ->
-                        if (u.contains(event.x.toInt(),event.y.toInt())){
+                        if (u.contains(event.x.toInt(), event.y.toInt())) {
                             mChooseDate = t
+                            mSelectedListener?.onSelected(t)
                             invalidate()
                         }
                     }
@@ -362,10 +369,21 @@ class CalendarView : View {
     }
 
 
+    fun setOnDateSelectedListener(listener: DateSelectedListener) {
+        mSelectedListener = listener
+    }
+
+
+    interface DateSelectedListener {
+        fun onSelected(date: Date)
+    }
+
+
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         mVelocityTracker.recycle()
     }
+
 
     private fun isTheSameDay(day1: Date, day2: Date): Boolean {
         val calendar1 = Calendar.getInstance()

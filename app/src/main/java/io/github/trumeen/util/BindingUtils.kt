@@ -22,10 +22,13 @@ import com.youth.banner.Banner
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.extension.toMinutes
+import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.main.SampleAdapter
 import io.github.trumeen.view.GridSpacingItemDecoration
 import io.github.trumeen.view.RoundedCornerCenterCrop
+import io.github.trumeen.weight.CalendarView
+import java.util.*
 
 
 object BindingUtils {
@@ -175,6 +178,19 @@ object BindingUtils {
             view.layoutParams as ConstraintLayout.LayoutParams
         params.dimensionRatio = setRatio
         view.layoutParams = params
+    }
+
+    @BindingAdapter("app:onSelectedDateChange")
+    @JvmStatic
+    fun setOnSelectedDateChange(view: CalendarView, viewModel: CalendarViewModel) {
+        view.setOnDateSelectedListener(object : CalendarView.DateSelectedListener {
+            override fun onSelected(date: Date) {
+                println("onSelected:${date.time}")
+                viewModel.getPagingData(date)
+            }
+
+        })
+
     }
 
 }

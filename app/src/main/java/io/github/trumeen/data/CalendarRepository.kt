@@ -7,17 +7,20 @@ import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.data.CalendarPageDataSource
 import io.github.trumeen.net.VideoApi
 import kotlinx.coroutines.flow.Flow
+import java.util.*
 
 class CalendarRepository(val api: VideoApi) {
+
 
     suspend fun getCalendarData(date: String): List<RecommendItemBean> {
         return api.getCalendarData(date).itemList
     }
 
-    fun getPageData(): Flow<PagingData<RecommendItemBean>> {
+    fun getPageData(date: Date): Flow<PagingData<RecommendItemBean>> {
+        println("CalendarRepository--->getPageData:${date.time}")
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = { CalendarPageDataSource(api) }
+            pagingSourceFactory = { CalendarPageDataSource(api, date) }
         ).flow
 
     }

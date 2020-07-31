@@ -8,8 +8,10 @@
 
 
     <io.github.trumeen.weight.CalendarView
+        android:id="@+id/calendar_view"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

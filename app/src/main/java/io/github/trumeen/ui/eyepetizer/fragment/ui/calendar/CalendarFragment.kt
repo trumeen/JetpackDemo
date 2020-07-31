@@ -2,18 +2,13 @@ package io.github.trumeen.ui.eyepetizer.fragment.ui.calendar
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.R
 import io.github.trumeen.ui.base.BaseVmFragment
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,8 +24,8 @@ class CalendarFragment : BaseVmFragment<CalendarViewModel>() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private val calendarAdapter = CalendarAdapter()
 
+    private lateinit var mCalendarAdapter: CalendarAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,19 +40,19 @@ class CalendarFragment : BaseVmFragment<CalendarViewModel>() {
     }
 
     override fun initData() {
+        mCalendarAdapter = CalendarAdapter(mViewModel)
+        recycler_view.run {
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            adapter = mCalendarAdapter
+        }
         lifecycleScope.launch {
-            mViewModel.getPagingData().collectLatest {
-                calendarAdapter.submitData(it)
+            mViewModel.getPagingData(Calendar.getInstance().time).collectLatest {
+                mCalendarAdapter.submitData(it)
             }
         }
     }
 
     override fun initView() {
-        recycler_view.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-
-        recycler_view.adapter = calendarAdapter
-
         iv_back.setOnClickListener {
             back()
         }
