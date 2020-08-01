@@ -14,6 +14,7 @@
         android:layout_height="wrap_content">
 
         <io.github.trumeen.weight.CalendarView
+            android:id="@+id/item_calendar_view"
             app:onSelectedDateChange="@{viewModel}"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_350"

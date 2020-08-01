@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.R
+import io.github.trumeen.databinding.ItemCalendarLayoutBinding
 import io.github.trumeen.ui.base.BaseVmFragment
+import io.github.trumeen.weight.CalendarView
 import kotlinx.android.synthetic.main.fragment_calendar.*
+import kotlinx.android.synthetic.main.item_calendar_layout.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
@@ -57,6 +60,7 @@ class CalendarFragment : BaseVmFragment<CalendarViewModel>() {
             back()
         }
     }
+
 
     companion object {
         /**

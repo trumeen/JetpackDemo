@@ -56,6 +56,7 @@ class CalendarView : View {
     private lateinit var mVelocityTracker: VelocityTracker
     private lateinit var mConfiguration: ViewConfiguration
     private val mCurrentDay: Date
+    private var mTouchArea: Rect = Rect()
 
     init {
         initPaint()
@@ -74,6 +75,7 @@ class CalendarView : View {
         mIconY = 100
         mWeekSpace = (measuredWidth - 200 - 700) / 6f
         mWidth = measuredWidth
+        mTouchArea.set(0, mWeekStartY.toInt(), mWidth, (mWeekStartY + 200).toInt())
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
@@ -236,136 +238,154 @@ class CalendarView : View {
     private var mStartScrollX = 0f
     private var mStartScrollY = 0f
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        println("event-->$event")
-        mVelocityTracker?.addMovement(event)
-        when (event?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                mStartScrollX = event.x
-                mDownX = event.x
-                mStartScrollY = event.y
-            }
-            MotionEvent.ACTION_MOVE -> {
-                val fl = (event.x - mStartScrollX)
-                if (abs(fl) > ViewConfiguration.get(mContext).scaledTouchSlop) {
-                    mWeekStartX -= fl
-                    mStartScrollX = event.x
-                    invalidate()
-                }
-            }
-            MotionEvent.ACTION_UP -> {
-                val fl = (event.x - mDownX)
-                if (abs(fl) <= ViewConfiguration.get(mContext).scaledTouchSlop) {
-                    //点击事件
-                    println("点击事件")
-                    mItems.forEach { (t, u) ->
-                        if (u.contains(event.x.toInt(), event.y.toInt())) {
-                            mChooseDate = t
-                            mSelectedListener?.onSelected(t)
-                            invalidate()
-                        }
-                    }
 
-                } else {
-                    mVelocityTracker.computeCurrentVelocity(
-                        1000,
-                        mConfiguration.scaledMaximumFlingVelocity.toFloat()
-                    )
-                    if (abs(mWeekStartX) < mWidth / 2 && abs(mVelocityTracker.xVelocity) < 2000) {
-                        val start = mWeekStartX.toInt()
-                        mCalendar.set(Calendar.WEEK_OF_YEAR, mWeekNum)
-                        mCalendar.set(Calendar.DAY_OF_WEEK, mCalendar.firstDayOfWeek)
-                        GlobalScope.launch {
-                            withContext(Dispatchers.IO) {
-                                if (start > mPaddingStart) {
-                                    (start downTo mPaddingStart.toInt() step 10).forEach {
-                                        mWeekStartX = it.toFloat()
-                                        delay(5)
-                                        postInvalidate()
-                                    }
-                                } else if (start < mPaddingStart.toInt()) {
-                                    (start..100 step 10).forEach {
-                                        mWeekStartX = it.toFloat()
-                                        delay(5)
-                                        postInvalidate()
-                                    }
-                                }
-                                if (mWeekStartX.toInt() != mPaddingStart.toInt()) {
-                                    mWeekStartX = mPaddingStart
-                                    postInvalidate()
-                                }
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event?.let {
+            mVelocityTracker.addMovement(event)
+            when (it.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    if (!mTouchArea.contains(event.x.toInt(), event.y.toInt())) {
+                        return false
+                    } else {
+                        parent.requestDisallowInterceptTouchEvent(true)
+                    }
+                    mStartScrollX = event.x
+                    mDownX = event.x
+                    mStartScrollY = event.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+
+                    val moveX = (event.x - mStartScrollX)
+                    val moveY = (event.y - mStartScrollY)
+                    if (abs(moveX) > ViewConfiguration.get(mContext).scaledTouchSlop) {
+                        mWeekStartX -= moveX
+                        mStartScrollX = event.x
+                        invalidate()
+                    }
+                }
+                MotionEvent.ACTION_UP -> {
+                    val fl = (event.x - mDownX)
+                    if (abs(fl) <= ViewConfiguration.get(mContext).scaledTouchSlop) {
+                        //点击事件
+                        println("点击事件")
+                        mItems.forEach { (t, u) ->
+                            if (u.contains(event.x.toInt(), event.y.toInt())) {
+                                mChooseDate = t
+                                mSelectedListener?.onSelected(t)
+                                invalidate()
                             }
                         }
 
                     } else {
-                        if (mWeekStartX > 0 || mVelocityTracker.xVelocity < 0) {
-                            val end = mWidth + mPaddingStart.toInt()
-                            val start = mWeekStartX.toInt()
-                            GlobalScope.launch {
-                                withContext(Dispatchers.IO) {
-                                    var delet = abs(start - end) / 200
-                                    if (delet == 0) {
-                                        delet = 1
-                                    }
-                                    if (start > end) {
-                                        (start downTo end step delet * 10).forEach {
-                                            mWeekStartX = it.toFloat()
-                                            delay(10)
-                                            postInvalidate()
-                                        }
-                                    } else if (start < end) {
-                                        (start..end step delet * 10).forEach {
-                                            mWeekStartX = it.toFloat()
-                                            delay(10)
-                                            postInvalidate()
-                                        }
-                                    }
-                                    if (mWeekStartX.toInt() != end) {
-                                        mWeekStartX = end.toFloat()
-                                        postInvalidate()
-                                    }
-                                }
-                            }
+                        mVelocityTracker.computeCurrentVelocity(
+                            1000,
+                            mConfiguration.scaledMaximumFlingVelocity.toFloat()
+                        )
+                        if (abs(mWeekStartX) < mWidth / 2 && abs(mVelocityTracker.xVelocity) < 2000) {
+                            moveBack()
 
                         } else {
-                            val end = -mWidth + mPaddingStart.toInt()
-                            val start = mWeekStartX.toInt()
-                            GlobalScope.launch {
-                                withContext(Dispatchers.IO) {
-                                    var delet = abs(start - end) / 200
-                                    if (delet == 0) {
-                                        delet = 1
-                                    }
-                                    if (start > end) {
-                                        (start downTo end step delet * 10).forEach {
-                                            mWeekStartX = it.toFloat()
-                                            delay(10)
+                            if (mWeekStartX > 0 || mVelocityTracker.xVelocity < 0) {
+                                val end = mWidth + mPaddingStart.toInt()
+                                val start = mWeekStartX.toInt()
+                                GlobalScope.launch {
+                                    withContext(Dispatchers.IO) {
+                                        var delet = abs(start - end) / 200
+                                        if (delet == 0) {
+                                            delet = 1
+                                        }
+                                        if (start > end) {
+                                            (start downTo end step delet * 10).forEach {
+                                                mWeekStartX = it.toFloat()
+                                                delay(10)
+                                                postInvalidate()
+                                            }
+                                        } else if (start < end) {
+                                            (start..end step delet * 10).forEach {
+                                                mWeekStartX = it.toFloat()
+                                                delay(10)
+                                                postInvalidate()
+                                            }
+                                        }
+                                        if (mWeekStartX.toInt() != end) {
+                                            mWeekStartX = end.toFloat()
                                             postInvalidate()
                                         }
-                                    } else if (start < end) {
-                                        (start..end step delet * 10).forEach {
-                                            mWeekStartX = it.toFloat()
-                                            delay(10)
+                                    }
+                                }
+
+                            } else {
+                                val end = -mWidth + mPaddingStart.toInt()
+                                val start = mWeekStartX.toInt()
+                                GlobalScope.launch {
+                                    withContext(Dispatchers.IO) {
+                                        var delet = abs(start - end) / 200
+                                        if (delet == 0) {
+                                            delet = 1
+                                        }
+                                        if (start > end) {
+                                            (start downTo end step delet * 10).forEach {
+                                                mWeekStartX = it.toFloat()
+                                                delay(10)
+                                                postInvalidate()
+                                            }
+                                        } else if (start < end) {
+                                            (start..end step delet * 10).forEach {
+                                                mWeekStartX = it.toFloat()
+                                                delay(10)
+                                                postInvalidate()
+                                            }
+                                        }
+                                        if (mWeekStartX.toInt() != end) {
+                                            mWeekStartX = end.toFloat()
                                             postInvalidate()
                                         }
-                                    }
-                                    if (mWeekStartX.toInt() != end) {
-                                        mWeekStartX = end.toFloat()
-                                        postInvalidate()
                                     }
                                 }
                             }
-                        }
 
+                        }
                     }
                 }
-            }
 
-            MotionEvent.ACTION_CANCEL -> {
-                println("ACTION_CANCEL")
+                MotionEvent.ACTION_CANCEL -> {
+                    println("ACTION_CANCEL")
+                }
+            }
+            return true
+        }
+        return false
+    }
+
+    private fun moveBack() {
+        val start = mWeekStartX.toInt()
+        mCalendar.set(Calendar.WEEK_OF_YEAR, mWeekNum)
+        mCalendar.set(Calendar.DAY_OF_WEEK, mCalendar.firstDayOfWeek)
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                if (start > mPaddingStart) {
+                    (start downTo mPaddingStart.toInt() step 10).forEach {
+                        mWeekStartX = it.toFloat()
+                        delay(5)
+                        postInvalidate()
+                    }
+                } else if (start < mPaddingStart.toInt()) {
+                    (start..100 step 10).forEach {
+                        mWeekStartX = it.toFloat()
+                        delay(5)
+                        postInvalidate()
+                    }
+                }
+                if (mWeekStartX.toInt() != mPaddingStart.toInt()) {
+                    mWeekStartX = mPaddingStart
+                    postInvalidate()
+                }
             }
         }
-        return true
+    }
+
+    fun release(){
+        mVelocityTracker.recycle()
     }
 
 
@@ -376,12 +396,6 @@ class CalendarView : View {
 
     interface DateSelectedListener {
         fun onSelected(date: Date)
-    }
-
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        mVelocityTracker.recycle()
     }
 
 
