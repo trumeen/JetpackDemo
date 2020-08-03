@@ -39,13 +39,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:src="@drawable/icon_ugc_video"
+                    app:srcLoacal="@{recommendItem.data.content.data.urls}"
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_marginEnd="@dimen/dp_5"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -93,8 +94,8 @@
             app:layout_constraintTop_toTopOf="@id/iv_favorites"
             app:layout_constraintBottom_toBottomOf="@id/iv_favorites"
             app:layout_constraintEnd_toStartOf="@id/iv_favorites"
-            android:layout_width="wrap_content"
             android:layout_marginEnd="@dimen/dp_5"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <ImageView

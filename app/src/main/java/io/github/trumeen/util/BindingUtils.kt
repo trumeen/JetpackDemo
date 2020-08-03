@@ -22,6 +22,7 @@ import com.youth.banner.Banner
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.extension.toMinutes
+import io.github.trumeen.extension.visible
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.main.SampleAdapter
@@ -189,6 +190,17 @@ object BindingUtils {
 
         })
 
+    }
+
+    @BindingAdapter("app:srcLoacal")
+    @JvmStatic
+    fun setLocalSrc(view: ImageView, dates: List<Any>) {
+        if (dates.size > 1) {
+            view.visible(true)
+            view.setImageResource(R.drawable.muti_pic)
+        } else {
+            view.visible(false)
+        }
     }
 
 }

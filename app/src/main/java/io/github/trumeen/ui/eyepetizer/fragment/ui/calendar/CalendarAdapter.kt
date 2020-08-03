@@ -131,7 +131,7 @@ class CalendarAdapter(val viewModel: CalendarViewModel) :
             UGC_PICTURE_BEAN, Pair(
                 DataBindingUtil.inflate<ViewDataBinding>(
                     LayoutInflater.from(parent.context),
-                    R.layout.item_recommend_ugc_video_layout,
+                    R.layout.item_recommend_ugc_picture_layout,
                     parent,
                     false
                 ), BR.recommendItem
