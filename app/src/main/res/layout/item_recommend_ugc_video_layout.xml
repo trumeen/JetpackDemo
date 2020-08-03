@@ -48,6 +48,8 @@
             android:id="@+id/tv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:text="@{recommendItem.data.content.data.description}"
             android:textSize="@dimen/dp_12"
             app:layout_constraintStart_toStartOf="parent"

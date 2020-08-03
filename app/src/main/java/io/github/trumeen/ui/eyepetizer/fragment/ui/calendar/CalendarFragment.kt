@@ -47,6 +47,7 @@ class CalendarFragment : BaseVmFragment<CalendarViewModel>() {
         recycler_view.run {
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapter = mCalendarAdapter
+            mViewModel.setAdapter(mCalendarAdapter)
         }
         lifecycleScope.launch {
             mViewModel.getPagingData(Calendar.getInstance().time).collectLatest {

@@ -173,7 +173,6 @@ object BindingUtils {
         if (map[0] / map[1].toFloat() >= 1.8) {
             setRatio = "1:1"
         }
-        println("setRatio:$setRatio")
         val params =
             view.layoutParams as ConstraintLayout.LayoutParams
         params.dimensionRatio = setRatio
@@ -185,8 +184,7 @@ object BindingUtils {
     fun setOnSelectedDateChange(view: CalendarView, viewModel: CalendarViewModel) {
         view.setOnDateSelectedListener(object : CalendarView.DateSelectedListener {
             override fun onSelected(date: Date) {
-                println("onSelected:${date.time}")
-                viewModel.getPagingData(date)
+                viewModel.refreshData(date)
             }
 
         })

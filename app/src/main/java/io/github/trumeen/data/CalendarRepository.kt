@@ -11,6 +11,7 @@ import java.util.*
 
 class CalendarRepository(val api: VideoApi) {
 
+    private lateinit var mCalendarPageDataSource: CalendarPageDataSource
 
     suspend fun getCalendarData(date: String): List<RecommendItemBean> {
         return api.getCalendarData(date).itemList
@@ -18,10 +19,15 @@ class CalendarRepository(val api: VideoApi) {
 
     fun getPageData(date: Date): Flow<PagingData<RecommendItemBean>> {
         println("CalendarRepository--->getPageData:${date.time}")
+//        mCalendarPageDataSource = CalendarPageDataSource(api, date)
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { CalendarPageDataSource(api, date) }
         ).flow
 
+    }
+
+    fun refreshDate(date: Date){
+        CalendarPageDataSource.setRefreshKey(date)
     }
 }

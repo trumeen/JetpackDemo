@@ -19,6 +19,14 @@ class CalendarViewModel : BaseViewModel() {
 
     var mCalendarData: MutableLiveData<ArrayList<RecommendItemBean>> = MutableLiveData()
 
+    private lateinit var mAdapter: CalendarAdapter
+
+    private lateinit var mChooseDate: Date
+
+
+    fun setAdapter(adapter: CalendarAdapter) {
+        mAdapter = adapter
+    }
 
     init {
         mCalendarData.value = ArrayList()
@@ -35,7 +43,8 @@ class CalendarViewModel : BaseViewModel() {
     }
 
     fun getPagingData(date: Date): Flow<PagingData<UiModel>> {
-        return repository.getPageData(date).map { pagingDate ->
+        mChooseDate = date
+        return repository.getPageData(mChooseDate).map { pagingDate ->
             pagingDate.map {
                 UiModel.RecommendItem(it)
             }
@@ -53,6 +62,11 @@ class CalendarViewModel : BaseViewModel() {
             }
         }
 
+    }
+
+    fun refreshData(date: Date) {
+        repository.refreshDate(date)
+        mAdapter.refresh()
     }
 
 
