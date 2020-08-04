@@ -13,6 +13,7 @@ import io.github.trumeen.ui.main.SampleAdapter
 
 open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA_COMPARATOR) {
 
+
     val TEXT_CARD = 0
     val FOLLOW_CARD = 1
     val BANNER = 2
@@ -33,7 +34,8 @@ open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>
     val VIDEO_BEAN_FOR_CLIENT = 17
     val UGC_VIDEO_BEAN = 17
     val UGC_PICTURE_BEAN = 18
-
+    val ITEM_COLLECTION = 19
+    val AUTO_PLAY_FOLLOWCARD = 20
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -249,6 +251,24 @@ open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>
             )
         )
 
+        addType(
+            ITEM_COLLECTION, Pair(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_item_collection_layout, parent, false
+                ), BR.recommendItem
+            )
+        )
+
+        addType(
+            AUTO_PLAY_FOLLOWCARD, Pair(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_auto_play_followcard_layout, parent, false
+                ), BR.recommendItem
+            )
+        )
+
         return super.onCreateViewHolder(parent, viewType)
     }
 
@@ -283,7 +303,14 @@ open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>
                         else -> BRIEF_CARD
                     }
                 }
-                "horizontalScrollCard" -> HORIZONTAL_SCROLL_CARD
+                "horizontalScrollCard" -> {
+                    when (data.dataType) {
+                        "ItemCollection" -> ITEM_COLLECTION
+                        "HorizontalScrollCard"
+                        -> HORIZONTAL_SCROLL_CARD
+                        else -> HORIZONTAL_SCROLL_CARD
+                    }
+                }
                 "specialSquareCardCollection" -> SPECIAL_SQUARE_CARD_COLLECTION
                 "columnCardList" -> COLUMN_CARD_LIST
                 "roamingCalendarDailyCard" -> ROAMING_CALENDAR_DAILY_CARD
@@ -301,6 +328,7 @@ open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>
                         else -> TEXT_CARD
                     }
                 }
+                "autoPlayFollowCard"->AUTO_PLAY_FOLLOWCARD
                 else -> TEXT_CARD
             }
         }

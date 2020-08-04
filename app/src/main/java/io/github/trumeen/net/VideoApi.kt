@@ -3,6 +3,7 @@ package io.github.trumeen.net
 import com.blankj.utilcode.util.PathUtils
 import io.github.trumeen.BuildConfig
 import io.github.trumeen.bean.RecommendBean
+import io.github.trumeen.bean.TabInfoBean
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -83,6 +84,19 @@ interface VideoApi {
     suspend fun getCalendarNextData(
         @Url url: String
     ): RecommendBean
+
+
+    @GET("")
+    suspend fun getCommunityNextData(@Url url: String): RecommendBean
+
+    @GET("")
+    suspend fun getCommunityData(
+        @Url url: String,
+        @Query("refreshCount") refreshCount: Int = 0
+    ): RecommendBean
+
+    @GET("v7/community/tab/list")
+    suspend fun getCommunityTabs(): TabInfoBean
 
 
 }

@@ -18,9 +18,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.chad.library.BR
+import com.google.android.exoplayer2.SeekParameters
+import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.youth.banner.Banner
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
+import io.github.trumeen.extension.load
 import io.github.trumeen.extension.toMinutes
 import io.github.trumeen.extension.visible
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
@@ -28,7 +32,10 @@ import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.main.SampleAdapter
 import io.github.trumeen.view.GridSpacingItemDecoration
 import io.github.trumeen.view.RoundedCornerCenterCrop
+import io.github.trumeen.weight.AutoPlayVideoPlayer
 import io.github.trumeen.weight.CalendarView
+import kotlinx.android.synthetic.main.activity_video_player.*
+import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 import java.util.*
 
 
@@ -201,6 +208,36 @@ object BindingUtils {
         } else {
             view.visible(false)
         }
+    }
+
+    @BindingAdapter("app:bindVideoPlayUrl", "app:bindVideoCover")
+    @JvmStatic
+    fun setVideoInfo(video: AutoPlayVideoPlayer, playUrl: String, coverUrl: String) {
+        println("setVideoInfo playUrl:$playUrl coverUrl:$coverUrl")
+        val imageView = ImageView(video.context)
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        imageView.load(coverUrl)
+        val gsyVideoOption = GSYVideoOptionBuilder()
+        gsyVideoOption.setThumbImageView(imageView)
+            .setIsTouchWiget(true)
+            .setRotateViewAuto(false)
+            .setLockLand(false)
+            .setAutoFullWithSize(false)
+            .setShowFullAnimation(false)
+            .setNeedLockFull(true)
+            .setUrl(playUrl)
+            .setVideoTitle("")
+            .setCacheWithPlay(false)
+            .setVideoAllCallBack(object : GSYSampleCallBack() {
+                override fun onPrepared(url: String?, vararg objects: Any?) {
+                    super.onPrepared(url, *objects)
+                    if (video.gsyVideoManager.player is Exo2PlayerManager) {
+                        (video.gsyVideoManager
+                            .player as Exo2PlayerManager).setSeekParameter(SeekParameters.NEXT_SYNC)
+                    }
+                }
+            }).build(video)
+
     }
 
 }

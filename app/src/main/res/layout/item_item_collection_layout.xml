@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="recommendItem"
+            type="io.github.trumeen.bean.RecommendItemBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_10">
+
+
+        <ImageView
+            app:radius="@{@dimen/dp_4}"
+            android:id="@+id/iv_left"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_80"
+            app:imgUrl="@{recommendItem.data.itemList.get(0).data.bgPicture}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_right"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{recommendItem.data.itemList.get(0).data.title}"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_18"
+            app:layout_constraintBottom_toTopOf="@id/tv_subtitle"
+            app:layout_constraintEnd_toEndOf="@id/iv_left"
+            app:layout_constraintStart_toStartOf="@id/iv_left"
+            app:layout_constraintTop_toTopOf="@id/iv_left"
+            tools:text="@string/refresh_recommend" />
+
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{recommendItem.data.itemList.get(0).data.title}"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_15"
+            app:layout_constraintBottom_toBottomOf="@id/iv_left"
+            app:layout_constraintEnd_toEndOf="@id/iv_left"
+            app:layout_constraintStart_toStartOf="@id/iv_left"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="@string/refresh_recommend" />
+
+        <ImageView
+            app:radius="@{@dimen/dp_4}"
+            android:id="@+id/iv_right"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_80"
+            android:layout_marginStart="@dimen/dp_10"
+            app:imgUrl="@{recommendItem.data.itemList.get(1).data.bgPicture}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{recommendItem.data.itemList.get(0).data.title}"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_18"
+            app:layout_constraintBottom_toTopOf="@id/tv_subtitle2"
+            app:layout_constraintEnd_toEndOf="@id/iv_right"
+            app:layout_constraintStart_toStartOf="@id/iv_right"
+            app:layout_constraintTop_toTopOf="@id/iv_right"
+            tools:text="@string/refresh_recommend" />
+
+        <TextView
+            android:id="@+id/tv_subtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{recommendItem.data.itemList.get(0).data.title}"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_15"
+            app:layout_constraintBottom_toBottomOf="@id/iv_right"
+            app:layout_constraintEnd_toEndOf="@id/iv_right"
+            app:layout_constraintStart_toStartOf="@id/iv_right"
+            app:layout_constraintTop_toBottomOf="@id/tv_title2"
+            tools:text="@string/refresh_recommend" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
