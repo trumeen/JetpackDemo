@@ -50,10 +50,8 @@ object BindingUtils {
         placeholder: Drawable? = null
     ) {
         if (TextUtils.isEmpty(url)) {
-            println("img url is empty")
             return
         }
-
         imageView.load(url) {
             placeholder?.let {
                 placeholder(it)
@@ -104,8 +102,6 @@ object BindingUtils {
             banner.setBannerGalleryEffect(10, 5, 1f)
             banner.isAutoLoop(false)
             banner.adapter = ImageBannerAdapter(datas)
-        } else {
-            println("已设置adapter")
         }
 
     }
@@ -133,10 +129,7 @@ object BindingUtils {
                 date, R.layout.item_square_card_layout,
                 BR.recommendItem
             )
-        } else {
-            println("已设置adapter")
         }
-
     }
 
     @BindingAdapter("app:bindCollectionGrid")
@@ -156,8 +149,6 @@ object BindingUtils {
                 date, R.layout.item_collection_card_layout,
                 BR.recommendItem
             )
-        } else {
-            println("已设置adapter")
         }
 
     }
@@ -165,10 +156,11 @@ object BindingUtils {
     @BindingAdapter("app:gotoPage")
     @JvmStatic
     fun goToPage(view: View, url: String?) {
-        if (url.isNullOrEmpty()) {
-            return
+        view.setOnClickListener {
+            if (!url.isNullOrEmpty()) {
+                view.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }
         }
-        view.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
     @BindingAdapter("layout_constraintDimensionRatio")
@@ -213,7 +205,6 @@ object BindingUtils {
     @BindingAdapter("app:bindVideoPlayUrl", "app:bindVideoCover")
     @JvmStatic
     fun setVideoInfo(video: AutoPlayVideoPlayer, playUrl: String, coverUrl: String) {
-        println("setVideoInfo playUrl:$playUrl coverUrl:$coverUrl")
         val imageView = ImageView(video.context)
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         imageView.load(coverUrl)

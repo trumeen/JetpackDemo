@@ -14,6 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.eyepetizer.WebViewActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="webview"
+                    android:scheme="eyepetizer" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.eyepetizer.video.VideoPlayerActivity"
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
@@ -30,9 +46,7 @@
                     android:scheme="eyepetizer" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" >
-
-        </activity>
+        <activity android:name=".ui.MainActivity"></activity>
         <activity android:name=".ui.MainActivity2" />
         <activity android:name=".ui.eyepetizer.EyepettizerMainActivity">
             <intent-filter>

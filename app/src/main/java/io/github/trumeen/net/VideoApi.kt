@@ -2,6 +2,7 @@ package io.github.trumeen.net
 
 import com.blankj.utilcode.util.PathUtils
 import io.github.trumeen.BuildConfig
+import io.github.trumeen.bean.MessageListBean
 import io.github.trumeen.bean.RecommendBean
 import io.github.trumeen.bean.TabInfoBean
 import okhttp3.Cache
@@ -98,5 +99,10 @@ interface VideoApi {
     @GET("v7/community/tab/list")
     suspend fun getCommunityTabs(): TabInfoBean
 
+    @GET("v3/messages")
+    suspend fun getMessageData(): MessageListBean
+
+    @GET("")
+    suspend fun getMessageNextData(@Url url: String): MessageListBean
 
 }

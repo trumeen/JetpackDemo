@@ -13,8 +13,8 @@ android {
         applicationId "io.github.trumeen"
         minSdkVersion 26
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 580
+        versionName "6.1.580"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

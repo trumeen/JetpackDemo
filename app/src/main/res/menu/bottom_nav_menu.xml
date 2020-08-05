@@ -12,13 +12,9 @@
         android:title="@string/menu_community" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/select_ic_tab_strip_icon_category"
-        android:title="@string/title_dashboard" />
-
-    <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/select_ic_tab_strip_icon_profile"
         android:title="@string/title_notifications" />
+
 
 </menu>
