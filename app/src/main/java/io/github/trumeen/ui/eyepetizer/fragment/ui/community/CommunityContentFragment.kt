@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.R
 import io.github.trumeen.ui.base.BaseVmFragment
+import io.github.trumeen.ui.eyepetizer.EyepettizerMainActivity
+import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.RecommendPagingAdapter
 import kotlinx.android.synthetic.main.fragment_community_content.*
 import kotlinx.coroutines.flow.collectLatest
@@ -23,7 +26,7 @@ private const val ARG_PARAM1 = "param1"
  * Use the [CommunityContentFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CommunityContentFragment : BaseVmFragment<CommunityViewModel>() {
+class CommunityContentFragment : BaseVmFragment<EyepettizerViewModel>() {
     // TODO: Rename and change types of parameters
     private lateinit var mApiUrl: String
 
@@ -74,16 +77,12 @@ class CommunityContentFragment : BaseVmFragment<CommunityViewModel>() {
 
     }
 
+    override fun initViewModel() {
+        mViewModel = ViewModelProvider(activity as EyepettizerMainActivity).get(viewModelClass())
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param url Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CommunityContentFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(url: String) =
             CommunityContentFragment().apply {
@@ -93,7 +92,7 @@ class CommunityContentFragment : BaseVmFragment<CommunityViewModel>() {
             }
     }
 
-    override fun viewModelClass(): Class<CommunityViewModel> {
-        return CommunityViewModel::class.java
+    override fun viewModelClass(): Class<EyepettizerViewModel> {
+        return EyepettizerViewModel::class.java
     }
 }

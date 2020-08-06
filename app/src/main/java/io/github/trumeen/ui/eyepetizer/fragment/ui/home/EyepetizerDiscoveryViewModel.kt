@@ -9,7 +9,7 @@ import io.github.trumeen.ui.base.BaseViewModel
 class EyepetizerDiscoveryViewModel : BaseViewModel() {
     val itemDataSet = MutableLiveData<ObservableArrayList<RecommendItemBean>>()
 
-    fun getData() {
+    fun getDiscoveryData() {
 
         launch(block = {
             val recommendList = VideoApi.get("http://baobab.kaiyanapp.com/api/v5/")

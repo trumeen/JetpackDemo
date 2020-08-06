@@ -1,14 +1,10 @@
 package io.github.trumeen.ui.eyepetizer.fragment.ui.notifications
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import io.github.trumeen.bean.Message
 import io.github.trumeen.data.MessageRepository
 import io.github.trumeen.data.NotificationUiModel
-import io.github.trumeen.data.UiModel
 import io.github.trumeen.net.VideoApi
 import io.github.trumeen.ui.base.BaseViewModel
 import io.github.trumeen.ui.eyepetizer.video.EYEPETTIZER_BASE_URL
@@ -18,7 +14,7 @@ import java.text.SimpleDateFormat
 
 class NotificationsViewModel : BaseViewModel() {
 
-    private val mRepository = MessageRepository(VideoApi.get(EYEPETTIZER_BASE_URL))
+   /* private val mRepository = MessageRepository(VideoApi.get(EYEPETTIZER_BASE_URL))
 
     fun getMessageList(): Flow<PagingData<NotificationUiModel>> {
         return mRepository.getMessageList().map { pagingDate ->
@@ -48,7 +44,7 @@ class NotificationsViewModel : BaseViewModel() {
                 null
             }
         }
-    }
+    }*/
 }
 
 fun Long.toWeekString(): String {

@@ -1,7 +1,5 @@
 package io.github.trumeen.ui.eyepetizer.fragment.ui.community
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.bean.Tab
@@ -13,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 class CommunityViewModel : BaseViewModel() {
 
-    private var mRepository = CommunityRepository(VideoApi.get(EYEPETTIZER_BASE_URL))
+    /*private var mRepository = CommunityRepository(VideoApi.get(EYEPETTIZER_BASE_URL))
 
     fun getCommunityData(url:String): Flow<PagingData<RecommendItemBean>> {
         return mRepository.getCommunityData(url)
@@ -22,6 +20,6 @@ class CommunityViewModel : BaseViewModel() {
 
     suspend fun getTabs(): List<Tab> {
         return mRepository.getCommunityTabs()
-    }
+    }*/
 
 }

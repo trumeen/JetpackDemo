@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 class EyepetizerRecommendViewModel : BaseViewModel() {
 
     val itemDataSet = MutableLiveData<ObservableArrayList<RecommendItemBean>>()
-    val repository = HomePageRepository(VideoApi.get("http://baobab.kaiyanapp.com/api/v5/"))
+//    val repository = HomePageRepository(VideoApi.get("http://baobab.kaiyanapp.com/api/v5/"))
 
     fun getData() {
         launch(block = {
@@ -25,7 +25,7 @@ class EyepetizerRecommendViewModel : BaseViewModel() {
 
     }
 
-    fun getPagingData(url:String): Flow<PagingData<RecommendItemBean>> {
+    /*fun getRecommendPagingData(url:String): Flow<PagingData<RecommendItemBean>> {
         return repository.getPageData(url)
-    }
+    }*/
 }

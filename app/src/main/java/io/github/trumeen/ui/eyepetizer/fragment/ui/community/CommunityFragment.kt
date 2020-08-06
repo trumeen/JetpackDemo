@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -13,6 +14,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.trumeen.R
 import io.github.trumeen.ui.base.BaseVmFragment
+import io.github.trumeen.ui.eyepetizer.EyepettizerMainActivity
+import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.DailyFragment
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.DiscoveryFragment
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.RecommendFragment
@@ -24,10 +27,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.withContext
 
-class CommunityFragment : BaseVmFragment<CommunityViewModel>() {
+class CommunityFragment : BaseVmFragment<EyepettizerViewModel>() {
 
-    override fun viewModelClass(): Class<CommunityViewModel> {
-        return CommunityViewModel::class.java
+    override fun viewModelClass(): Class<EyepettizerViewModel> {
+        return EyepettizerViewModel::class.java
     }
 
     override fun onCreateView(
@@ -36,6 +39,10 @@ class CommunityFragment : BaseVmFragment<CommunityViewModel>() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_community, container, false)
+    }
+
+    override fun initViewModel() {
+        mViewModel = ViewModelProvider(activity as EyepettizerMainActivity).get(viewModelClass())
     }
 
     override fun initData() {
@@ -63,8 +70,5 @@ class CommunityFragment : BaseVmFragment<CommunityViewModel>() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
 
 }

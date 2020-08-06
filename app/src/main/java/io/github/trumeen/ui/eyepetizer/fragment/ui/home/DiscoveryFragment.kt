@@ -2,18 +2,19 @@ package io.github.trumeen.ui.eyepetizer.fragment.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ObservableArrayList
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.ViewModelProvider
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.base.BaseVmFragment
+import io.github.trumeen.ui.eyepetizer.EyepettizerMainActivity
+import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
 import kotlinx.android.synthetic.main.fragment_discovery.*
 
 
-class DiscoveryFragment : BaseVmFragment<EyepetizerDiscoveryViewModel>() {
+class DiscoveryFragment : BaseVmFragment<EyepettizerViewModel>() {
 
     var sampleAdapter: RecommendAdapter<RecommendItemBean>? = null
 
@@ -28,15 +29,16 @@ class DiscoveryFragment : BaseVmFragment<EyepetizerDiscoveryViewModel>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mViewModel.itemDataSet.value = ObservableArrayList()
-
         sampleAdapter = RecommendAdapter(
             mViewModel.itemDataSet.value!!
         )
         recycler_view.adapter = sampleAdapter
+        mViewModel.getDiscoveryData()
 
-        mViewModel.getData()
+    }
 
+    override fun initViewModel() {
+        mViewModel = ViewModelProvider(activity as EyepettizerMainActivity).get(viewModelClass())
     }
 
     override fun onDestroy() {
@@ -53,8 +55,8 @@ class DiscoveryFragment : BaseVmFragment<EyepetizerDiscoveryViewModel>() {
                 }
     }
 
-    override fun viewModelClass(): Class<EyepetizerDiscoveryViewModel> {
+    override fun viewModelClass(): Class<EyepettizerViewModel> {
 
-        return EyepetizerDiscoveryViewModel::class.java
+        return EyepettizerViewModel::class.java
     }
 }
