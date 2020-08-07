@@ -3,7 +3,7 @@ package io.github.trumeen.ui.eyepetizer.fragment.ui.community
 import android.view.ViewGroup
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.RecommendPagingAdapter
-import io.github.trumeen.ui.main.SampleAdapter
+import io.github.trumeen.ui.base.SampleAdapter
 
 class CommunityAdapter : RecommendPagingAdapter() {
 

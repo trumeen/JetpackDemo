@@ -8,8 +8,8 @@ import androidx.databinding.ViewDataBinding
 import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
-import io.github.trumeen.ui.main.MultipleTypeAdapter
-import io.github.trumeen.ui.main.SampleAdapter
+import io.github.trumeen.ui.base.MultipleTypeAdapter
+import io.github.trumeen.ui.base.SampleAdapter
 
 open class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
         MultipleTypeAdapter<RecommendItemBean>(mDatas) {

@@ -1,9 +1,6 @@
 package io.github.trumeen
 
 import android.app.Application
-import android.content.Context
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import com.blankj.utilcode.util.AppUtils
 import io.github.trumeen.common.ActivityLifecycleCallbacksAdapter
 import io.github.trumeen.util.core.ActivityManager

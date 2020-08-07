@@ -9,7 +9,7 @@ import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.data.NotificationUiModel
 import io.github.trumeen.ui.base.MultipleTypePagingAdapter
-import io.github.trumeen.ui.main.SampleAdapter
+import io.github.trumeen.ui.base.SampleAdapter
 
 class NotificationAdapter : MultipleTypePagingAdapter<NotificationUiModel>(DATA_COMPARATOR) {
 

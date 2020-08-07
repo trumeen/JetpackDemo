@@ -9,7 +9,7 @@ import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.base.MultipleTypePagingAdapter
-import io.github.trumeen.ui.main.SampleAdapter
+import io.github.trumeen.ui.base.SampleAdapter
 
 open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA_COMPARATOR) {
 

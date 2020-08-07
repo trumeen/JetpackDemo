@@ -6,14 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
 import androidx.databinding.ViewDataBinding
-import com.chad.library.BR
 import com.youth.banner.adapter.BannerAdapter
+import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
-import io.github.trumeen.ui.main.SampleAdapter
+import io.github.trumeen.ui.base.SampleAdapter
 
 class ImageBannerAdapter(var datas:ObservableArrayList<RecommendItemBean>):
-    BannerAdapter<RecommendItemBean,SampleAdapter.SampleViewHolder>(datas) {
+    BannerAdapter<RecommendItemBean, SampleAdapter.SampleViewHolder>(datas) {
 
     private val viewHolders: MutableList<SampleAdapter.SampleViewHolder> = mutableListOf()
 

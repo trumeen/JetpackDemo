@@ -14,8 +14,6 @@ import kotlin.random.Random
 class EyepetizerInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original: Request = chain.request()
-//添加请求参数，此处是以豆瓣api为例，下面会贴出Base_url
-        //添加请求参数，此处是以豆瓣api为例，下面会贴出Base_url
         val url: HttpUrl = original.url.newBuilder()
             .addQueryParameter("udid", "74b07e6bb02b436b92387a6a8a37d7f4414c1434")
             .addQueryParameter("vc", App.versionCode.toString())
@@ -30,8 +28,6 @@ class EyepetizerInterceptor : Interceptor {
             .addQueryParameter("system_version_code", DeviceUtils.getSDKVersionCode().toString())
             .addQueryParameter("isOldUser", "true")
             .build()
-//添加请求头
-        //添加请求头
         val request: Request = original.newBuilder()
 /*            .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
             .addHeader("Connection", "keep-alive")*/

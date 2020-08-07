@@ -3,19 +3,14 @@ package io.github.trumeen.ui.eyepetizer.fragment.ui.calendar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ViewDataBinding
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.BR
 import io.github.trumeen.R
-import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.data.UiModel
 import io.github.trumeen.ui.base.MultipleTypePagingAdapter
-import io.github.trumeen.ui.eyepetizer.fragment.ui.home.RecommendAdapter
-import io.github.trumeen.ui.eyepetizer.fragment.ui.home.RecommendPagingAdapter
-import io.github.trumeen.ui.main.SampleAdapter
+import io.github.trumeen.ui.base.SampleAdapter
 
 class CalendarAdapter(val viewModel: CalendarViewModel) :
     MultipleTypePagingAdapter<UiModel>(DATA_COMPARATOR) {

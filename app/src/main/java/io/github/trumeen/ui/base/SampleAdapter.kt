@@ -1,4 +1,4 @@
-package io.github.trumeen.ui.main
+package io.github.trumeen.ui.base
 
 import android.view.LayoutInflater
 import android.view.View
@@ -71,7 +71,8 @@ class SampleAdapter<T>(
             parent,
             false
         )
-        val sampleViewHolder = SampleViewHolder(inflate.root)
+        val sampleViewHolder =
+            SampleViewHolder(inflate.root)
         sampleViewHolder.setBinding(inflate)
         viewHolders.add(sampleViewHolder)
         sampleViewHolder.markCreated()

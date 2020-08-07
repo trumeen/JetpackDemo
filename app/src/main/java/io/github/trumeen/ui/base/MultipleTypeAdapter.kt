@@ -1,4 +1,4 @@
-package io.github.trumeen.ui.main
+package io.github.trumeen.ui.base
 
 import android.view.ViewGroup
 import androidx.databinding.ObservableArrayList

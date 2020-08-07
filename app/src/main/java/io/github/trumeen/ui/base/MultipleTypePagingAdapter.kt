@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import io.github.trumeen.ui.main.SampleAdapter
 
 open class MultipleTypePagingAdapter<T : Any>(diffCallback: DiffUtil.ItemCallback<T>) :
     PagingDataAdapter<T, SampleAdapter.SampleViewHolder>(diffCallback) {
