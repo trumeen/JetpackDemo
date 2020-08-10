@@ -47,6 +47,20 @@ class CommunityRepository(val viewModelScope: CoroutineScope) {
         return map[url]!!
     }
 
+    fun getCommunityRecData(url: String): Flow<PagingData<RecommendItemBean>> {
+        if (map[url] == null) {
+            map[url] = Pager(config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+                pagingSourceFactory = {
+                    CommunityDateSource(
+                        VideoApi.get(EYEPETTIZER_BASE_URL),
+                        url
+                    )
+                }).flow.cachedIn(viewModelScope)
+
+        }
+        return map[url]!!
+    }
+
     suspend fun getCommunityTabs(): List<Tab> {
         return VideoApi.get(EYEPETTIZER_BASE_URL).getCommunityTabs().tabInfo.tabList
     }

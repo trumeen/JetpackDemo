@@ -45,6 +45,11 @@ class CommunityContentFragment : BaseVmFragment<EyepettizerViewModel>() {
         return inflater.inflate(R.layout.fragment_community_content, container, false)
     }
 
+    override fun onStart() {
+        super.onStart()
+        println("onStart")
+    }
+
     override fun initData() {
 
         val communityAdapter = CommunityAdapter()
@@ -65,13 +70,15 @@ class CommunityContentFragment : BaseVmFragment<EyepettizerViewModel>() {
         }
 
         lifecycleScope.launchWhenCreated {
-            mViewModel.getCommunityData(mApiUrl).collectLatest {
-                if (mApiUrl.contains("http://baobab.kaiyanapp.com/api/v7/community/tab/rec")) {
+            if (mApiUrl.contains("http://baobab.kaiyanapp.com/api/v7/community/tab/rec")) {
+                mViewModel.getCommunityRecData(mApiUrl).collectLatest {
+                    println("getCommunityRecData")
                     communityAdapter.submitData(it)
-                } else {
+                }
+            } else {
+                mViewModel.getCommunityData(mApiUrl).collectLatest {
                     followAdapter.submitData(it)
                 }
-
             }
         }
 

@@ -45,7 +45,6 @@ class RecyclerViewAtViewPager2 : RecyclerView {
                         val view = it[it.childCount - 1]
                         if(view is Banner<*, *>){
                             val canScrollHorizontally = view.canScrollHorizontally(startX - endX)
-                            println("findChildViewUnder banner: $canScrollHorizontally")
                             parent.requestDisallowInterceptTouchEvent(
                                 canScrollHorizontally
                             )
@@ -55,7 +54,6 @@ class RecyclerViewAtViewPager2 : RecyclerView {
                                 val canScrollHorizontally = view.canScrollHorizontally(
                                     startX - endX
                                 )
-                                println("findChildViewUnder:$view canScrollHorizontally :$canScrollHorizontally")
                                 parent.requestDisallowInterceptTouchEvent(
                                     canScrollHorizontally
                                 )

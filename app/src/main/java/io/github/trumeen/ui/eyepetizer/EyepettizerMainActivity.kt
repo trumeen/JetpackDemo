@@ -33,11 +33,6 @@ class EyepettizerMainActivity : AppCompatActivity() {
         nav_view.setupWithNavController(navController)
         binding.setVariable(BR.viewModel, mViewModel)
         binding.lifecycleOwner = this
-        mViewModel.mBottomButtonState.observe(this,
-            Observer<Boolean> {
-                println("value Change:${it}")
-            })
-        println("EyepettizerMainActivity onCreate $mViewModel")
     }
 
     private fun initViewModel() {

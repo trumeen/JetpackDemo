@@ -199,7 +199,6 @@ public class Banner<T, BA extends BannerAdapter> extends FrameLayout implements 
     public boolean canScrollHorizontally(int direction) {
 
         if (getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL) {
-            System.out.println("canScrollHorizontally" + direction + "current:" + getCurrentItem() + "total:" + getItemCount());
             if (direction == 0) {
                 return true;
             }

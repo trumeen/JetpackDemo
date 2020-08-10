@@ -27,6 +27,7 @@ class EyepettizerViewModel : BaseViewModel() {
     var mCommunityRepository = CommunityRepository(viewModelScope)
     private val mMessageRepository = MessageRepository(viewModelScope)
     private var mRecommendResult = MutableLiveData<PagingData<RecommendItemBean>>()
+    var mTabs = MutableLiveData<List<Tab>>()
 
     init {
         itemDataSet.value = ObservableArrayList()
@@ -58,9 +59,14 @@ class EyepettizerViewModel : BaseViewModel() {
         return mCommunityRepository.getCommunityData(url)
     }
 
+    fun getCommunityRecData(url: String): Flow<PagingData<RecommendItemBean>> {
+        return mCommunityRepository.getCommunityRecData(url)
+    }
 
-    suspend fun getTabs(): List<Tab> {
-        return mCommunityRepository.getCommunityTabs()
+
+    suspend fun getTabs() {
+        mTabs.value = mCommunityRepository.getCommunityTabs()
+//        return mCommunityRepository.getCommunityTabs()
     }
 
 
