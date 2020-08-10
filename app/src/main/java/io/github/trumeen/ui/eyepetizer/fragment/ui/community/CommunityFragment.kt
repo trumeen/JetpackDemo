@@ -10,24 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabItem
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.trumeen.R
 import io.github.trumeen.bean.Tab
 import io.github.trumeen.ui.base.BaseVmFragment
 import io.github.trumeen.ui.eyepetizer.EyepettizerMainActivity
 import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
-import io.github.trumeen.ui.eyepetizer.fragment.ui.home.DailyFragment
-import io.github.trumeen.ui.eyepetizer.fragment.ui.home.DiscoveryFragment
-import io.github.trumeen.ui.eyepetizer.fragment.ui.home.RecommendFragment
-import kotlinx.android.synthetic.main.fragment_community.*
 import kotlinx.android.synthetic.main.fragment_community.tabLayout
 import kotlinx.android.synthetic.main.fragment_community.viewPager
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.withContext
 
 class CommunityFragment : BaseVmFragment<EyepettizerViewModel>() {
 
@@ -49,7 +39,7 @@ class CommunityFragment : BaseVmFragment<EyepettizerViewModel>() {
 
     override fun initData() {
 
-        mViewModel.mTabs.value?.let { tabs ->
+        mViewModel.mCommunityTabs.value?.let { tabs ->
             viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             viewPager.adapter =
                 object : FragmentStateAdapter(childFragmentManager, lifecycle) {
@@ -68,7 +58,7 @@ class CommunityFragment : BaseVmFragment<EyepettizerViewModel>() {
 
         }
 
-        mViewModel.mTabs.observe(this,
+        mViewModel.mCommunityTabs.observe(this,
             Observer<List<Tab>> { tabs ->
                 if (viewPager.adapter == null) {
                     viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -91,7 +81,7 @@ class CommunityFragment : BaseVmFragment<EyepettizerViewModel>() {
             })
 
         lifecycleScope.launchWhenCreated {
-            mViewModel.getTabs()
+            mViewModel.getCommunityTabs()
         }
     }
 

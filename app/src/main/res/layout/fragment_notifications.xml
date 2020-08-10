@@ -6,9 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".ui.eyepetizer.fragment.ui.notifications.NotificationsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="@dimen/dp_20"
-        android:id="@+id/recycler_view"
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="@dimen/dp_44"
+        android:layout_height="@dimen/dp_44"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_action_search"
+        app:layout_constraintBottom_toBottomOf="@id/tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tabLayout" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="@dimen/dp_210"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorColor="@color/text_black">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

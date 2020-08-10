@@ -105,4 +105,7 @@ interface VideoApi {
     @GET("")
     suspend fun getMessageNextData(@Url url: String): MessageListBean
 
+    @GET("v3/messages/tabList")
+    suspend fun getMessageTabs(): TabInfoBean
+
 }
