@@ -17,21 +17,6 @@ class CommunityRepository(val viewModelScope: CoroutineScope) {
 
     private var map = HashMap<String, Flow<PagingData<RecommendItemBean>>>()
 
-    private var pager1 = Pager(config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-        pagingSourceFactory = {
-            CommunityDateSource(
-                VideoApi.get(EYEPETTIZER_BASE_URL),
-                "http://baobab.kaiyanapp.com/api/v7/community/tab/rec"
-            )
-        }).flow.cachedIn(viewModelScope)
-
-    private var pager2 = Pager(config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-        pagingSourceFactory = {
-            CommunityDateSource(
-                VideoApi.get(EYEPETTIZER_BASE_URL),
-                "http://baobab.kaiyanapp.com/api/v7/community/tab/list"
-            )
-        }).flow.cachedIn(viewModelScope)
 
     fun getCommunityData(url: String): Flow<PagingData<RecommendItemBean>> {
         if (map[url] == null) {

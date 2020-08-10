@@ -49,7 +49,11 @@ class NotificationsFragment : BaseVmFragment<EyepettizerViewModel>() {
                     }
 
                     override fun createFragment(position: Int): Fragment {
-                        return CommunityContentFragment.newInstance(tabs[position].apiUrl)
+                        return when (position) {
+                            0 -> PushContentFragment.newInstance(tabs[position].apiUrl)
+                            1 -> InteractiveFragment.newInstance(tabs[position].apiUrl)
+                            else -> MessagesFragment.newInstance(tabs[position].apiUrl)
+                        }
                     }
                 }
             TabLayoutMediator(tabLayout, viewPager,
