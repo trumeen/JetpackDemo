@@ -20,9 +20,6 @@
         android:label="@string/menu_community"
         tools:layout="@layout/fragment_community">
 
-        <argument
-            android:name="myArg"
-            app:argType="string" />
     </fragment>
 
     <fragment

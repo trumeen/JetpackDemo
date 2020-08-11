@@ -6,6 +6,13 @@
 
 
 
+    <View
+        android:id="@+id/view_toolbar"
+        android:background="@color/color_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48" />
+
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="@dimen/dp_44"
@@ -19,7 +26,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="@dimen/dp_210"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_44"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+        app:layout_constraintTop_toBottomOf="@+id/view_toolbar">
 
     </androidx.viewpager2.widget.ViewPager2>
 

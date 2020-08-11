@@ -35,6 +35,7 @@ class CommunityContentFragment : BaseVmFragment<EyepettizerViewModel>() {
         arguments?.let {
             mApiUrl = it.getString(ARG_PARAM1)
         }
+        println("onCreate")
     }
 
     override fun onCreateView(

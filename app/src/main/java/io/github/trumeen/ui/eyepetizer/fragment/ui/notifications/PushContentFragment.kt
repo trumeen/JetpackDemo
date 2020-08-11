@@ -31,7 +31,6 @@ class PushContentFragment : BaseVmFragment<EyepettizerViewModel>() {
 
 
     override fun initData() {
-        println("initData")
         val notificationAdapter = NotificationAdapter()
         recycler_view.apply {
             adapter = notificationAdapter

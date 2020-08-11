@@ -1,20 +1,17 @@
 package io.github.trumeen.ui.eyepetizer
 
-import android.os.Build
+import android.graphics.Color
 import android.os.Bundle
-import androidx.annotation.RequiresApi
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.databinding.ActivityEyepettizerMainBinding
-import io.github.trumeen.ui.base.BaseVmActivity
+import io.github.trumeen.extension.setStatusBarColor
 import kotlinx.android.synthetic.main.activity_eyepettizer_main.*
 
 class EyepettizerMainActivity : AppCompatActivity() {
@@ -23,7 +20,8 @@ class EyepettizerMainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        setStatusBarColor(resources.getColor(R.color.color_bg))
         initViewModel()
         val binding = DataBindingUtil.setContentView<ActivityEyepettizerMainBinding>(
             this,

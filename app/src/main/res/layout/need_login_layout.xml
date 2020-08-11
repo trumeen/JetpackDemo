@@ -7,7 +7,7 @@
 
 
     <ImageView
-        android:layout_marginTop="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_78"
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,8 +18,8 @@
 
     <TextView
         android:fontFamily="@font/fzlantingheis_db1_gb_regular"
-        android:layout_marginTop="@dimen/dp_40"
-        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dp_35"
+        android:textColor="@color/color_normal_dark"
         android:textSize="@dimen/sp_16"
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
@@ -46,9 +46,9 @@
         android:textSize="@dimen/sp_16"
         android:gravity="center"
         android:textColor="@color/text_white"
-        android:background="@color/text_blue"
+        android:background="@color/alert_color_blue"
         android:id="@+id/textView18"
-        android:layout_width="@dimen/dp_210"
+        android:layout_width="@dimen/dp_240"
         android:layout_height="@dimen/dp_40"
         android:text="@string/account_login_btn"
         app:layout_constraintEnd_toEndOf="parent"

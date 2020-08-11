@@ -38,51 +38,53 @@ class CommunityFragment : BaseVmFragment<EyepettizerViewModel>() {
     }
 
     override fun initData() {
-
-        mViewModel.mCommunityTabs.value?.let { tabs ->
-            viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            viewPager.adapter =
-                object : FragmentStateAdapter(childFragmentManager, lifecycle) {
-                    override fun getItemCount(): Int {
-                        return tabs.size
-                    }
-
-                    override fun createFragment(position: Int): Fragment {
-                        return CommunityContentFragment.newInstance(tabs[position].apiUrl)
-                    }
-                }
-            TabLayoutMediator(tabLayout, viewPager,
-                TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-                    tab.text = tabs[position].name
-                }).attach()
-
-        }
-
-        mViewModel.mCommunityTabs.observe(this,
-            Observer<List<Tab>> { tabs ->
-                if (viewPager.adapter == null) {
-                    viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-                    viewPager.adapter =
-                        object : FragmentStateAdapter(childFragmentManager, lifecycle) {
-                            override fun getItemCount(): Int {
-                                return tabs.size
-                            }
-
-                            override fun createFragment(position: Int): Fragment {
-                                return CommunityContentFragment.newInstance(tabs[position].apiUrl)
-                            }
+        if (mViewModel.mCommunityTabs.value != null) {
+            mViewModel.mCommunityTabs.value?.let { tabs ->
+                viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                viewPager.adapter =
+                    object : FragmentStateAdapter(childFragmentManager, lifecycle) {
+                        override fun getItemCount(): Int {
+                            return tabs.size
                         }
-                    TabLayoutMediator(tabLayout, viewPager,
-                        TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-                            tab.text = tabs[position].name
-                        }).attach()
-                }
 
-            })
+                        override fun createFragment(position: Int): Fragment {
+                            return CommunityContentFragment.newInstance(tabs[position].apiUrl)
+                        }
+                    }
+                TabLayoutMediator(tabLayout, viewPager,
+                    TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+                        tab.text = tabs[position].name
+                    }).attach()
 
-        lifecycleScope.launchWhenCreated {
-            mViewModel.getCommunityTabs()
+            }
+        } else {
+            mViewModel.mCommunityTabs.observe(this,
+                Observer<List<Tab>> { tabs ->
+                    if (viewPager.adapter == null) {
+                        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                        viewPager.adapter =
+                            object : FragmentStateAdapter(childFragmentManager, lifecycle) {
+                                override fun getItemCount(): Int {
+                                    return tabs.size
+                                }
+
+                                override fun createFragment(position: Int): Fragment {
+                                    return CommunityContentFragment.newInstance(tabs[position].apiUrl)
+                                }
+                            }
+                        TabLayoutMediator(tabLayout, viewPager,
+                            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+                                tab.text = tabs[position].name
+                            }).attach()
+                    }
+
+                })
+            lifecycleScope.launchWhenCreated {
+                mViewModel.getCommunityTabs()
+            }
         }
+
+
     }
 
 
