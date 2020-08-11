@@ -9,7 +9,7 @@
 
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{recommendItem.data.weeklyDestination}"
+            android:text="@{recommendItem.recommendItemBean.data.weeklyDestination}"
             android:textColor="@color/text_black"
             android:textSize="@dimen/dp_20"
             android:textStyle="bold"
@@ -38,7 +38,7 @@
             android:id="@+id/tv_daily_destination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{recommendItem.data.dailyDestination}"
+            android:text="@{recommendItem.recommendItemBean.data.dailyDestination}"
             android:textSize="@dimen/dp_14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
             android:id="@+id/tv_daily_reason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{recommendItem.data.recReason}"
+            android:text="@{recommendItem.recommendItemBean.data.recReason}"
             android:textSize="@dimen/dp_14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

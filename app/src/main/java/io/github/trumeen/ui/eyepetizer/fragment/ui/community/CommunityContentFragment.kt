@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.R
@@ -80,6 +81,28 @@ class CommunityContentFragment : BaseVmFragment<EyepettizerViewModel>() {
                 mViewModel.getCommunityData(mApiUrl).collectLatest {
                     followAdapter.submitData(it)
                 }
+            }
+        }
+
+        communityAdapter.addLoadStateListener {
+            when (it.refresh) {
+                is LoadState.Error -> swipe_refresh_layout.isRefreshing = false
+                is LoadState.NotLoading -> swipe_refresh_layout.isRefreshing = false
+            }
+        }
+
+        followAdapter.addLoadStateListener {
+            when (it.refresh) {
+                is LoadState.Error -> swipe_refresh_layout.isRefreshing = false
+                is LoadState.NotLoading -> swipe_refresh_layout.isRefreshing = false
+            }
+        }
+
+        swipe_refresh_layout.setOnRefreshListener {
+            if (mApiUrl.contains("http://baobab.kaiyanapp.com/api/v7/community/tab/rec")) {
+                communityAdapter.refresh()
+            } else {
+                followAdapter.refresh()
             }
         }
 

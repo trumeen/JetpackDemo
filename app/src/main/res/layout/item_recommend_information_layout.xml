@@ -6,7 +6,7 @@
 
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -25,7 +25,7 @@
                 android:id="@+id/iv_title"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_160"
-                app:imgUrl="@{recommendItem.data.backgroundImage}"
+                app:imgUrl="@{recommendItem.recommendItemBean.data.backgroundImage}"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -34,7 +34,7 @@
                 android:background="@color/line_ed"
                 android:padding="@dimen/dp_16"
                 app:layout_constraintTop_toBottomOf="@id/iv_title"
-                app:multipleText="@{recommendItem.data.titleList}" />
+                app:multipleText="@{recommendItem.recommendItemBean.data.titleList}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

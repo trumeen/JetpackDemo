@@ -24,6 +24,7 @@ class EyepettizerViewModel : BaseViewModel() {
             viewModelScope
         )
     private val dailyRepository = DailyPageRepository(viewModelScope)
+    private val discoveryRepository = DiscoveryRepository(viewModelScope)
     var mCommunityRepository = CommunityRepository(viewModelScope)
     private val mMessageRepository = MessageRepository(viewModelScope)
     private var mRecommendResult = MutableLiveData<PagingData<RecommendItemBean>>()
@@ -35,14 +36,24 @@ class EyepettizerViewModel : BaseViewModel() {
         mRecommendResult.value = PagingData.empty()
     }
 
-    fun getDiscoveryData() {
-        launch(block = {
-            val recommendList = VideoApi.get("http://baobab.kaiyanapp.com/api/v5/")
-                .getRecommendList("http://baobab.kaiyanapp.com/api/v7/index/tab/discovery")
-            itemDataSet.value?.addAll(recommendList.itemList)
-        }, error = {
-            println("异常:${it.message}")
-        })
+    fun getDiscoveryData(): Flow<PagingData<UiModel>> {
+        return discoveryRepository.getPageData().map { pagingDate ->
+            pagingDate.map {
+                UiModel.RecommendItem(it)
+            }
+        }.map {
+            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+                if (after == null) {
+                    // we're at the end of the list
+                    return@insertSeparators UiModel.FooterItem("")
+                }
+                if (before == null) {
+                    // we're at the beginning of the list
+                    return@insertSeparators null
+                }
+                null
+            }
+        }
 
     }
 
@@ -68,16 +79,64 @@ class EyepettizerViewModel : BaseViewModel() {
     }
 
 
-    fun getDailyPagingData(): Flow<PagingData<RecommendItemBean>> {
-        return dailyRepository.getPageData()
+    fun getDailyPagingData(): Flow<PagingData<UiModel>> {
+        return dailyRepository.getPageData().map { pagingData->
+            pagingData.map {
+                UiModel.RecommendItem(it)
+            }
+        }.map {
+            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+                if (after == null) {
+                    // we're at the end of the list
+                    return@insertSeparators UiModel.FooterItem("")
+                }
+                if (before == null) {
+                    // we're at the beginning of the list
+                    return@insertSeparators null
+                }
+                null
+            }
+        }
     }
 
-    fun getCommunityData(url: String): Flow<PagingData<RecommendItemBean>> {
-        return mCommunityRepository.getCommunityData(url)
+    fun getCommunityData(url: String): Flow<PagingData<UiModel>> {
+        return mCommunityRepository.getCommunityData(url).map { pagingData->
+            pagingData.map {
+                UiModel.RecommendItem(it)
+            }
+        }.map {
+            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+                if (after == null) {
+                    // we're at the end of the list
+                    return@insertSeparators UiModel.FooterItem("")
+                }
+                if (before == null) {
+                    // we're at the beginning of the list
+                    return@insertSeparators null
+                }
+                null
+            }
+        }
     }
 
-    fun getCommunityRecData(url: String): Flow<PagingData<RecommendItemBean>> {
-        return mCommunityRepository.getCommunityRecData(url)
+    fun getCommunityRecData(url: String): Flow<PagingData<UiModel>> {
+        return mCommunityRepository.getCommunityRecData(url).map { pagingData->
+            pagingData.map {
+                UiModel.RecommendItem(it)
+            }
+        }.map {
+            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+                if (after == null) {
+                    // we're at the end of the list
+                    return@insertSeparators UiModel.FooterItem("")
+                }
+                if (before == null) {
+                    // we're at the beginning of the list
+                    return@insertSeparators null
+                }
+                null
+            }
+        }
     }
 
 

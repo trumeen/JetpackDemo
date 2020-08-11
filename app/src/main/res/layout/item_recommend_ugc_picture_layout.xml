@@ -7,7 +7,7 @@
 
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
 
@@ -32,14 +32,14 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:onClick="@{(view)->recommendItem.goToVideoPage(view.context,recommendItem.data.content.data)}"
+                    android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view.context,recommendItem.recommendItemBean.data.content.data)}"
                     android:scaleType="centerCrop"
-                    app:imgUrl="@{recommendItem.data.content.data.cover.detail}"
-                    app:layout_constraintDimensionRatio="@{@string/pictureFormate(recommendItem.data.content.data.width,recommendItem.data.content.data.height)}"
+                    app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
+                    app:layout_constraintDimensionRatio="@{@string/pictureFormate(recommendItem.recommendItemBean.data.content.data.width,recommendItem.recommendItemBean.data.content.data.height)}"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    app:srcLoacal="@{recommendItem.data.content.data.urls}"
+                    app:srcLoacal="@{recommendItem.recommendItemBean.data.content.data.urls}"
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_marginEnd="@dimen/dp_5"
                     app:layout_constraintTop_toTopOf="parent"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:maxLines="3"
             android:ellipsize="end"
-            android:text="@{recommendItem.data.content.data.description}"
+            android:text="@{recommendItem.recommendItemBean.data.content.data.description}"
             android:textSize="@dimen/dp_12"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_content"
@@ -71,7 +71,7 @@
             android:id="@+id/iv_head"
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
-            app:imgUrl="@{recommendItem.data.header.icon}"
+            app:imgUrl="@{recommendItem.recommendItemBean.data.header.icon}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_desc"
             app:radius="@{@dimen/dp_25}" />
@@ -82,7 +82,7 @@
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{recommendItem.data.header.issuerName}"
+            android:text="@{recommendItem.recommendItemBean.data.header.issuerName}"
             android:textSize="@dimen/dp_12"
             app:layout_constraintBottom_toBottomOf="@id/iv_head"
             app:layout_constraintStart_toEndOf="@id/iv_head"
@@ -90,7 +90,7 @@
             tools:text="jin" />
 
         <TextView
-            android:text="@{String.valueOf(recommendItem.data.content.data.consumption.collectionCount)}"
+            android:text="@{String.valueOf(recommendItem.recommendItemBean.data.content.data.consumption.collectionCount)}"
             app:layout_constraintTop_toTopOf="@id/iv_favorites"
             app:layout_constraintBottom_toBottomOf="@id/iv_favorites"
             app:layout_constraintEnd_toStartOf="@id/iv_favorites"

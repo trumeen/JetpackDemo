@@ -5,7 +5,7 @@
     <data>
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
         
         <ImageView
             android:layout_marginStart="@dimen/dp_15"
-            app:imgUrl="@{recommendItem.data.icon}"
+            app:imgUrl="@{recommendItem.recommendItemBean.data.icon}"
             app:radius="@{@dimen/dp_4}"
             android:id="@+id/iv_head"
             android:layout_marginTop="@dimen/dp_10"
@@ -32,7 +32,7 @@
             android:textColor="@color/text_black"
             app:layout_constraintStart_toEndOf="@id/iv_head"
             android:layout_marginStart="@dimen/dp_13"
-            android:text="@{recommendItem.data.title}"
+            android:text="@{recommendItem.recommendItemBean.data.title}"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
@@ -42,7 +42,7 @@
             android:textColor="@color/text_7d"
             app:layout_constraintStart_toEndOf="@id/iv_head"
             android:layout_marginStart="@dimen/dp_13"
-            android:text="@{recommendItem.data.description}"
+            android:text="@{recommendItem.recommendItemBean.data.description}"
             app:layout_constraintBottom_toTopOf="@id/view_line"
             android:layout_marginBottom="@dimen/dp_16"
             android:layout_width="wrap_content"

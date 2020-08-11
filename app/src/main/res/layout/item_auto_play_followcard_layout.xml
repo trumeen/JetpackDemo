@@ -9,7 +9,7 @@
 
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
             android:id="@+id/iv_avt"
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
-            app:imgUrl="@{recommendItem.data.content.data.author.icon}"
+            app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.author.icon}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:radius="@{@dimen/dp_50}" />
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_5"
-            android:text="@{recommendItem.data.content.data.author.name}"
+            android:text="@{recommendItem.recommendItemBean.data.content.data.author.name}"
             android:textColor="@color/text_black"
             android:textSize="@dimen/dp_14"
             android:textStyle="bold"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_5"
-            android:text="@{recommendItem.data.content.data.title}"
+            android:text="@{recommendItem.recommendItemBean.data.content.data.title}"
             android:textSize="@dimen/dp_12"
             app:layout_constraintBottom_toBottomOf="@id/iv_avt"
             app:layout_constraintStart_toEndOf="@id/iv_avt"
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_3"
-            android:text="@{recommendItem.data.content.data.titlePgc}"
+            android:text="@{recommendItem.recommendItemBean.data.content.data.titlePgc}"
             android:textColor="@color/text_black"
             android:textSize="@dimen/dp_12"
             app:layout_constraintBottom_toBottomOf="@id/tv_release_time"
@@ -77,7 +77,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="@{recommendItem.data.content.data.description}"
+            android:text="@{recommendItem.recommendItemBean.data.content.data.description}"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/dp_12"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,8 +87,8 @@
             android:id="@+id/video"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_180"
-            app:bindVideoCover="@{recommendItem.data.content.data.cover.detail}"
-            app:bindVideoPlayUrl="@{recommendItem.data.content.data.playUrl}"
+            app:bindVideoCover="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
+            app:bindVideoPlayUrl="@{recommendItem.recommendItemBean.data.content.data.playUrl}"
             app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
 

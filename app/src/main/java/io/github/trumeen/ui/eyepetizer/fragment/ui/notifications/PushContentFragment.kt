@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.trumeen.R
 import io.github.trumeen.ui.base.BaseVmFragment
@@ -40,6 +41,15 @@ class PushContentFragment : BaseVmFragment<EyepettizerViewModel>() {
             mViewModel.getMessageList().collectLatest {
                 notificationAdapter.submitData(it)
             }
+        }
+        notificationAdapter.addLoadStateListener {
+            when(it.refresh){
+                is LoadState.NotLoading -> swipe_refresh_layout.isRefreshing = false
+                is LoadState.Error -> swipe_refresh_layout.isRefreshing = false
+            }
+        }
+        swipe_refresh_layout.setOnRefreshListener {
+            notificationAdapter.refresh()
         }
 
     }

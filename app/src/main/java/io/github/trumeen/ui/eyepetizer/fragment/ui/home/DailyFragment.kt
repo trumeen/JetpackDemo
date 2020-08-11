@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import io.github.trumeen.R
 import io.github.trumeen.ui.base.BaseVmFragment
 import io.github.trumeen.ui.eyepetizer.EyepettizerMainActivity
 import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
-import kotlinx.android.synthetic.main.fragment_daily.recycler_view
+import kotlinx.android.synthetic.main.fragment_daily.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -41,6 +42,16 @@ class DailyFragment : BaseVmFragment<EyepettizerViewModel>() {
             mViewModel.getDailyPagingData().collectLatest {
                 recommendPagingAdapter.submitData(it)
             }
+        }
+        recommendPagingAdapter.addLoadStateListener {
+            when (it.refresh) {
+                is LoadState.NotLoading -> swipe_refresh_layout.isRefreshing = false
+                is LoadState.Error -> swipe_refresh_layout.isRefreshing = false
+            }
+        }
+
+        swipe_refresh_layout.setOnRefreshListener {
+            recommendPagingAdapter.refresh()
         }
     }
 

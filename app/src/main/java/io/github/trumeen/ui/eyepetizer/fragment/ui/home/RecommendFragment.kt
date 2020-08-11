@@ -46,7 +46,6 @@ class RecommendFragment : BaseVmFragment<EyepettizerViewModel>() {
 
         recommendPagingAdapter.addLoadStateListener {
             when (it.refresh) {
-                is LoadState.Loading -> swipe_refresh_layout.isRefreshing = true
                 is LoadState.NotLoading -> swipe_refresh_layout.isRefreshing = false
                 is LoadState.Error -> swipe_refresh_layout.isRefreshing = false
             }

@@ -6,7 +6,7 @@
     <data>
     <variable
         name="recommendItem"
-        type="io.github.trumeen.bean.RecommendItemBean" />
+        type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/dp_22"
             android:textColor="@color/text_black"
-            android:text="@{recommendItem.data.text}"
+            android:text="@{recommendItem.recommendItemBean.data.text}"
             tools:text="每日开眼精选"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dp_16"
-            android:text="@{recommendItem.data.rightText}"
+            android:text="@{recommendItem.recommendItemBean.data.rightText}"
             android:layout_marginEnd="@dimen/dp_15"
             tools:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -9,7 +9,7 @@
 
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_180"
             app:banner_orientation="horizontal"
-            app:bindBanner="@{recommendItem.data.itemList}"
+            app:bindBanner="@{recommendItem.recommendItemBean.data.itemList}"
             app:is_infinite_loop="false"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -9,7 +9,7 @@
 
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_enter"
             android:drawablePadding="@dimen/dp_10"
-            android:text="@{recommendItem.data.header.title}"
+            android:text="@{recommendItem.recommendItemBean.data.header.title}"
             android:textColor="@color/text_black"
             android:textSize="@dimen/dp_22"
             android:textStyle="bold"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_enter_blue"
             android:drawablePadding="@dimen/dp_5"
-            android:text="@{recommendItem.data.header.rightText}"
+            android:text="@{recommendItem.recommendItemBean.data.header.rightText}"
             android:textColor="@color/text_blue"
             android:textSize="@dimen/dp_16"
             app:layout_constraintBottom_toTopOf="@+id/recycler_view"
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            app:bindCollectionGrid="@{recommendItem.data.itemList}"
+            app:bindCollectionGrid="@{recommendItem.recommendItemBean.data.itemList}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

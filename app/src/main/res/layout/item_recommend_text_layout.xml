@@ -9,7 +9,7 @@
 
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
             android:layout_marginStart="@dimen/dp_15"
             android:drawableEnd="@drawable/ic_enter"
             android:drawablePadding="@dimen/dp_10"
-            android:text="@{recommendItem.data.text}"
+            android:text="@{recommendItem.recommendItemBean.data.text}"
             android:textColor="@color/text_black"
             android:textSize="@dimen/dp_22"
             android:textStyle="bold"
@@ -47,7 +47,7 @@
             android:text="@string/add_follow"
             android:textColor="@color/text_black"
             android:textSize="@dimen/dp_10"
-            android:visibility="@{recommendItem.data.follow==null?View.GONE:View.VISIBLE}"
+            android:visibility="@{recommendItem.recommendItemBean.data.follow==null?View.GONE:View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

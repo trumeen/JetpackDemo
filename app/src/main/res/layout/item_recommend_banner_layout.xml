@@ -5,7 +5,7 @@
     <data>
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@
 
         <ImageView
             app:radius="@{@dimen/dp_4}"
-            app:imgUrl="@{recommendItem.data.image}"
+            app:imgUrl="@{recommendItem.recommendItemBean.data.image}"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             app:layout_constraintBottom_toTopOf="@id/view_line"

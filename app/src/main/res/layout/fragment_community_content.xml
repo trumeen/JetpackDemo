@@ -11,10 +11,17 @@
         android:layout_height="match_parent"
         tools:context=".ui.eyepetizer.fragment.ui.community.CommunityContentFragment">
 
-        <io.github.trumeen.weight.RecyclerViewAtViewPager2
-            android:id="@+id/recycler_view"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <io.github.trumeen.weight.RecyclerViewAtViewPager2
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     </FrameLayout>
 </layout>
