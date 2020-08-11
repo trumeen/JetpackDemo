@@ -47,8 +47,24 @@ class EyepettizerViewModel : BaseViewModel() {
     }
 
 
-    fun getRecommendPagingData(): Flow<PagingData<RecommendItemBean>> {
-        return recommendRepository.getPageData()
+    fun getRecommendPagingData(): Flow<PagingData<UiModel>> {
+        return recommendRepository.getPageData().map { pagingDate ->
+            pagingDate.map {
+                UiModel.RecommendItem(it)
+            }
+        }.map {
+            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+                if (after == null) {
+                    // we're at the end of the list
+                    return@insertSeparators UiModel.FooterItem("")
+                }
+                if (before == null) {
+                    // we're at the beginning of the list
+                    return@insertSeparators null
+                }
+                null
+            }
+        }
     }
 
 

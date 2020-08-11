@@ -7,7 +7,7 @@
 
         <variable
             name="recommendItem"
-            type="io.github.trumeen.bean.RecommendItemBean" />
+            type="io.github.trumeen.data.UiModel.RecommendItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_180"
             android:layout_marginBottom="@dimen/dp_9"
-            android:onClick="@{(view)->recommendItem.goToVideoPage(view.context,recommendItem.data.content.data)}"
-            app:imgUrl="@{recommendItem.data.content.data.cover.detail}"
+            android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view.context,recommendItem.recommendItemBean.data.content.data)}"
+            app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
             app:layout_constraintTop_toTopOf="parent"
             app:radius="@{@dimen/dp_4}" />
 
@@ -39,7 +39,7 @@
             android:textSize="@dimen/dp_16"
             app:layout_constraintBottom_toBottomOf="@id/iv_content"
             app:layout_constraintEnd_toEndOf="@id/iv_content"
-            app:minutesText="@{recommendItem.data.content.data.duration}"
+            app:minutesText="@{recommendItem.recommendItemBean.data.content.data.duration}"
             tools:text="01:08" />
 
         <ImageView
@@ -48,7 +48,7 @@
             android:layout_height="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_9"
-            app:imgUrl="@{recommendItem.data.header.icon}"
+            app:imgUrl="@{recommendItem.recommendItemBean.data.header.icon}"
             app:layout_constraintBottom_toTopOf="@id/view_line"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_content"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="@{recommendItem.data.header.title}"
+            android:text="@{recommendItem.recommendItemBean.data.header.title}"
             android:textColor="@color/text_black"
             android:textSize="@dimen/sp_14"
             app:layout_constraintStart_toEndOf="@+id/iv_head"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_2"
-            android:text="@{recommendItem.data.header.description}"
+            android:text="@{recommendItem.recommendItemBean.data.header.description}"
             android:textColor="@color/text_7d"
             app:layout_constraintStart_toEndOf="@+id/iv_head"
             app:layout_constraintTop_toBottomOf="@id/tv_title"

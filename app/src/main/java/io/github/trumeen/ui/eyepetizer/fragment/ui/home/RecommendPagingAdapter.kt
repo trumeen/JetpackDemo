@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
+import io.github.trumeen.data.UiModel
 import io.github.trumeen.ui.base.MultipleTypePagingAdapter
 import io.github.trumeen.ui.base.SampleAdapter
 
-open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>(DATA_COMPARATOR) {
+open class RecommendPagingAdapter : MultipleTypePagingAdapter<UiModel>(DATA_COMPARATOR) {
 
 
     val TEXT_CARD = 0
@@ -274,85 +276,99 @@ open class RecommendPagingAdapter : MultipleTypePagingAdapter<RecommendItemBean>
 
 
     override fun getItemViewType(position: Int): Int {
-        if (position == itemCount - 1) {
-            return FOOT_VIEW
-        }
         val item = getItem(position)
         item?.run {
-            return when (type) {
-                "textCard" -> {
-                    when (data.dataType) {
-                        "TextCardWithRightAndLeftTitle" -> TEXT_CARD_WITH_RIGHT_LEFT_TITLE
-                        "TextCardWithTagId" -> TEXT_CARD_WITH_TAG_ID
-                        "TextCard" -> when (data.type) {
-                            "footer3", "footer2" -> TEXT_CARD_FOOTER
-                            else -> TEXT_CARD
-                        }
-                        else -> TEXT_CARD
-                    }
-                }
-                "followCard" -> FOLLOW_CARD
-                "banner" -> BANNER
-                "informationCard" -> INFORMATION_CARD
-                "videoSmallCard" -> VIDEO_SMALL_CARD
-                "ugcSelectedCardCollection" -> UGC_CARD
-                "briefCard" -> {
-                    when (item.data.dataType) {
-                        "TagBriefCard" -> BRIEF_CARD
-                        "TopicBriefCard" -> TOPIC_BRIEF_CARD
-                        else -> BRIEF_CARD
-                    }
-                }
-                "horizontalScrollCard" -> {
-                    when (data.dataType) {
-                        "ItemCollection" -> ITEM_COLLECTION
-                        "HorizontalScrollCard"
-                        -> HORIZONTAL_SCROLL_CARD
-                        else -> HORIZONTAL_SCROLL_CARD
-                    }
-                }
-                "specialSquareCardCollection" -> SPECIAL_SQUARE_CARD_COLLECTION
-                "columnCardList" -> COLUMN_CARD_LIST
-                "roamingCalendarDailyCard" -> ROAMING_CALENDAR_DAILY_CARD
-                "roamingCalendarWeeklyCard" -> ROAMING_CALENDAR_WEEKLY_CARD
-                "communityColumnsCard" -> {
-                    when (data.dataType) {
-                        "FollowCard" -> {
-                            when (data.content.data.dataType) {
-                                "VideoBeanForClient" -> VIDEO_BEAN_FOR_CLIENT
-                                "UgcVideoBean" -> UGC_VIDEO_BEAN
-                                "UgcPictureBean" -> UGC_PICTURE_BEAN
+            if (this is UiModel.RecommendItem) {
+                this.recommendItemBean.run {
+                    return when (type) {
+                        "textCard" -> {
+                            when (data.dataType) {
+                                "TextCardWithRightAndLeftTitle" -> TEXT_CARD_WITH_RIGHT_LEFT_TITLE
+                                "TextCardWithTagId" -> TEXT_CARD_WITH_TAG_ID
+                                "TextCard" -> when (data.type) {
+                                    "footer3", "footer2" -> TEXT_CARD_FOOTER
+                                    else -> TEXT_CARD
+                                }
                                 else -> TEXT_CARD
                             }
                         }
+                        "followCard" -> FOLLOW_CARD
+                        "banner" -> BANNER
+                        "informationCard" -> INFORMATION_CARD
+                        "videoSmallCard" -> VIDEO_SMALL_CARD
+                        "ugcSelectedCardCollection" -> UGC_CARD
+                        "briefCard" -> {
+                            when (data.dataType) {
+                                "TagBriefCard" -> BRIEF_CARD
+                                "TopicBriefCard" -> TOPIC_BRIEF_CARD
+                                else -> BRIEF_CARD
+                            }
+                        }
+                        "horizontalScrollCard" -> {
+                            when (data.dataType) {
+                                "ItemCollection" -> ITEM_COLLECTION
+                                "HorizontalScrollCard"
+                                -> HORIZONTAL_SCROLL_CARD
+                                else -> HORIZONTAL_SCROLL_CARD
+                            }
+                        }
+                        "specialSquareCardCollection" -> SPECIAL_SQUARE_CARD_COLLECTION
+                        "columnCardList" -> COLUMN_CARD_LIST
+                        "roamingCalendarDailyCard" -> ROAMING_CALENDAR_DAILY_CARD
+                        "roamingCalendarWeeklyCard" -> ROAMING_CALENDAR_WEEKLY_CARD
+                        "communityColumnsCard" -> {
+                            when (data.dataType) {
+                                "FollowCard" -> {
+                                    when (data.content.data.dataType) {
+                                        "VideoBeanForClient" -> VIDEO_BEAN_FOR_CLIENT
+                                        "UgcVideoBean" -> UGC_VIDEO_BEAN
+                                        "UgcPictureBean" -> UGC_PICTURE_BEAN
+                                        else -> TEXT_CARD
+                                    }
+                                }
+                                else -> TEXT_CARD
+                            }
+                        }
+                        "autoPlayFollowCard" -> AUTO_PLAY_FOLLOWCARD
                         else -> TEXT_CARD
                     }
                 }
-                "autoPlayFollowCard"->AUTO_PLAY_FOLLOWCARD
-                else -> TEXT_CARD
+            } else if (this is UiModel.FooterItem) {
+                return FOOT_VIEW
             }
+
         }
         return TEXT_CARD
     }
 
-    override fun getItemCount(): Int {
-        val itemCount = super.getItemCount()
-        return if (itemCount > 0) itemCount + 1 else itemCount
-    }
 
     companion object {
-        val DATA_COMPARATOR = object : DiffUtil.ItemCallback<RecommendItemBean>() {
+        val DATA_COMPARATOR = object : DiffUtil.ItemCallback<UiModel>() {
             override fun areItemsTheSame(
-                oldItem: RecommendItemBean,
-                newItem: RecommendItemBean
+                oldItem: UiModel,
+                newItem: UiModel
             ): Boolean =
-                oldItem.id == newItem.id
+                ((oldItem is UiModel.RecommendItem && newItem is UiModel.RecommendItem && oldItem.recommendItemBean.id == newItem.recommendItemBean.id) ||
+                        (oldItem is UiModel.HeaderItem && newItem is UiModel.HeaderItem))
 
             override fun areContentsTheSame(
-                oldItem: RecommendItemBean,
-                newItem: RecommendItemBean
+                oldItem: UiModel,
+                newItem: UiModel
             ): Boolean =
                 oldItem == newItem
+        }
+    }
+
+    override fun onViewAttachedToWindow(holder: SampleAdapter.SampleViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        val lp: ViewGroup.LayoutParams = holder.itemView.layoutParams
+        if (lp is StaggeredGridLayoutManager.LayoutParams && (holder.layoutPosition == 0
+                    || holder.layoutPosition == 1
+                    || holder.layoutPosition == 2
+                    || holder.layoutPosition == 3)
+        ) {
+            val p: StaggeredGridLayoutManager.LayoutParams = lp
+            p.isFullSpan = true
         }
     }
 }

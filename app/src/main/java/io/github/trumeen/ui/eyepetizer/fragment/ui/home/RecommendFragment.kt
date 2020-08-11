@@ -8,9 +8,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.PagedList
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.trumeen.R
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.ui.base.BaseVmFragment
@@ -41,6 +43,18 @@ class RecommendFragment : BaseVmFragment<EyepettizerViewModel>() {
                     recommendPagingAdapter.submitData(it)
                 }
         }
+
+        recommendPagingAdapter.addLoadStateListener {
+            when (it.refresh) {
+                is LoadState.Loading -> swipe_refresh_layout.isRefreshing = true
+                is LoadState.NotLoading -> swipe_refresh_layout.isRefreshing = false
+                is LoadState.Error -> swipe_refresh_layout.isRefreshing = false
+            }
+        }
+
+        swipe_refresh_layout.setOnRefreshListener {
+            recommendPagingAdapter.refresh()
+        }
         /*mViewModel.getRecommendPagingLivingData("http://baobab.kaiyanapp.com/api/v5/index/tab/allRec")
             .observe(
                 activity as EyepettizerMainActivity,
@@ -55,6 +69,7 @@ class RecommendFragment : BaseVmFragment<EyepettizerViewModel>() {
             )*/
 
     }
+
 
     override fun initViewModel() {
         mViewModel = ViewModelProvider(activity as EyepettizerMainActivity).get(viewModelClass())

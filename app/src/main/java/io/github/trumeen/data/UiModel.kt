@@ -7,4 +7,6 @@ sealed class UiModel {
 
     data class HeaderItem(val description: String) : UiModel()
 
+    data class FooterItem(val description: String) : UiModel()
+
 }

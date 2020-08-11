@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -23,6 +24,22 @@
             app:radius="@{@dimen/dp_4}"
             android:layout_width="@dimen/dp_173"
             android:layout_height="@dimen/dp_100"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_7"
+            android:background="@drawable/shape_bg_time"
+            android:fontFamily="@font/dinnextltpro_condensed"
+            android:paddingStart="@dimen/dp_3"
+            android:paddingEnd="@dimen/dp_3"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/dp_16"
+            app:layout_constraintBottom_toBottomOf="@id/iv_head"
+            app:layout_constraintEnd_toEndOf="@id/iv_head"
+            app:minutesText="@{recommendItem.data.duration}"
+            tools:text="01:08" />
 
         <TextView
             android:layout_marginTop="@dimen/dp_7"

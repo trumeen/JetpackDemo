@@ -67,6 +67,11 @@ interface VideoApi {
     ): RecommendBean
 
     @GET("")
+    suspend fun getRecommendNextData(
+        @Url url: String
+    ): RecommendBean
+
+    @GET("")
     suspend fun getDailyList(
         @Url url: String, @Query("date") date: Long = Calendar.getInstance().timeInMillis
     ): RecommendBean
