@@ -33,6 +33,7 @@ class CommunityFragment : BaseVmFragment<EyepettizerViewModel>() {
         return inflater.inflate(R.layout.fragment_community, container, false)
     }
 
+
     override fun initViewModel() {
         mViewModel = ViewModelProvider(activity as EyepettizerMainActivity).get(viewModelClass())
     }

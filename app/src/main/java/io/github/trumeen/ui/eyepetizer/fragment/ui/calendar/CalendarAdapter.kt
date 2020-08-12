@@ -273,8 +273,7 @@ class CalendarAdapter(val viewModel: CalendarViewModel) :
         if (getItemViewType(position) != HEAD_VIEW) {
             holder.getBinding()
                 .setVariable(
-                    bindings[getItemViewType(position)]!!.second,
-                    (getItem(position) as UiModel.RecommendItem).recommendItemBean
+                    bindings[getItemViewType(position)]!!.second, getItem(position)
                 )
         } else {
             holder.getBinding()

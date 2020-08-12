@@ -72,7 +72,8 @@ class CalendarView : View {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         mIconX = measuredWidth - 200
-        mIconY = 100
+        mIconY = top
+        mWeekStartY = top + 200f
         mWeekSpace = (measuredWidth - 200 - 700) / 6f
         mWidth = measuredWidth
         mTouchArea.set(0, mWeekStartY.toInt(), mWidth, (mWeekStartY + 200).toInt())
@@ -105,7 +106,7 @@ class CalendarView : View {
         mTextPaint.textSize = 100f
         mTextPaint.typeface = resources.getFont(R.font.lobster_1_4)
         mTextPaint.color = resources.getColor(R.color.colorAccent)
-        canvas?.drawText(format.format(date), mPaddingStart - 50, 200f, mTextPaint)
+        canvas?.drawText(format.format(date), mPaddingStart - 50, top.toFloat() + 100, mTextPaint)
     }
 
     private fun drawIcon(canvas: Canvas?) {
@@ -267,7 +268,6 @@ class CalendarView : View {
                     val fl = (event.x - mDownX)
                     if (abs(fl) <= ViewConfiguration.get(mContext).scaledTouchSlop) {
                         //点击事件
-                        println("点击事件")
                         mItems.forEach { (t, u) ->
                             if (u.contains(event.x.toInt(), event.y.toInt())) {
                                 mChooseDate = t
@@ -349,7 +349,7 @@ class CalendarView : View {
                 }
 
                 MotionEvent.ACTION_CANCEL -> {
-                    println("ACTION_CANCEL")
+
                 }
             }
             return true
@@ -384,7 +384,7 @@ class CalendarView : View {
         }
     }
 
-    fun release(){
+    fun release() {
         mVelocityTracker.recycle()
     }
 

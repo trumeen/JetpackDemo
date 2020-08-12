@@ -363,9 +363,7 @@ open class RecommendPagingAdapter : MultipleTypePagingAdapter<UiModel>(DATA_COMP
         super.onViewAttachedToWindow(holder)
         val lp: ViewGroup.LayoutParams = holder.itemView.layoutParams
         if (lp is StaggeredGridLayoutManager.LayoutParams && (holder.layoutPosition == 0
-                    || holder.layoutPosition == 1
-                    || holder.layoutPosition == 2
-                    || holder.layoutPosition == 3)
+                    || holder.layoutPosition == 1)
         ) {
             val p: StaggeredGridLayoutManager.LayoutParams = lp
             p.isFullSpan = true

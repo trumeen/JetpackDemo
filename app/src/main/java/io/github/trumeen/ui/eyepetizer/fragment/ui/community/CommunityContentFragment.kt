@@ -36,7 +36,6 @@ class CommunityContentFragment : BaseVmFragment<EyepettizerViewModel>() {
         arguments?.let {
             mApiUrl = it.getString(ARG_PARAM1)
         }
-        println("onCreate")
     }
 
     override fun onCreateView(
@@ -49,7 +48,6 @@ class CommunityContentFragment : BaseVmFragment<EyepettizerViewModel>() {
 
     override fun onStart() {
         super.onStart()
-        println("onStart")
     }
 
     override fun initData() {
@@ -74,7 +72,6 @@ class CommunityContentFragment : BaseVmFragment<EyepettizerViewModel>() {
         lifecycleScope.launchWhenCreated {
             if (mApiUrl.contains("http://baobab.kaiyanapp.com/api/v7/community/tab/rec")) {
                 mViewModel.getCommunityRecData(mApiUrl).collectLatest {
-                    println("getCommunityRecData")
                     communityAdapter.submitData(it)
                 }
             } else {
