@@ -859,5 +859,8 @@
     <string name="pictureFormate">%1$d:%2$d</string>
     <string name="format_week">%1$d年第%2$d周</string>
     <string name="notification_title">每日新鲜资讯</string>
+    <string name="title_activity_splash">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>
