@@ -89,10 +89,7 @@ class NotificationsFragment : BaseVmFragment<EyepettizerViewModel>() {
                 }
 
             })
-
-        lifecycleScope.launchWhenCreated {
-            mViewModel.getMessagesTabs()
-        }
+        mViewModel.getMessagesTabs()
 
     }
 

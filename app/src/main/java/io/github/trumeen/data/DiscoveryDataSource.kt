@@ -8,11 +8,11 @@ import java.io.IOException
 private const val FIRST_INDEX = 0
 
 class DiscoveryDataSource(private var api: VideoApi, private var requestUrl: String) :
-    PagingSource<String, RecommendItemBean>() {
+    EyepetizerDataSource<String, RecommendItemBean>() {
 
     private var lastUrl: String? = null
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, RecommendItemBean> {
 
+    override suspend fun loadData(params: LoadParams<String>): LoadResult<String, RecommendItemBean> {
         val url: String = params.key ?: ""
         val response = if (!url.isNullOrEmpty()) {
             lastUrl = url
@@ -21,14 +21,10 @@ class DiscoveryDataSource(private var api: VideoApi, private var requestUrl: Str
             lastUrl = null
             api.getRecommendList(url = requestUrl, page = FIRST_INDEX)
         }
-        return try {
-            LoadResult.Page(
-                data = response.itemList,
-                prevKey = if (lastUrl.isNullOrEmpty()) null else lastUrl,
-                nextKey = if (response.nextPageUrl.isNullOrEmpty()) null else response.nextPageUrl
-            )
-        } catch (exception: IOException) {
-            return LoadResult.Error(exception)
-        }
+        return LoadResult.Page(
+            data = response.itemList,
+            prevKey = if (lastUrl.isNullOrEmpty()) null else lastUrl,
+            nextKey = if (response.nextPageUrl.isNullOrEmpty()) null else response.nextPageUrl
+        )
     }
 }

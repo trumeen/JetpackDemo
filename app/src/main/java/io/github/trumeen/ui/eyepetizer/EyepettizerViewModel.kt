@@ -42,7 +42,7 @@ class EyepettizerViewModel : BaseViewModel() {
                 UiModel.RecommendItem(it)
             }
         }.map {
-            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+            it.insertSeparators<UiModel.RecommendItem, UiModel> { before, after ->
                 if (after == null) {
                     // we're at the end of the list
                     return@insertSeparators UiModel.FooterItem("")
@@ -64,7 +64,7 @@ class EyepettizerViewModel : BaseViewModel() {
                 UiModel.RecommendItem(it)
             }
         }.map {
-            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+            it.insertSeparators<UiModel.RecommendItem, UiModel> { before, after ->
                 if (after == null) {
                     // we're at the end of the list
                     return@insertSeparators UiModel.FooterItem("")
@@ -80,12 +80,12 @@ class EyepettizerViewModel : BaseViewModel() {
 
 
     fun getDailyPagingData(): Flow<PagingData<UiModel>> {
-        return dailyRepository.getPageData().map { pagingData->
+        return dailyRepository.getPageData().map { pagingData ->
             pagingData.map {
                 UiModel.RecommendItem(it)
             }
         }.map {
-            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+            it.insertSeparators<UiModel.RecommendItem, UiModel> { before, after ->
                 if (after == null) {
                     // we're at the end of the list
                     return@insertSeparators UiModel.FooterItem("")
@@ -100,12 +100,12 @@ class EyepettizerViewModel : BaseViewModel() {
     }
 
     fun getCommunityData(url: String): Flow<PagingData<UiModel>> {
-        return mCommunityRepository.getCommunityData(url).map { pagingData->
+        return mCommunityRepository.getCommunityData(url).map { pagingData ->
             pagingData.map {
                 UiModel.RecommendItem(it)
             }
         }.map {
-            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+            it.insertSeparators<UiModel.RecommendItem, UiModel> { before, after ->
                 if (after == null) {
                     // we're at the end of the list
                     return@insertSeparators UiModel.FooterItem("")
@@ -120,12 +120,12 @@ class EyepettizerViewModel : BaseViewModel() {
     }
 
     fun getCommunityRecData(url: String): Flow<PagingData<UiModel>> {
-        return mCommunityRepository.getCommunityRecData(url).map { pagingData->
+        return mCommunityRepository.getCommunityRecData(url).map { pagingData ->
             pagingData.map {
                 UiModel.RecommendItem(it)
             }
         }.map {
-            it.insertSeparators<UiModel.RecommendItem,UiModel>{ before, after ->
+            it.insertSeparators<UiModel.RecommendItem, UiModel> { before, after ->
                 if (after == null) {
                     // we're at the end of the list
                     return@insertSeparators UiModel.FooterItem("")
@@ -140,14 +140,18 @@ class EyepettizerViewModel : BaseViewModel() {
     }
 
 
-    suspend fun getCommunityTabs() {
-        mCommunityTabs.value = mCommunityRepository.getCommunityTabs()
+    fun getCommunityTabs() {
+        launch(block = {
+            mCommunityTabs.value = mCommunityRepository.getCommunityTabs()
+        })
+
 //        return mCommunityRepository.getCommunityTabs()
     }
 
-    suspend fun getMessagesTabs() {
-        mMessagesTabs.value = mMessageRepository.getMessageTabs()
-//        return mCommunityRepository.getCommunityTabs()
+    fun getMessagesTabs() {
+        launch(block = {
+            mMessagesTabs.value = mMessageRepository.getMessageTabs()
+        })
     }
 
 

@@ -5,11 +5,11 @@ import io.github.trumeen.bean.Message
 import io.github.trumeen.net.VideoApi
 import java.io.IOException
 
-class MessageDateSource(val api: VideoApi) : PagingSource<String, Message>() {
+class MessageDateSource(val api: VideoApi) : EyepetizerDataSource<String, Message>() {
     private var lastUrl: String? = null
 
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, Message> {
+    override suspend fun loadData(params: LoadParams<String>): LoadResult<String, Message> {
         val url: String = params.key ?: ""
         val response = if (!url.isNullOrEmpty()) {
             lastUrl = url
@@ -18,15 +18,11 @@ class MessageDateSource(val api: VideoApi) : PagingSource<String, Message>() {
             lastUrl = null
             api.getMessageData()
         }
-        return try {
-            LoadResult.Page(
-                data = response.messageList,
-                prevKey = if (lastUrl.isNullOrEmpty()) null else lastUrl,
-                nextKey = if (response.nextPageUrl.isNullOrEmpty()) null else response.nextPageUrl
-            )
-        } catch (exception: IOException) {
-            return LoadResult.Error(exception)
-        }
+        return LoadResult.Page(
+            data = response.messageList,
+            prevKey = if (lastUrl.isNullOrEmpty()) null else lastUrl,
+            nextKey = if (response.nextPageUrl.isNullOrEmpty()) null else response.nextPageUrl
+        )
     }
 
 
