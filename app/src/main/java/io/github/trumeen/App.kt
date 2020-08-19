@@ -1,6 +1,7 @@
 package io.github.trumeen
 
 import android.app.Application
+import cn.bmob.v3.Bmob
 import com.blankj.utilcode.util.AppUtils
 import io.github.trumeen.common.ActivityLifecycleCallbacksAdapter
 import io.github.trumeen.util.core.ActivityManager
@@ -28,6 +29,7 @@ class App : Application() {
     }
 
     private fun init() {
+        Bmob.initialize(this, "00eb3483ce9bafcf13186a01e5949f75");
         rigesterActivityCallbacks()
         setDayNightMode()
         versionCode = AppUtils.getAppVersionCode()

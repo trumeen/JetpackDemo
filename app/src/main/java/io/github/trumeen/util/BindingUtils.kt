@@ -239,6 +239,7 @@ object BindingUtils {
     fun setCourseDesc(view: TextView, course: Course) {
         view.text = "level ${course.level} | ${when (course.type) {
             1 -> "答疑课"
+            2->"教学课"
             else -> "专项课"
         }}"
     }

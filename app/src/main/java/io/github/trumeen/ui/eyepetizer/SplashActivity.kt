@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import io.github.trumeen.R
+import io.github.trumeen.ui.lls.LLSMainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**

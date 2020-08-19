@@ -58,6 +58,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.eyepetizer.EyepettizerMainActivity" />
+
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="io.github.trumeen.BmobContentProvider">
+        </provider>
     </application>
 
 </manifest>

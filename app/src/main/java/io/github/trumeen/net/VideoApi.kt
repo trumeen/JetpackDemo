@@ -1,24 +1,22 @@
 package io.github.trumeen.net
 
 import com.blankj.utilcode.util.PathUtils
+import com.google.gson.JsonObject
 import io.github.trumeen.BuildConfig
-import io.github.trumeen.bean.LLSCureseResultBean
-import io.github.trumeen.bean.MessageListBean
-import io.github.trumeen.bean.RecommendBean
-import io.github.trumeen.bean.TabInfoBean
+import io.github.trumeen.bean.*
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.random.Random
 
 
 /**
@@ -149,5 +147,11 @@ interface VideoApi {
         @Query("isEnd") isEnd: Boolean = true,
         @Query("pageNum") pageNum: Int = 20
     ): LLSCureseResultBean
+
+    @GET("lux_klass_sessions/{id}/video")
+    suspend fun getVideoInfo(@Path("id") id: String, @Query("token") token: String):JsonObject
+
+    @GET("lux_klass_sessions/{id}/content")
+    suspend fun getContent(@Path("id") id: String, @Query("token") token: String): JsonObject
 
 }
