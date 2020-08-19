@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:showPaths="true"
+    android:id="@+id/motion_splash"
     app:layoutDescription="@xml/activity_splash_scene"
     tools:context=".ui.eyepetizer.SplashActivity">
 
@@ -14,7 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/landing_background" />
+        android:src="@drawable/landing_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/iv_logo"
