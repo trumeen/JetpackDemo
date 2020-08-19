@@ -20,8 +20,10 @@ import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.youth.banner.Banner
 import io.github.trumeen.BR
 import io.github.trumeen.R
+import io.github.trumeen.bean.Course
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.extension.load
+import io.github.trumeen.extension.toDateTime
 import io.github.trumeen.extension.toMinutes
 import io.github.trumeen.extension.visible
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
@@ -224,6 +226,21 @@ object BindingUtils {
                 }
             }).build(video)
 
+    }
+
+    @BindingAdapter("app:Datetext")
+    @JvmStatic
+    fun setDateText(view: TextView, dates: Long) {
+        view.text = dates.toDateTime("yyyy.MM.DD HH:mm")
+    }
+
+    @BindingAdapter("app:courseDesc")
+    @JvmStatic
+    fun setCourseDesc(view: TextView, course: Course) {
+        view.text = "level ${course.level} | ${when (course.type) {
+            1 -> "答疑课"
+            else -> "专项课"
+        }}"
     }
 
 }
