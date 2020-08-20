@@ -1,5 +1,6 @@
 package io.github.trumeen.ui.eyepetizer
 
+import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
+import com.blankj.utilcode.util.PermissionUtils
 import io.github.trumeen.R
 import io.github.trumeen.ui.lls.LLSMainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -25,6 +27,20 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        requestPermissions(
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE
+            ), 1000
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        println(permissions)
     }
 
     override fun onResume() {
@@ -42,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                startActivity(Intent(this@SplashActivity, EyepettizerMainActivity::class.java))
+                startActivity(Intent(this@SplashActivity, LLSMainActivity::class.java))
                 finish()
             }
 

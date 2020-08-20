@@ -29,6 +29,8 @@ import io.github.trumeen.extension.visible
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.base.SampleAdapter
+import io.github.trumeen.ui.lls.COURSE_DATA
+import io.github.trumeen.ui.lls.LLSCourseContentActivity
 import io.github.trumeen.view.GridSpacingItemDecoration
 import io.github.trumeen.weight.AutoPlayVideoPlayer
 import io.github.trumeen.weight.CalendarView
@@ -239,9 +241,21 @@ object BindingUtils {
     fun setCourseDesc(view: TextView, course: Course) {
         view.text = "level ${course.level} | ${when (course.type) {
             1 -> "答疑课"
-            2->"教学课"
+            2 -> "教学课"
             else -> "专项课"
         }}"
     }
+
+    @BindingAdapter("app:gotoCoursePage")
+    @JvmStatic
+    fun gotoCoursePage(view: TextView, course: Course) {
+        view.setOnClickListener {
+            val intent = Intent(view.context, LLSCourseContentActivity::class.java)
+            intent.putExtra(COURSE_DATA, course)
+            view.context.startActivity(intent)
+        }
+
+    }
+
 
 }

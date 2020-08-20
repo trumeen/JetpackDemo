@@ -1,10 +1,15 @@
 package io.github.trumeen.bean
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+
 data class LLSCureseResultBean(
     val courseList: List<Course>,
     val serverTime: Int
 )
 
+@Parcelize
 data class Course(
     val id: String,
     val level: Int,
@@ -14,4 +19,4 @@ data class Course(
     val title: String,
     val type: Int,
     val uri: String
-)
+) : Parcelable

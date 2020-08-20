@@ -61,17 +61,17 @@ interface VideoApi {
 
         fun getLLS(baseUrl: String): VideoApi {
             val SIZE_OF_CACHE = 100 * 1024 * 1024.toLong() // 10 MiB
-            val cacheFile: String = PathUtils.getExternalAppCachePath()
-            val file = File(cacheFile)
-            if (!file.exists()) {
-                file.mkdirs()
-            }
-            val cache = Cache(file, SIZE_OF_CACHE)
+//            val cacheFile: String = PathUtils.getExternalAppCachePath()
+//            val file = File(cacheFile)
+//            if (!file.exists()) {
+//                file.mkdirs()
+//            }
+//            val cache = Cache(file, SIZE_OF_CACHE)
             val clientBuilder = OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
 //                .addNetworkInterceptor(CacheControl.REWRITE_RESPONSE_INTERCEPTOR) //有网络时的拦截器
                 .addInterceptor(LLSInterceptor())//没网络时的拦截器
-                .cache(cache)
+//                .cache(cache)
             if (BuildConfig.DEBUG) {
                 val loggingInterceptor = HttpLoggingInterceptor()
                 loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -82,6 +82,24 @@ interface VideoApi {
                 .client(clientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 //.addConverterFactory(Base64GsonConverterFacctory.create(Gson()))
+                .build()
+                .create(VideoApi::class.java)
+        }
+
+        fun getBmob(baseUrl: String): VideoApi {
+
+            val clientBuilder = OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .addInterceptor(BmobInterceptor())//没网络时的拦截器
+            if (BuildConfig.DEBUG) {
+                val loggingInterceptor = HttpLoggingInterceptor()
+                loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+                clientBuilder.addInterceptor(loggingInterceptor)
+            }
+            return Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(clientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(VideoApi::class.java)
         }
@@ -149,9 +167,24 @@ interface VideoApi {
     ): LLSCureseResultBean
 
     @GET("lux_klass_sessions/{id}/video")
-    suspend fun getVideoInfo(@Path("id") id: String, @Query("token") token: String):JsonObject
+    suspend fun getVideoInfo(
+        @Path("id") id: String,
+        @Query("token") token: String
+    ): LLSVideoInfoBean
 
-    @GET("lux_klass_sessions/{id}/content")
+    @GET("elite_klass_sessions/{id}/content")
     suspend fun getContent(@Path("id") id: String, @Query("token") token: String): JsonObject
+
+    @GET("course_list")
+    suspend fun getBmobCurseList(
+        @Query("skip") offset: Int,
+        @Query("limit") limit: Int
+    ): BmobCourseListBean
+
+
+    @GET("course_content")
+    suspend fun getBmobCurseContent(
+        @Query("where") params: String
+    ): CourseContentBean
 
 }

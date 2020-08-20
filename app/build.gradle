@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':m3u8manger_lib')
     def pagingVersion = "3.0.0-alpha04"
     def navigationVersion = "2.3.0"
     implementation 'androidx.appcompat:appcompat:1.2.0'
