@@ -3,21 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="content"
             type="io.github.trumeen.bean.ContentItem" />
+
+        <variable
+            name="viewModel"
+            type="io.github.trumeen.ui.lls.LLSCourseContentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_marginBottom="@dimen/dp_20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            app:setAudioUrl="@{content.audioUrl}"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingEnd="@dimen/dp_20"
+            android:gravity="center_vertical"
+            android:drawablePadding="@dimen/dp_10"
+            android:background="@drawable/shape_bg_lls_audio"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{content.audioUrl}"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="@dimen/dp_50"
+            android:text="@{String.valueOf(content.duration)}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/voice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

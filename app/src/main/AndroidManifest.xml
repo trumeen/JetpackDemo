@@ -18,7 +18,8 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.lls.LLSCourseContentActivity"></activity>
+        <activity android:name=".ui.lls.ImagePreviewActivity"></activity>
+        <activity android:name=".ui.lls.LLSCourseContentActivity" />
         <activity android:name=".ui.lls.LLSMainActivity" />
         <activity
             android:name=".ui.eyepetizer.SplashActivity"
@@ -67,7 +68,7 @@
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="io.github.trumeen.BmobContentProvider"></provider>
+            android:authorities="io.github.trumeen.BmobContentProvider" />
     </application>
 
 </manifest>

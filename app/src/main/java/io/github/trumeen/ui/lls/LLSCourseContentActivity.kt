@@ -26,7 +26,7 @@ class LLSCourseContentActivity : BaseVmActivity<LLSCourseContentViewModel>() {
     }
 
     override fun initData() {
-        courseAdapter = CourseContentAdapter(mViewModel.contenLiveData.value!!)
+        courseAdapter = CourseContentAdapter(mViewModel.contenLiveData.value!!,mViewModel)
         recycler_view.apply {
             adapter = courseAdapter
             layoutManager = LinearLayoutManager(this@LLSCourseContentActivity)

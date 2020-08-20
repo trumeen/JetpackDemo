@@ -2,6 +2,7 @@ package io.github.trumeen.util
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
 import android.net.Uri
 import android.text.TextUtils
 import android.view.View
@@ -22,18 +23,20 @@ import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.bean.Course
 import io.github.trumeen.bean.RecommendItemBean
-import io.github.trumeen.extension.load
-import io.github.trumeen.extension.toDateTime
-import io.github.trumeen.extension.toMinutes
-import io.github.trumeen.extension.visible
+import io.github.trumeen.extension.*
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.base.SampleAdapter
 import io.github.trumeen.ui.lls.COURSE_DATA
+import io.github.trumeen.ui.lls.IMAGE_URL
+import io.github.trumeen.ui.lls.ImagePreviewActivity
 import io.github.trumeen.ui.lls.LLSCourseContentActivity
 import io.github.trumeen.view.GridSpacingItemDecoration
 import io.github.trumeen.weight.AutoPlayVideoPlayer
 import io.github.trumeen.weight.CalendarView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 import java.util.*
 
@@ -67,6 +70,34 @@ object BindingUtils {
 
         }
 //        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+    }
+
+    @BindingAdapter("app:imgGlide")
+    @JvmStatic
+    fun setImgGlide(
+        imageView: ImageView,
+        url: String?
+    ) {
+        if (TextUtils.isEmpty(url)) {
+            return
+        }
+        imageView.loadGlide(url!!)
+    }
+
+    @BindingAdapter("app:toPreviewPage")
+    @JvmStatic
+    fun toPreviewPage(
+        imageView: ImageView,
+        url: String?
+    ) {
+        if (TextUtils.isEmpty(url)) {
+            return
+        }
+        imageView.setOnClickListener {
+            val intent = Intent(imageView.context,ImagePreviewActivity::class.java)
+            intent.putExtra(IMAGE_URL,url)
+            imageView.context.startActivity(intent)
+        }
     }
 
     @BindingAdapter("app:minutesText")
@@ -239,10 +270,11 @@ object BindingUtils {
     @BindingAdapter("app:courseDesc")
     @JvmStatic
     fun setCourseDesc(view: TextView, course: Course) {
-        view.text = "level ${course.level} | ${when (course.type) {
-            1 -> "答疑课"
+        view.text = "level ${course.level} | ${when (course.tag) {
+            2 -> "答疑课"
             2 -> "教学课"
-            else -> "专项课"
+            3 -> "专项课"
+            else ->""
         }}"
     }
 
@@ -253,6 +285,25 @@ object BindingUtils {
             val intent = Intent(view.context, LLSCourseContentActivity::class.java)
             intent.putExtra(COURSE_DATA, course)
             view.context.startActivity(intent)
+        }
+
+    }
+
+    val mediaPlayer = MediaPlayer()
+
+    @BindingAdapter("app:setAudioUrl")
+    @JvmStatic
+    fun setAudioUrl(view: TextView, audioUrl: String) {
+        view.setOnClickListener {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+            GlobalScope.launch(Dispatchers.IO) {
+                mediaPlayer.setDataSource(audioUrl)
+                mediaPlayer.prepare()
+                mediaPlayer.start()
+            }
+
+
         }
 
     }

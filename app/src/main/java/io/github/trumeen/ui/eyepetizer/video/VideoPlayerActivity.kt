@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
+import coil.api.load
 import com.google.android.exoplayer2.SeekParameters
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
@@ -16,7 +17,6 @@ import io.github.trumeen.R
 import io.github.trumeen.bean.VIDEO_INFO
 import io.github.trumeen.bean.VideoInfoBean
 import io.github.trumeen.databinding.ActivityVideoPlayerBinding
-import io.github.trumeen.extension.load
 import io.github.trumeen.ui.base.BaseVmActivity
 import kotlinx.android.synthetic.main.activity_video_player.*
 import tv.danmaku.ijk.media.exo2.Exo2PlayerManager

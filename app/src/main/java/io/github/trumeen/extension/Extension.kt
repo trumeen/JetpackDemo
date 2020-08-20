@@ -19,11 +19,11 @@ import io.github.trumeen.view.RoundedCornerCenterCrop
  */
 
 
-fun ImageView.load(url: String) =
+fun ImageView.loadGlide(url: String) =
     Glide.with(this.context).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).into(this)
 
 
-fun ImageView.load(url: String, radius: Int) =
+fun ImageView.loadGlide(url: String, radius: Int) =
     Glide.with(this.context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)

@@ -15,7 +15,7 @@ const val TYPE_TEXT = 0
 const val TYPE_AUDIO = 1
 const val TYPE_PIC = 2
 
-class CourseContentAdapter(var mDatas: ObservableArrayList<ContentItem>) :
+class CourseContentAdapter(var mDatas: ObservableArrayList<ContentItem>,val viewModel:LLSCourseContentViewModel) :
     MultipleTypeAdapter<ContentItem>(mDatas) {
 
 
@@ -52,6 +52,11 @@ class CourseContentAdapter(var mDatas: ObservableArrayList<ContentItem>) :
         )
 
         return super.onCreateViewHolder(parent, viewType)
+    }
+
+    override fun onBindViewHolder(holder: SampleAdapter.SampleViewHolder, position: Int) {
+        holder.getBinding().setVariable(BR.viewModel,viewModel)
+        super.onBindViewHolder(holder, position)
     }
 
     override fun getItemViewType(position: Int): Int {
