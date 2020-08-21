@@ -26,6 +26,12 @@ class LLSMainActivity : BaseVmActivity<LLSMainViewModle>() {
 
     override fun layoutRes() = R.layout.activity_l_l_s_main
 
+    override fun initView() {
+        iv_back.setOnClickListener {
+            finish()
+        }
+    }
+
     override fun initData() {
 
         var courseListAdapter = CourseListAdapter()
@@ -39,58 +45,58 @@ class LLSMainActivity : BaseVmActivity<LLSMainViewModle>() {
             }
         }
 
-       /* GlobalScope.launch(Dispatchers.IO) {
-            val api = VideoApi.getLLS(LLS_BASE_URL)
+        /* GlobalScope.launch(Dispatchers.IO) {
+             val api = VideoApi.getLLS(LLS_BASE_URL)
 
 
-            (3..12).forEach {
-                val curseList = api
-                    .getCurseList(token = TOKEN, page = it)
-                if (!curseList.courseList.isNullOrEmpty()) {
-                    curseList.courseList.forEach { course ->
-                        println("title-->${course.title}")
-                        if (course.uri.isNullOrBlank()) {
-                            val url = api.getVideoInfo(course.id, TOKEN)
-                            withContext(Dispatchers.Main) {
-                                val m3U8DownloadTask = M3U8DownloadTask(course.id)
-                                m3U8DownloadTask.apply {
-                                    saveFilePath = "/sdcard/LLS/${course.id}.ts"
-                                    download(url.url, object : OnDownloadListener {
-                                        override fun onSuccess() {
-                                            println("${url} --下载成功")
-                                        }
+             (3..12).forEach {
+                 val curseList = api
+                     .getCurseList(token = TOKEN, page = it)
+                 if (!curseList.courseList.isNullOrEmpty()) {
+                     curseList.courseList.forEach { course ->
+                         println("title-->${course.title}")
+                         if (course.uri.isNullOrBlank()) {
+                             val url = api.getVideoInfo(course.id, TOKEN)
+                             withContext(Dispatchers.Main) {
+                                 val m3U8DownloadTask = M3U8DownloadTask(course.id)
+                                 m3U8DownloadTask.apply {
+                                     saveFilePath = "/sdcard/LLS/${course.id}.ts"
+                                     download(url.url, object : OnDownloadListener {
+                                         override fun onSuccess() {
+                                             println("${url} --下载成功")
+                                         }
 
-                                        override fun onDownloading(
-                                            itemFileSize: Long,
-                                            totalTs: Int,
-                                            curTs: Int
-                                        ) {
-                                            println("${url} --下载中")
-                                        }
+                                         override fun onDownloading(
+                                             itemFileSize: Long,
+                                             totalTs: Int,
+                                             curTs: Int
+                                         ) {
+                                             println("${url} --下载中")
+                                         }
 
-                                        override fun onProgress(curLength: Long) {
-                                            println("${url} --下载中--${curLength}")
-                                        }
+                                         override fun onProgress(curLength: Long) {
+                                             println("${url} --下载中--${curLength}")
+                                         }
 
-                                        override fun onError(errorMsg: Throwable?) {
-                                            println("${url} --下载失败 ${errorMsg?.message}")
-                                        }
+                                         override fun onError(errorMsg: Throwable?) {
+                                             println("${url} --下载失败 ${errorMsg?.message}")
+                                         }
 
-                                        override fun onStart() {
-                                            println("${url} --开始下载")
-                                        }
+                                         override fun onStart() {
+                                             println("${url} --开始下载")
+                                         }
 
-                                    })
-                                }
-                                withContext(Dispatchers.IO) {
-                                    while (m3U8DownloadTask.isRunning) {
-                                        delay(1000)
-                                    }
-                                }
-                            }
+                                     })
+                                 }
+                                 withContext(Dispatchers.IO) {
+                                     while (m3U8DownloadTask.isRunning) {
+                                         delay(1000)
+                                     }
+                                 }
+                             }
 
 
-                            *//* BmobCourseContentBean().apply {
+                             *//* BmobCourseContentBean().apply {
                                  this.id = course.id
 
                                  this.result = url

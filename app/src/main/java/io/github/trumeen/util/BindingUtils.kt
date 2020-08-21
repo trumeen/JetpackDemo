@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.utils.LottieValueAnimator
 import com.google.android.exoplayer2.SeekParameters
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
@@ -27,10 +29,7 @@ import io.github.trumeen.extension.*
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.base.SampleAdapter
-import io.github.trumeen.ui.lls.COURSE_DATA
-import io.github.trumeen.ui.lls.IMAGE_URL
-import io.github.trumeen.ui.lls.ImagePreviewActivity
-import io.github.trumeen.ui.lls.LLSCourseContentActivity
+import io.github.trumeen.ui.lls.*
 import io.github.trumeen.view.GridSpacingItemDecoration
 import io.github.trumeen.weight.AutoPlayVideoPlayer
 import io.github.trumeen.weight.CalendarView
@@ -94,8 +93,8 @@ object BindingUtils {
             return
         }
         imageView.setOnClickListener {
-            val intent = Intent(imageView.context,ImagePreviewActivity::class.java)
-            intent.putExtra(IMAGE_URL,url)
+            val intent = Intent(imageView.context, ImagePreviewActivity::class.java)
+            intent.putExtra(IMAGE_URL, url)
             imageView.context.startActivity(intent)
         }
     }
@@ -274,7 +273,7 @@ object BindingUtils {
             2 -> "答疑课"
             2 -> "教学课"
             3 -> "专项课"
-            else ->""
+            else -> ""
         }}"
     }
 
@@ -291,20 +290,44 @@ object BindingUtils {
 
     val mediaPlayer = MediaPlayer()
 
-    @BindingAdapter("app:setAudioUrl")
+    @BindingAdapter("app:setAudioUrl", "app:llsViewModle")
     @JvmStatic
-    fun setAudioUrl(view: TextView, audioUrl: String) {
+    fun setAudioUrl(view: TextView, audioUrl: String, viewModel: LLSCourseContentViewModel) {
         view.setOnClickListener {
             mediaPlayer.stop()
             mediaPlayer.reset()
             GlobalScope.launch(Dispatchers.IO) {
                 mediaPlayer.setDataSource(audioUrl)
+                viewModel.currentAudioUrl.postValue(audioUrl)
+                mediaPlayer.setOnCompletionListener {
+                    viewModel.currentAudioUrl.postValue("")
+                }
                 mediaPlayer.prepare()
                 mediaPlayer.start()
             }
 
 
         }
+
+    }
+
+    @BindingAdapter("app:playAnimation", "app:audioUrl")
+    @JvmStatic
+    fun playAnimation(
+        view: LottieAnimationView,
+        viewModel: String,
+        audioUrl: String
+    ) {
+        if (audioUrl == viewModel && viewModel.isNotEmpty()) {
+            view.repeatCount = LottieValueAnimator.INFINITE
+            view.playAnimation()
+        } else {
+            view.pauseAnimation()
+            view.progress = 0f
+            view.repeatCount = 0
+            view.cancelAnimation()
+        }
+
 
     }
 

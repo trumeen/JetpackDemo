@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="content"
             type="io.github.trumeen.bean.ContentItem" />
@@ -13,24 +14,41 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_50"
         android:layout_marginEnd="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_20"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginBottom="@dimen/dp_20">
 
         <TextView
-            app:setAudioUrl="@{content.audioUrl}"
-            android:paddingStart="@dimen/dp_20"
-            android:paddingEnd="@dimen/dp_20"
-            android:gravity="center_vertical"
-            android:drawablePadding="@dimen/dp_10"
-            android:background="@drawable/shape_bg_lls_audio"
+            android:textColor="@color/text_green"
+            android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
+            android:background="@drawable/shape_bg_lls_audio"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingEnd="@dimen/dp_20"
             android:text="@{String.valueOf(content.duration)}"
+            app:drawableStartCompat="@drawable/voice"
             app:layout_constraintTop_toTopOf="parent"
-            app:drawableStartCompat="@drawable/voice" />
+            app:llsViewModle="@{viewModel}"
+            app:setAudioUrl="@{content.audioUrl}" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_playing"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            app:audioUrl="@{content.audioUrl}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_content"
+            app:layout_constraintEnd_toEndOf="@id/tv_content"
+            app:layout_constraintTop_toTopOf="@id/tv_content"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="part_playing.json"
+            app:lottie_repeatCount="-1"
+            app:playAnimation="@{viewModel.currentAudioUrl}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

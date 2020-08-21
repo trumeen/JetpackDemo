@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.trumeen.R
 import io.github.trumeen.bean.Course
 import io.github.trumeen.ui.base.BaseVmActivity
+import io.github.trumeen.util.BindingUtils
 import kotlinx.android.synthetic.main.activity_l_l_s_course_content.*
 
 const val COURSE_DATA = "course_data"
@@ -26,7 +27,7 @@ class LLSCourseContentActivity : BaseVmActivity<LLSCourseContentViewModel>() {
     }
 
     override fun initData() {
-        courseAdapter = CourseContentAdapter(mViewModel.contenLiveData.value!!,mViewModel)
+        courseAdapter = CourseContentAdapter(mViewModel.contentLiveData.value!!, mViewModel)
         recycler_view.apply {
             adapter = courseAdapter
             layoutManager = LinearLayoutManager(this@LLSCourseContentActivity)
@@ -36,6 +37,7 @@ class LLSCourseContentActivity : BaseVmActivity<LLSCourseContentViewModel>() {
 
     override fun onDestroy() {
         courseAdapter?.setLifecycleDestroyed()
+        BindingUtils.mediaPlayer.release()
         super.onDestroy()
 
     }

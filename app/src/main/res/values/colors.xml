@@ -285,4 +285,6 @@
     <color name="bg_alpha">#22000000</color>
     <color name="bg_name">#90000000</color>
     <color name="colorAccent">#1B1B1D</color>
+    <color name="text_green">#1afa29</color>
+    <color name="color_green_eye">#CCE8CF</color>
 </resources>
