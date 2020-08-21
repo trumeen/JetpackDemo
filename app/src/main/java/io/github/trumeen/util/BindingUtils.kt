@@ -29,7 +29,6 @@ import io.github.trumeen.extension.*
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.base.SampleAdapter
-import io.github.trumeen.ui.lls.*
 import io.github.trumeen.view.GridSpacingItemDecoration
 import io.github.trumeen.weight.AutoPlayVideoPlayer
 import io.github.trumeen.weight.CalendarView
@@ -83,21 +82,6 @@ object BindingUtils {
         imageView.loadGlide(url!!)
     }
 
-    @BindingAdapter("app:toPreviewPage")
-    @JvmStatic
-    fun toPreviewPage(
-        imageView: ImageView,
-        url: String?
-    ) {
-        if (TextUtils.isEmpty(url)) {
-            return
-        }
-        imageView.setOnClickListener {
-            val intent = Intent(imageView.context, ImagePreviewActivity::class.java)
-            intent.putExtra(IMAGE_URL, url)
-            imageView.context.startActivity(intent)
-        }
-    }
 
     @BindingAdapter("app:minutesText")
     @JvmStatic
@@ -259,77 +243,5 @@ object BindingUtils {
             }).build(video)
 
     }
-
-    @BindingAdapter("app:Datetext")
-    @JvmStatic
-    fun setDateText(view: TextView, dates: Long) {
-        view.text = dates.toDateTime("yyyy.MM.DD HH:mm")
-    }
-
-    @BindingAdapter("app:courseDesc")
-    @JvmStatic
-    fun setCourseDesc(view: TextView, course: Course) {
-        view.text = "level ${course.level} | ${when (course.tag) {
-            2 -> "答疑课"
-            2 -> "教学课"
-            3 -> "专项课"
-            else -> ""
-        }}"
-    }
-
-    @BindingAdapter("app:gotoCoursePage")
-    @JvmStatic
-    fun gotoCoursePage(view: TextView, course: Course) {
-        view.setOnClickListener {
-            val intent = Intent(view.context, LLSCourseContentActivity::class.java)
-            intent.putExtra(COURSE_DATA, course)
-            view.context.startActivity(intent)
-        }
-
-    }
-
-    val mediaPlayer = MediaPlayer()
-
-    @BindingAdapter("app:setAudioUrl", "app:llsViewModle")
-    @JvmStatic
-    fun setAudioUrl(view: TextView, audioUrl: String, viewModel: LLSCourseContentViewModel) {
-        view.setOnClickListener {
-            mediaPlayer.stop()
-            mediaPlayer.reset()
-            GlobalScope.launch(Dispatchers.IO) {
-                mediaPlayer.setDataSource(audioUrl)
-                viewModel.currentAudioUrl.postValue(audioUrl)
-                mediaPlayer.setOnCompletionListener {
-                    viewModel.currentAudioUrl.postValue("")
-                }
-                mediaPlayer.prepare()
-                mediaPlayer.start()
-            }
-
-
-        }
-
-    }
-
-    @BindingAdapter("app:playAnimation", "app:audioUrl")
-    @JvmStatic
-    fun playAnimation(
-        view: LottieAnimationView,
-        viewModel: String,
-        audioUrl: String
-    ) {
-        if (audioUrl == viewModel && viewModel.isNotEmpty()) {
-            view.repeatCount = LottieValueAnimator.INFINITE
-            view.playAnimation()
-        } else {
-            view.pauseAnimation()
-            view.progress = 0f
-            view.repeatCount = 0
-            view.cancelAnimation()
-        }
-
-
-    }
-
 
 }

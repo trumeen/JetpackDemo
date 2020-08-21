@@ -2,19 +2,10 @@ package io.github.trumeen.ui.eyepetizer
 
 import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.view.MotionEvent
-import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
-import com.blankj.utilcode.util.PermissionUtils
 import io.github.trumeen.R
-import io.github.trumeen.ui.lls.LLSMainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
@@ -58,7 +49,7 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                startActivity(Intent(this@SplashActivity, LLSMainActivity::class.java))
+                startActivity(Intent(this@SplashActivity, EyepettizerMainActivity::class.java))
                 finish()
             }
 
