@@ -79,13 +79,13 @@ class VideoPlayerActivity : BaseVmActivity<VideoPlayerViewModel>() {
                 //配合下方的onConfigurationChanged
                 orientationUtils?.isEnable = !lock
             }.build(video)
+
         video.fullscreenButton
             .setOnClickListener(View.OnClickListener { //直接横屏
                 orientationUtils!!.resolveByClick()
                 //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
                 video.startWindowFullscreen(this, true, true)
             })
-
         video.setOnBackClickListener(View.OnClickListener { finish() })
     }
 
@@ -112,6 +112,7 @@ class VideoPlayerActivity : BaseVmActivity<VideoPlayerViewModel>() {
     }
 
     override fun onResume() {
+        video.startButton.performClick()
         getCurPlay().onVideoResume(false)
         super.onResume()
         isPause = false
@@ -122,6 +123,7 @@ class VideoPlayerActivity : BaseVmActivity<VideoPlayerViewModel>() {
         if (isPlay) {
             getCurPlay().release()
         }
+        video.gsyVideoManager?.releaseMediaPlayer()
         orientationUtils?.releaseListener()
     }
 

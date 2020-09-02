@@ -17,11 +17,12 @@
         android:paddingEnd="@dimen/dp_15">
 
         <ImageView
+            android:transitionName="cover_image"
             android:id="@+id/iv_content"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_180"
             android:layout_marginBottom="@dimen/dp_9"
-            android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view.context,recommendItem.recommendItemBean.data.content.data)}"
+            android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view,view.context,recommendItem.recommendItemBean.data.content.data)}"
             app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
             app:layout_constraintTop_toTopOf="parent"
             app:radius="@{@dimen/dp_4}" />

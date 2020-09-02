@@ -32,20 +32,21 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view.context,recommendItem.recommendItemBean.data.content.data)}"
+                    android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view,view.context,recommendItem.recommendItemBean.data.content.data)}"
                     android:scaleType="centerCrop"
+                    android:transitionName="cover_image"
                     app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
                     app:layout_constraintDimensionRatio="@{@string/pictureFormate(recommendItem.recommendItemBean.data.content.data.width,recommendItem.recommendItemBean.data.content.data.height)}"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:src="@drawable/icon_ugc_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_marginEnd="@dimen/dp_5"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/icon_ugc_video"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -53,12 +54,12 @@
 
 
         <TextView
-            android:layout_marginTop="@dimen/dp_5"
             android:id="@+id/tv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="3"
+            android:layout_marginTop="@dimen/dp_5"
             android:ellipsize="end"
+            android:maxLines="3"
             android:text="@{recommendItem.recommendItemBean.data.content.data.description}"
             android:textSize="@dimen/dp_12"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,22 +67,22 @@
             tools:text="jin" />
 
         <ImageView
-            android:layout_marginTop="@dimen/dp_5"
             android:id="@+id/iv_head"
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_5"
             app:imgUrl="@{recommendItem.recommendItemBean.data.header.icon}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_desc"
             app:radius="@{@dimen/dp_25}" />
 
         <TextView
-            android:layout_marginStart="@dimen/dp_5"
-            android:textColor="@color/text_gray"
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
             android:text="@{recommendItem.recommendItemBean.data.header.issuerName}"
+            android:textColor="@color/text_gray"
             android:textSize="@dimen/dp_12"
             app:layout_constraintBottom_toBottomOf="@id/iv_head"
             app:layout_constraintStart_toEndOf="@id/iv_head"
@@ -89,22 +90,22 @@
             tools:text="jin" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_5"
             android:text="@{String.valueOf(recommendItem.recommendItemBean.data.content.data.consumption.collectionCount)}"
-            app:layout_constraintTop_toTopOf="@id/iv_favorites"
             app:layout_constraintBottom_toBottomOf="@id/iv_favorites"
             app:layout_constraintEnd_toStartOf="@id/iv_favorites"
-            android:layout_width="wrap_content"
-            android:layout_marginEnd="@dimen/dp_5"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toTopOf="@id/iv_favorites" />
 
         <ImageView
             android:id="@+id/iv_favorites"
-            app:layout_constraintTop_toTopOf="@id/iv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_like_heart_grey"
             app:layout_constraintBottom_toBottomOf="@id/iv_head"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_action_like_heart_grey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toTopOf="@id/iv_head" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

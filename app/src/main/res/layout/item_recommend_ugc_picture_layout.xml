@@ -30,9 +30,10 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:transitionName="cover_image"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view.context,recommendItem.recommendItemBean.data.content.data)}"
+                    android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view,view.context,recommendItem.recommendItemBean.data.content.data)}"
                     android:scaleType="centerCrop"
                     app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
                     app:layout_constraintDimensionRatio="@{@string/pictureFormate(recommendItem.recommendItemBean.data.content.data.width,recommendItem.recommendItemBean.data.content.data.height)}"

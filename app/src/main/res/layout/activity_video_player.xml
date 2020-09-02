@@ -17,9 +17,10 @@
         tools:context=".ui.eyepetizer.video.VideoPlayerActivity">
 
         <io.github.trumeen.weight.LandLayoutVideo
+            android:transitionName="cover_image"
             android:id="@+id/video"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_180"
+            android:layout_height="@dimen/dp_220"
             app:layout_constraintTop_toTopOf="parent" />
 
 
