@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.trumeen.R
 import io.github.trumeen.bean.Tab
@@ -86,7 +87,32 @@ class CommunityFragment : BaseVmFragment<EyepettizerViewModel>() {
         }
 
 
+        tabLayout.addOnTabSelectedListener(tabChangeListener)
+
     }
 
+    private val tabChangeListener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+
+
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            tab?.let {
+                mViewModel.mCommunityPageIndex = it.position
+            }
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tabLayout.getTabAt(mViewModel.mCommunityPageIndex)?.select()
+        viewPager.setCurrentItem(mViewModel.mCommunityPageIndex, false)
+
+    }
 
 }

@@ -17,6 +17,9 @@ val api = VideoApi.get(EYEPETTIZER_BASE_URL)
 
 class EyepettizerViewModel : BaseViewModel() {
 
+    var mNotificationPageIndex: Int = 0
+    var mCommunityPageIndex: Int = 0
+    var mHomeFragmentIndex: Int = 1
     val mBottomButtonState: MutableLiveData<Boolean> = MutableLiveData(true)
     val itemDataSet = MutableLiveData<ObservableArrayList<RecommendItemBean>>()
     private val recommendRepository =
@@ -27,8 +30,14 @@ class EyepettizerViewModel : BaseViewModel() {
     private val discoveryRepository = DiscoveryRepository(viewModelScope)
     var mCommunityRepository = CommunityRepository(viewModelScope)
     private val mMessageRepository = MessageRepository(viewModelScope)
+
+    //推荐数据
     private var mRecommendResult = MutableLiveData<PagingData<RecommendItemBean>>()
+
+    //社区页面TAB
     var mCommunityTabs = MutableLiveData<List<Tab>>()
+
+    //通知页面TAB
     var mMessagesTabs = MutableLiveData<List<Tab>>()
 
     init {
@@ -36,6 +45,11 @@ class EyepettizerViewModel : BaseViewModel() {
         mRecommendResult.value = PagingData.empty()
     }
 
+    //首页TAB index
+
+    /**
+     * 获取发现数据列表
+     */
     fun getDiscoveryData(): Flow<PagingData<UiModel>> {
         return discoveryRepository.getPageData().map { pagingDate ->
             pagingDate.map {
@@ -57,7 +71,9 @@ class EyepettizerViewModel : BaseViewModel() {
 
     }
 
-
+    /**
+     * 获取首页推荐数据
+     */
     fun getRecommendPagingData(): Flow<PagingData<UiModel>> {
         return recommendRepository.getPageData().map { pagingDate ->
             pagingDate.map {
@@ -79,6 +95,9 @@ class EyepettizerViewModel : BaseViewModel() {
     }
 
 
+    /**
+     * 获取日报列表数据
+     */
     fun getDailyPagingData(): Flow<PagingData<UiModel>> {
         return dailyRepository.getPageData().map { pagingData ->
             pagingData.map {
@@ -99,6 +118,9 @@ class EyepettizerViewModel : BaseViewModel() {
         }
     }
 
+    /**
+     * 获取社区列表
+     */
     fun getCommunityData(url: String): Flow<PagingData<UiModel>> {
         return mCommunityRepository.getCommunityData(url).map { pagingData ->
             pagingData.map {
@@ -119,6 +141,9 @@ class EyepettizerViewModel : BaseViewModel() {
         }
     }
 
+    /**
+     * 获取社区推荐内容列表
+     */
     fun getCommunityRecData(url: String): Flow<PagingData<UiModel>> {
         return mCommunityRepository.getCommunityRecData(url).map { pagingData ->
             pagingData.map {
@@ -148,6 +173,9 @@ class EyepettizerViewModel : BaseViewModel() {
 //        return mCommunityRepository.getCommunityTabs()
     }
 
+    /**
+     * 获取消息Tab列表
+     */
     fun getMessagesTabs() {
         launch(block = {
             mMessagesTabs.value = mMessageRepository.getMessageTabs()
@@ -155,6 +183,9 @@ class EyepettizerViewModel : BaseViewModel() {
     }
 
 
+    /**
+     * 获取推送的消息列表
+     */
     fun getMessageList(): Flow<PagingData<NotificationUiModel>> {
         return mMessageRepository.getMessageList().map { pagingDate ->
             pagingDate.map {

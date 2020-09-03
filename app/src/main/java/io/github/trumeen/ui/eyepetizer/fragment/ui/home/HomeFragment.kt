@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import io.github.trumeen.App
 import io.github.trumeen.R
 import io.github.trumeen.databinding.FragmentHomeBinding
 import io.github.trumeen.ui.base.BaseVmFragment
@@ -45,6 +45,7 @@ class HomeFragment : BaseVmFragment<EyepettizerViewModel>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
         viewPager.adapter = object : FragmentStateAdapter(childFragmentManager, lifecycle) {
             override fun getItemCount(): Int {
                 return 3
@@ -67,14 +68,33 @@ class HomeFragment : BaseVmFragment<EyepettizerViewModel>() {
                 }
             }).attach()
 
+        tabLayout.addOnTabSelectedListener(tabChangeListener)
         imageView.setOnClickListener {
             (activity as EyepettizerMainActivity).test()
         }
+    }
+    private val tabChangeListener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+
+
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            tab?.let {
+                mViewModel.mHomeFragmentIndex = it.position
+            }
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
         mViewModel.mBottomButtonState.value = true
+        tabLayout.getTabAt(mViewModel.mHomeFragmentIndex)?.select()
+        viewPager.setCurrentItem(mViewModel.mHomeFragmentIndex,false)
     }
 
     override fun initViewModel() {
@@ -83,15 +103,7 @@ class HomeFragment : BaseVmFragment<EyepettizerViewModel>() {
 
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {

@@ -4,27 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.trumeen.R
 import io.github.trumeen.bean.Tab
 import io.github.trumeen.ui.base.BaseVmFragment
 import io.github.trumeen.ui.eyepetizer.EyepettizerMainActivity
 import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
-import io.github.trumeen.ui.eyepetizer.fragment.ui.community.CommunityContentFragment
-import kotlinx.android.synthetic.main.fragment_community.*
-import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_notifications.tabLayout
 import kotlinx.android.synthetic.main.fragment_notifications.viewPager
-import kotlinx.coroutines.flow.collectLatest
 
 class NotificationsFragment : BaseVmFragment<EyepettizerViewModel>() {
 
@@ -90,6 +83,32 @@ class NotificationsFragment : BaseVmFragment<EyepettizerViewModel>() {
 
             })
         mViewModel.getMessagesTabs()
+
+        tabLayout.addOnTabSelectedListener(tabChangeListener)
+
+    }
+
+    private val tabChangeListener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+
+
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            tab?.let {
+                mViewModel.mNotificationPageIndex = it.position
+            }
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tabLayout.getTabAt(mViewModel.mNotificationPageIndex)?.select()
+        viewPager.setCurrentItem(mViewModel.mNotificationPageIndex, false)
 
     }
 
