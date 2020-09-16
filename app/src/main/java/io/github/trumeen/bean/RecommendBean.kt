@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Parcelable
 import android.util.Pair
 import android.view.View
+import io.github.trumeen.R
 import io.github.trumeen.ui.eyepetizer.video.VideoPlayerActivity
 import kotlinx.android.parcel.Parcelize
 import java.net.URI.create
@@ -55,7 +56,28 @@ data class RecommendItemBean(
                 videoInfo.author
             )
         )
-        context.startActivity(videoIntent,options.toBundle())
+        context.startActivity(videoIntent, options.toBundle())
+    }
+
+    fun goToVideoPage(view: View, context: Context, videoInfo: RecommendData) {
+        val options: ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
+            context as Activity,
+            Pair(view.findViewById(R.id.iv_head), "cover_image")
+        )
+        val videoIntent = Intent(context, VideoPlayerActivity::class.java)
+        videoIntent.putExtra(
+            VIDEO_INFO, VideoInfoBean(
+                videoInfo.id,
+                videoInfo.playUrl,
+                videoInfo.cover.detail,
+                videoInfo.title,
+                videoInfo.description,
+                videoInfo.category,
+                videoInfo.consumption,
+                videoInfo.author
+            )
+        )
+        context.startActivity(videoIntent, options.toBundle())
     }
 }
 
