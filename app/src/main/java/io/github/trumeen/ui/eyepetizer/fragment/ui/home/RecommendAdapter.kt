@@ -12,7 +12,7 @@ import io.github.trumeen.ui.base.MultipleTypeAdapter
 import io.github.trumeen.ui.base.SampleAdapter
 
 open class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean>) :
-        MultipleTypeAdapter<RecommendItemBean>(mDatas) {
+    MultipleTypeAdapter<RecommendItemBean>(mDatas) {
 
     val TEXT_CARD = 0
     val FOLLOW_CARD = 1
@@ -32,166 +32,190 @@ open class RecommendAdapter<T>(var mDatas: ObservableArrayList<RecommendItemBean
 
 
     override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): SampleAdapter.SampleViewHolder {
-        addType(
-                TEXT_CARD_WITH_RIGHT_LEFT_TITLE, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_text_with_right_left_title_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
 
-        addType(
-                TEXT_CARD, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_text_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-
-        addType(
-                TEXT_CARD_WITH_TAG_ID, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_text_with_tag_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-
-        addType(
-                TEXT_CARD_FOOTER, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_text_footer_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-
-
-        addType(
-                FOLLOW_CARD, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_follow_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-        addType(
-                BANNER, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_banner_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-        addType(
-                INFORMATION_CARD, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_information_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-        addType(
-                VIDEO_SMALL_CARD, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_video_small_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-        addType(
-                UGC_CARD, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_ugc_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-        addType(
-                BRIEF_CARD, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_brief_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-
-        addType(
-                TOPIC_BRIEF_CARD, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_topic_brief_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-
-        addType(
-                HORIZONTAL_SCROLL_CARD, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_horizontal_scroll_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-
-        addType(
-                SPECIAL_SQUARE_CARD_COLLECTION, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_special_square_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-
-        addType(
-                COLUMN_CARD_LIST, Pair(
-                DataBindingUtil.inflate<ViewDataBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_recommend_column_card_layout,
-                        parent,
-                        false
-                ), BR.recommendItem
-        )
-        )
-        addType(
-                FOOT_VIEW, Pair(
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_foot_view, parent, false
-                ), BR.recommendItem
-        )
-        )
+        when (viewType) {
+            TEXT_CARD_WITH_RIGHT_LEFT_TITLE -> {
+                addType(
+                    TEXT_CARD_WITH_RIGHT_LEFT_TITLE, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_text_with_right_left_title_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            TEXT_CARD -> {
+                addType(
+                    TEXT_CARD, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_text_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            TEXT_CARD_WITH_TAG_ID -> {
+                addType(
+                    TEXT_CARD_WITH_TAG_ID, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_text_with_tag_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            TEXT_CARD_FOOTER -> {
+                addType(
+                    TEXT_CARD_FOOTER, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_text_footer_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            FOLLOW_CARD -> {
+                addType(
+                    FOLLOW_CARD, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_follow_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            BANNER -> {
+                addType(
+                    BANNER, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_banner_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            INFORMATION_CARD -> {
+                addType(
+                    INFORMATION_CARD, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_information_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            VIDEO_SMALL_CARD -> {
+                addType(
+                    VIDEO_SMALL_CARD, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_video_small_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            UGC_CARD -> {
+                addType(
+                    UGC_CARD, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_ugc_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            BRIEF_CARD -> {
+                addType(
+                    BRIEF_CARD, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_brief_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            TOPIC_BRIEF_CARD -> {
+                addType(
+                    TOPIC_BRIEF_CARD, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_topic_brief_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            HORIZONTAL_SCROLL_CARD -> {
+                addType(
+                    HORIZONTAL_SCROLL_CARD, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_horizontal_scroll_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            SPECIAL_SQUARE_CARD_COLLECTION -> {
+                addType(
+                    SPECIAL_SQUARE_CARD_COLLECTION, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_special_square_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            COLUMN_CARD_LIST -> {
+                addType(
+                    COLUMN_CARD_LIST, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_recommend_column_card_layout,
+                            parent,
+                            false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+            FOOT_VIEW -> {
+                addType(
+                    FOOT_VIEW, Pair(
+                        DataBindingUtil.inflate(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_foot_view, parent, false
+                        ), BR.recommendItem
+                    )
+                )
+            }
+        }
         return super.onCreateViewHolder(parent, viewType)
     }
 
