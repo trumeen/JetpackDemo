@@ -88,12 +88,20 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_180"
             app:cardCornerRadius="@dimen/dp_4"
+            android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view,view.context,recommendItem.recommendItemBean.data.content.data)}"
             app:layout_constraintTop_toBottomOf="@id/tv_content">
 
-            <ImageView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_video"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.cardview.widget.CardView>
 
