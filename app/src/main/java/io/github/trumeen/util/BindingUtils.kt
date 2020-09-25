@@ -11,8 +11,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableArrayList
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.airbnb.lottie.LottieAnimationView
@@ -23,8 +25,7 @@ import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.youth.banner.Banner
 import io.github.trumeen.BR
 import io.github.trumeen.R
-import io.github.trumeen.bean.Course
-import io.github.trumeen.bean.RecommendItemBean
+import io.github.trumeen.bean.*
 import io.github.trumeen.extension.*
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
@@ -242,6 +243,25 @@ object BindingUtils {
                 }
             }).build(video)
 
+    }
+
+    @BindingAdapter("app:bindPicListAdapter", "app:idicateText")
+    @JvmStatic
+    fun bindPicListAdapter(
+        viewPager: ViewPager2,
+        data: MutableLiveData<ImageInfoBean>,
+        text: MutableLiveData<String>
+    ) {
+        viewPager.adapter = SampleAdapter(
+            ObservableArrayList<PictureBean>().apply {
+                data.value?.let {
+                    addAll(it.imgs.map { url ->
+                        PictureBean(url)
+                    })
+                }
+            }, R.layout.item_picture_show_layout,
+            BR.image
+        )
     }
 
 }

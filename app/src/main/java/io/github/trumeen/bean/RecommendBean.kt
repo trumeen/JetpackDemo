@@ -9,11 +9,13 @@ import android.os.Parcelable
 import android.util.Pair
 import android.view.View
 import io.github.trumeen.R
+import io.github.trumeen.ui.eyepetizer.ugc.UgcPictureAndVideoListActivity
 import io.github.trumeen.ui.eyepetizer.video.VideoPlayerActivity
 import kotlinx.android.parcel.Parcelize
 import java.net.URI.create
 
 const val VIDEO_INFO: String = "videoInfo"
+const val IMAGE_INFO: String = "imageInfo"
 
 data class RecommendBean(
     val adExist: Boolean,
@@ -76,6 +78,20 @@ data class RecommendItemBean(
                 videoInfo.consumption,
                 videoInfo.author
             )
+        )
+        context.startActivity(videoIntent, options.toBundle())
+    }
+
+    fun go2PicListPage(view: View, context: Context, videoInfo: RecommendItemBean, data: DataX) {
+        val options: ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
+            context as Activity,
+            Pair(view, "cover_image")
+        )
+        val videoIntent = Intent(context, UgcPictureAndVideoListActivity::class.java)
+
+        videoIntent.putExtra(
+            IMAGE_INFO,
+            ImageInfoBean(data.id, data.dataType, data.owner, data.consumption, data.urls)
         )
         context.startActivity(videoIntent, options.toBundle())
     }
@@ -319,30 +335,30 @@ data class DataX(
     val width: Int
 )
 
-
+@Parcelize
 data class Owner(
     val actionUrl: String,
-    val area: Any,
+    val area: String?,
     val avatar: String,
     val birthday: Long,
-    val city: Any,
-    val country: String,
-    val cover: String,
+    val city: String?,
+    val country: String?,
+    val cover: String?,
     val description: String,
     val expert: Boolean,
     val followed: Boolean,
     val gender: String,
     val ifPgc: Boolean,
-    val job: Any,
+    val job: String?,
     val library: String,
     val limitVideoOpen: Boolean,
     val nickname: String,
     val registDate: Long,
     val releaseDate: Long,
     val uid: Int,
-    val university: Any,
+    val university: String?,
     val userType: String
-)
+) : Parcelable
 
 data class AuthorX(
     val adTrack: Any,
