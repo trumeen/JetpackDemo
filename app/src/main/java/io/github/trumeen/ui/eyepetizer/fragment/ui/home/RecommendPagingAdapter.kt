@@ -321,6 +321,10 @@ open class RecommendPagingAdapter : MultipleTypePagingAdapter<UiModel>(DATA_COMP
         return super.onCreateViewHolder(parent, viewType)
     }
 
+    fun getItemData(position: Int): UiModel? {
+        return getItem(position)
+    }
+
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)

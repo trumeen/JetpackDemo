@@ -83,13 +83,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_avt" />
 
-        <io.github.trumeen.weight.AutoPlayVideoPlayer
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_180"
+            app:cardCornerRadius="@dimen/dp_4"
+            app:layout_constraintTop_toBottomOf="@id/tv_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!--<io.github.trumeen.weight.AutoPlayVideoPlayer
             android:id="@+id/video"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_180"
             app:bindVideoCover="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
             app:bindVideoPlayUrl="@{recommendItem.recommendItemBean.data.content.data.playUrl}"
-            app:layout_constraintTop_toBottomOf="@id/tv_content" />
+            app:layout_constraintTop_toBottomOf="@id/tv_content" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
