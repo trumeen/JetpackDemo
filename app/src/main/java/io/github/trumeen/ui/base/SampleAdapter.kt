@@ -10,7 +10,7 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 
-class SampleAdapter<T>(
+open class SampleAdapter<T>(
     var datas: ObservableArrayList<T>,
     var layoutRes: Int,
     var brId: Int,
@@ -18,7 +18,7 @@ class SampleAdapter<T>(
     var viewModel: ViewModel? = null
 ) :
     RecyclerView.Adapter<SampleAdapter.SampleViewHolder>() {
-    private val viewHolders: MutableList<SampleViewHolder> = mutableListOf()
+    val viewHolders: MutableList<SampleViewHolder> = mutableListOf()
 
     init {
         datas.addOnListChangedCallback(object :

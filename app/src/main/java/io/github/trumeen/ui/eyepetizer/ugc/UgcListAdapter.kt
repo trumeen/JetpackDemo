@@ -41,6 +41,18 @@ class UgcListAdapter(mDatas: ObservableArrayList<ImageInfoBean>, var viewModel: 
                     )
                 )
             }
+            UGC_PICTURE_BEAN_SIGNAL->{
+                addType(
+                    UGC_PICTURE_BEAN_SIGNAL, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_ugc_picture_signal_layout,
+                            parent,
+                            false
+                        ), BR.ugcBean
+                    )
+                )
+            }
         }
         return super.onCreateViewHolder(parent, viewType)
     }

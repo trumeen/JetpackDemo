@@ -26,10 +26,12 @@ import com.youth.banner.Banner
 import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.bean.*
+import io.github.trumeen.databinding.ItemPictureShowLayoutBinding
 import io.github.trumeen.extension.*
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
 import io.github.trumeen.ui.base.SampleAdapter
+import io.github.trumeen.ui.eyepetizer.ugc.UgcListViewModel
 import io.github.trumeen.view.GridSpacingItemDecoration
 import io.github.trumeen.weight.AutoPlayVideoPlayer
 import io.github.trumeen.weight.CalendarView
@@ -245,23 +247,41 @@ object BindingUtils {
 
     }
 
-    @BindingAdapter("app:bindPicListAdapter", "app:idicateText")
+    @BindingAdapter("app:bindPicListAdapter")
     @JvmStatic
     fun bindPicListAdapter(
         viewPager: ViewPager2,
-        data: MutableLiveData<ImageInfoBean>,
-        text: MutableLiveData<String>
+        data: UgcListViewModel
     ) {
-        viewPager.adapter = SampleAdapter(
-            ObservableArrayList<PictureBean>().apply {
-                data.value?.let {
-                    addAll(it.imgs.map { url ->
-                        PictureBean(url)
-                    })
+        if (viewPager.adapter == null) {
+            viewPager.adapter = SampleAdapter(
+                ObservableArrayList<PictureBean>().apply {
+                    data.currentDataX.value?.let {
+                        addAll(it.imgs.map { url ->
+                            PictureBean(url)
+                        })
+                    }
+                }, R.layout.item_picture_show_layout,
+                BR.image,
+                BR.viewModel,
+                data
+            )
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    data.picIndexText.postValue("${position + 1}/${data.currentDataX.value?.imgs?.size}")
                 }
-            }, R.layout.item_picture_show_layout,
-            BR.image
-        )
+            })
+        }
+
+    }
+
+    @BindingAdapter("app:imageClick")
+    @JvmStatic
+    fun changeShowDesc(view: View, viewModel: UgcListViewModel) {
+        view.setOnClickListener {
+            viewModel.showDesc.postValue(!viewModel.showDesc.value!!)
+        }
     }
 
 }

@@ -12,5 +12,6 @@ class UgcListViewModel : BaseViewModel() {
     val mList: ObservableArrayList<ImageInfoBean> = ObservableArrayList()
     var currentDataX: MutableLiveData<ImageInfoBean> = MutableLiveData()
     var picIndexText: MutableLiveData<String> = MutableLiveData()
+    var showDesc: MutableLiveData<Boolean> = MutableLiveData()
 
 }

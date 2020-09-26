@@ -35,7 +35,7 @@
                     android:layout_height="0dp"
                     android:onClick="@{(view)->recommendItem.recommendItemBean.go2PicListPage(view,view.context,recommendItem.recommendItemBean,recommendItem.recommendItemBean.data.content.data)}"
                     android:scaleType="centerCrop"
-                    app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
+                    app:imgGlide="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
                     app:layout_constraintDimensionRatio="@{@string/pictureFormate(recommendItem.recommendItemBean.data.content.data.width,recommendItem.recommendItemBean.data.content.data.height)}"
                     app:layout_constraintTop_toTopOf="parent" />
 

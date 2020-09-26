@@ -9,7 +9,7 @@ data class VideoInfoBean(
     val playUrl:String,
     val coverUrl: String,
     val title: String,
-    val description: String,
+    val description: String?,
     val category: String,
     val consumption: Consumption,
     val author: Author

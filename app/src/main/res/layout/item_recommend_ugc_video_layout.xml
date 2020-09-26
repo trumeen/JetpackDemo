@@ -35,7 +35,7 @@
                     android:onClick="@{(view)->recommendItem.recommendItemBean.goToVideoPage(view,view.context,recommendItem.recommendItemBean.data.content.data)}"
                     android:scaleType="centerCrop"
                     android:transitionName="cover_image"
-                    app:imgUrl="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
+                    app:imgGlide="@{recommendItem.recommendItemBean.data.content.data.cover.detail}"
                     app:layout_constraintDimensionRatio="@{@string/pictureFormate(recommendItem.recommendItemBean.data.content.data.width,recommendItem.recommendItemBean.data.content.data.height)}"
                     app:layout_constraintTop_toTopOf="parent" />
 

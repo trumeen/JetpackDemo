@@ -91,7 +91,14 @@ data class RecommendItemBean(
 
         videoIntent.putExtra(
             IMAGE_INFO,
-            ImageInfoBean(data.id, data.dataType, data.owner, data.consumption, data.urls)
+            ImageInfoBean(
+                data.id,
+                data.dataType,
+                data.owner,
+                data.consumption,
+                data.urls,
+                data.description
+            )
         )
         context.startActivity(videoIntent, options.toBundle())
     }
@@ -277,7 +284,7 @@ data class DataX(
     val createTime: Long,
     val dataType: String,
     val date: Long,
-    val description: String,
+    val description: String?,
     val descriptionEditor: String,
     val descriptionPgc: String,
     val duration: Int,
@@ -337,9 +344,9 @@ data class DataX(
 
 @Parcelize
 data class Owner(
-    val actionUrl: String,
+    val actionUrl: String?,
     val area: String?,
-    val avatar: String,
+    val avatar: String?,
     val birthday: Long,
     val city: String?,
     val country: String?,
@@ -347,17 +354,17 @@ data class Owner(
     val description: String,
     val expert: Boolean,
     val followed: Boolean,
-    val gender: String,
+    val gender: String?,
     val ifPgc: Boolean,
     val job: String?,
-    val library: String,
+    val library: String?,
     val limitVideoOpen: Boolean,
-    val nickname: String,
+    val nickname: String?,
     val registDate: Long,
     val releaseDate: Long,
     val uid: Int,
     val university: String?,
-    val userType: String
+    val userType: String?
 ) : Parcelable
 
 data class AuthorX(

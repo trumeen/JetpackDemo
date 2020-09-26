@@ -10,7 +10,8 @@ import kotlinx.android.parcel.Parcelize
 data class ImageInfoBean(
     val id: Int,
     val dateType:String,
-    val author: Owner,
+    val owner: Owner,
     val comment: Consumption,
-    val imgs: List<String>
+    val imgs: List<String>,
+    val description: String?
 ) : Parcelable

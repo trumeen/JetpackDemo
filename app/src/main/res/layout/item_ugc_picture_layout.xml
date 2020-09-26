@@ -14,15 +14,17 @@
         android:layout_height="match_parent">
 
         <androidx.viewpager2.widget.ViewPager2
-            app:bindPicListAdapter="@{ugcBean.currentDataX}"
-            app:idicateText="@{ugcBean.picIndexText}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:bindPicListAdapter="@{ugcBean}" />
 
         <TextView
-            android:text="@={ugcBean.picIndexText}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:text="@{ugcBean.picIndexText}"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/sp_15"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

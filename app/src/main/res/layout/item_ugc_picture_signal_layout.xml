@@ -5,11 +5,7 @@
     <data>
 
         <variable
-            name="image"
-            type="io.github.trumeen.bean.PictureBean" />
-
-        <variable
-            name="viewModel"
+            name="ugcBean"
             type="io.github.trumeen.ui.eyepetizer.ugc.UgcListViewModel" />
     </data>
 
@@ -18,14 +14,11 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            app:imageClick="@{ugcBean}"
             android:scaleType="fitCenter"
-            app:imageClick="@{viewModel}"
-            app:imgGlide="@{image.url}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:imgGlide="@{ugcBean.currentDataX.imgs[0]}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>
