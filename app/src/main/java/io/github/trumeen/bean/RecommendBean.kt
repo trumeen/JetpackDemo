@@ -8,7 +8,10 @@ import android.net.Uri
 import android.os.Parcelable
 import android.util.Pair
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import io.github.trumeen.R
+import io.github.trumeen.ui.eyepetizer.EyepettizerMainActivity
+import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
 import io.github.trumeen.ui.eyepetizer.ugc.UgcPictureAndVideoListActivity
 import io.github.trumeen.ui.eyepetizer.video.VideoPlayerActivity
 import kotlinx.android.parcel.Parcelize
@@ -16,6 +19,8 @@ import java.net.URI.create
 
 const val VIDEO_INFO: String = "videoInfo"
 const val IMAGE_INFO: String = "imageInfo"
+const val START_NEXT_PAGE: String = "startNextPage"
+const val ID_LIST: String = "idList"
 
 data class RecommendBean(
     val adExist: Boolean,
@@ -83,12 +88,27 @@ data class RecommendItemBean(
     }
 
     fun go2PicListPage(view: View, context: Context, videoInfo: RecommendItemBean, data: DataX) {
+
+        val viewModel =
+            ViewModelProvider((context as EyepettizerMainActivity)).get(EyepettizerViewModel::class.java)
+
         val options: ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
             context as Activity,
             Pair(view, "cover_image")
         )
         val videoIntent = Intent(context, UgcPictureAndVideoListActivity::class.java)
-
+        videoIntent.putExtra(START_NEXT_PAGE, viewModel.mCommunityNextUrl.value)
+        val toIndex = viewModel.mCommunityIdList.indexOf(data.id)
+        val removeAll = viewModel.mCommunityIdList.removeAll(
+            viewModel.mCommunityIdList.subList(
+                0,
+                toIndex+1
+            )
+        )
+        videoIntent.putExtra(
+            ID_LIST,
+            viewModel.mCommunityIdList
+        )
         videoIntent.putExtra(
             IMAGE_INFO,
             ImageInfoBean(

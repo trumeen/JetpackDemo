@@ -2,10 +2,13 @@ package io.github.trumeen.data
 
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.net.VideoApi
-import java.io.IOException
-import java.lang.Exception
+import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
 
-class CommunityDateSource(val api: VideoApi, var getUrl: String) :
+class CommunityDateSource(
+    val api: VideoApi,
+    var getUrl: String,
+    val viewModel: EyepettizerViewModel
+) :
     EyepetizerDataSource<String, RecommendItemBean>() {
 
     private var lastUrl: String? = null
@@ -22,7 +25,10 @@ class CommunityDateSource(val api: VideoApi, var getUrl: String) :
         return LoadResult.Page(
             data = response.itemList,
             prevKey = if (lastUrl.isNullOrEmpty()) null else lastUrl,
-            nextKey = if (response.nextPageUrl.isNullOrEmpty()) null else response.nextPageUrl
+            nextKey = if (response.nextPageUrl.isNullOrEmpty()) null else {
+                viewModel.mCommunityNextUrl.postValue(response.nextPageUrl)
+                response.nextPageUrl
+            }
         )
     }
 }

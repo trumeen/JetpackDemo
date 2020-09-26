@@ -7,12 +7,15 @@ import androidx.paging.cachedIn
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.bean.Tab
 import io.github.trumeen.net.VideoApi
+import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
 import io.github.trumeen.ui.eyepetizer.video.EYEPETTIZER_BASE_URL
-import io.github.trumeen.util.core.putSpValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
-class CommunityRepository(val viewModelScope: CoroutineScope) {
+class CommunityRepository(
+    val viewModelScope: CoroutineScope,
+    var viewModel: EyepettizerViewModel
+) {
 
 
     private var map = HashMap<String, Flow<PagingData<RecommendItemBean>>>()
@@ -24,7 +27,8 @@ class CommunityRepository(val viewModelScope: CoroutineScope) {
                 pagingSourceFactory = {
                     CommunityDateSource(
                         VideoApi.get(EYEPETTIZER_BASE_URL),
-                        url
+                        url,
+                        viewModel
                     )
                 }).flow.cachedIn(viewModelScope)
 
@@ -38,7 +42,8 @@ class CommunityRepository(val viewModelScope: CoroutineScope) {
                 pagingSourceFactory = {
                     CommunityDateSource(
                         VideoApi.get(EYEPETTIZER_BASE_URL),
-                        url
+                        url,
+                        viewModel
                     )
                 }).flow.cachedIn(viewModelScope)
 

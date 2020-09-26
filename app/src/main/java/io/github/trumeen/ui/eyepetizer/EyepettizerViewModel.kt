@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.map
 
 val api = VideoApi.get(EYEPETTIZER_BASE_URL)
 
-class EyepettizerViewModel : BaseViewModel() {
+open class EyepettizerViewModel : BaseViewModel() {
 
     var mNotificationPageIndex: Int = 0
     var mCommunityPageIndex: Int = 0
@@ -28,8 +28,12 @@ class EyepettizerViewModel : BaseViewModel() {
         )
     private val dailyRepository = DailyPageRepository(viewModelScope)
     private val discoveryRepository = DiscoveryRepository(viewModelScope)
-    var mCommunityRepository = CommunityRepository(viewModelScope)
+    var mCommunityRepository = CommunityRepository(viewModelScope,this)
     private val mMessageRepository = MessageRepository(viewModelScope)
+
+     val mCommunityNextUrl = MutableLiveData<String>()
+
+     val mCommunityIdList = ArrayList<Int>()
 
     //推荐数据
     private var mRecommendResult = MutableLiveData<PagingData<RecommendItemBean>>()
@@ -147,6 +151,9 @@ class EyepettizerViewModel : BaseViewModel() {
     fun getCommunityRecData(url: String): Flow<PagingData<UiModel>> {
         return mCommunityRepository.getCommunityRecData(url).map { pagingData ->
             pagingData.map {
+                if (it.type == "communityColumnsCard") {
+                    mCommunityIdList.add(it.id)
+                }
                 UiModel.RecommendItem(it)
             }
         }.map {
