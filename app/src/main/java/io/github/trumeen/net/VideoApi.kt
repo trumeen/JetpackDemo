@@ -113,4 +113,7 @@ interface VideoApi {
     @GET("v3/messages/tabList")
     suspend fun getMessageTabs(): TabInfoBean
 
+    @GET("v2/video/{path}")
+    suspend fun getUgcResult(@Path("path") id: Int, @Query("resourceType") type: String): DataX
+
 }

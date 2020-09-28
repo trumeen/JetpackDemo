@@ -17,12 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            app:imageClick="@{viewModel}"
-            android:scaleType="fitCenter"
+        <VideoView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:imgGlide="@{item.imgs[0]}" />
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            app:imageClick="@{viewModel}"
+            app:videoVideoPlayUrl="@{item.playUrl}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

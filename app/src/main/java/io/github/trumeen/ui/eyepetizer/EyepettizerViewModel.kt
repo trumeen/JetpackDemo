@@ -5,6 +5,8 @@ import androidx.lifecycle.*
 import androidx.paging.*
 import io.github.trumeen.bean.RecommendItemBean
 import io.github.trumeen.bean.Tab
+import io.github.trumeen.bean.UgcInfoBean
+import io.github.trumeen.bean.VideoInfoBean
 import io.github.trumeen.data.*
 import io.github.trumeen.net.VideoApi
 import io.github.trumeen.ui.base.BaseViewModel
@@ -28,12 +30,12 @@ open class EyepettizerViewModel : BaseViewModel() {
         )
     private val dailyRepository = DailyPageRepository(viewModelScope)
     private val discoveryRepository = DiscoveryRepository(viewModelScope)
-    var mCommunityRepository = CommunityRepository(viewModelScope,this)
+    var mCommunityRepository = CommunityRepository(viewModelScope, this)
     private val mMessageRepository = MessageRepository(viewModelScope)
 
-     val mCommunityNextUrl = MutableLiveData<String>()
+    val mCommunityNextUrl = MutableLiveData<String>()
 
-     val mCommunityIdList = ArrayList<Int>()
+    val mCommunityIdList = ArrayList<UgcInfoBean>()
 
     //推荐数据
     private var mRecommendResult = MutableLiveData<PagingData<RecommendItemBean>>()
@@ -152,7 +154,12 @@ open class EyepettizerViewModel : BaseViewModel() {
         return mCommunityRepository.getCommunityRecData(url).map { pagingData ->
             pagingData.map {
                 if (it.type == "communityColumnsCard") {
-                    mCommunityIdList.add(it.id)
+                    mCommunityIdList.add(
+                        UgcInfoBean(
+                            it.id,
+                            if (it.data.content.type == "ugcPicture") "ugc_picture" else "ugc_video"
+                        )
+                    )
                 }
                 UiModel.RecommendItem(it)
             }

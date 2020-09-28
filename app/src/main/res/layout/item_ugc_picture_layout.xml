@@ -5,8 +5,16 @@
     <data>
 
         <variable
-            name="ugcBean"
+            name="viewModel"
             type="io.github.trumeen.ui.eyepetizer.ugc.UgcListViewModel" />
+
+        <variable
+            name="item"
+            type="io.github.trumeen.bean.ImageInfoBean" />
+
+        <variable
+            name="indicat"
+            type="io.github.trumeen.bean.IndicateTextBean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,13 +24,15 @@
         <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:bindPicListAdapter="@{ugcBean}" />
+            app:bindPicItem="@{item}"
+            app:bindPicIndicat="@{indicat}"
+            app:bindPicListAdapter="@{viewModel}" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_15"
-            android:text="@{ugcBean.picIndexText}"
+            android:text="@={indicat.data}"
             android:textColor="@color/text_white"
             android:textSize="@dimen/sp_15"
             app:layout_constraintEnd_toEndOf="parent"

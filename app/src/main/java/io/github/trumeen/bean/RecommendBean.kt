@@ -98,11 +98,16 @@ data class RecommendItemBean(
         )
         val videoIntent = Intent(context, UgcPictureAndVideoListActivity::class.java)
         videoIntent.putExtra(START_NEXT_PAGE, viewModel.mCommunityNextUrl.value)
-        val toIndex = viewModel.mCommunityIdList.indexOf(data.id)
-        val removeAll = viewModel.mCommunityIdList.removeAll(
+        var toIndex = 0
+        viewModel.mCommunityIdList.forEachIndexed { index, ugcInfoBean ->
+            if (ugcInfoBean.id == data.id) {
+                toIndex = index
+            }
+        }
+        viewModel.mCommunityIdList.removeAll(
             viewModel.mCommunityIdList.subList(
                 0,
-                toIndex+1
+                toIndex + 1
             )
         )
         videoIntent.putExtra(
@@ -117,7 +122,8 @@ data class RecommendItemBean(
                 data.owner,
                 data.consumption,
                 data.urls,
-                data.description
+                data.description,
+                data.playUrl
             )
         )
         context.startActivity(videoIntent, options.toBundle())
@@ -371,7 +377,7 @@ data class Owner(
     val city: String?,
     val country: String?,
     val cover: String?,
-    val description: String,
+    val description: String?,
     val expert: Boolean,
     val followed: Boolean,
     val gender: String?,

@@ -2,23 +2,20 @@ package io.github.trumeen.util
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.media.MediaPlayer
 import android.net.Uri
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.VideoView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableArrayList
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
-import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.utils.LottieValueAnimator
 import com.google.android.exoplayer2.SeekParameters
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
@@ -26,7 +23,6 @@ import com.youth.banner.Banner
 import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.bean.*
-import io.github.trumeen.databinding.ItemPictureShowLayoutBinding
 import io.github.trumeen.extension.*
 import io.github.trumeen.ui.eyepetizer.fragment.ui.calendar.CalendarViewModel
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.ImageBannerAdapter
@@ -35,9 +31,6 @@ import io.github.trumeen.ui.eyepetizer.ugc.UgcListViewModel
 import io.github.trumeen.view.GridSpacingItemDecoration
 import io.github.trumeen.weight.AutoPlayVideoPlayer
 import io.github.trumeen.weight.CalendarView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 import java.util.*
 
@@ -247,29 +240,39 @@ object BindingUtils {
 
     }
 
-    @BindingAdapter("app:bindPicListAdapter")
+    @BindingAdapter("app:videoVideoPlayUrl")
+    @JvmStatic
+    fun bindVideoView(videoView: VideoView, url: String) {
+        videoView.setVideoPath(url)
+        videoView.start()
+    }
+
+    @BindingAdapter("app:bindPicListAdapter", "app:bindPicItem", "app:bindPicIndicat")
     @JvmStatic
     fun bindPicListAdapter(
         viewPager: ViewPager2,
-        data: UgcListViewModel
+        viewModel: UgcListViewModel,
+        currentData: ImageInfoBean,
+        indicateTextBean: IndicateTextBean
     ) {
-        if (viewPager.adapter == null) {
+        if (viewPager.adapter == null || (viewPager.adapter != null && viewPager.tag != currentData.id)) {
+            viewPager.tag = currentData.id
             viewPager.adapter = SampleAdapter(
                 ObservableArrayList<PictureBean>().apply {
-                    data.currentDataX.value?.let {
-                        addAll(it.imgs.map { url ->
+                    currentData.let {
+                        addAll(it.imgs!!.map { url ->
                             PictureBean(url)
                         })
                     }
                 }, R.layout.item_picture_show_layout,
                 BR.image,
                 BR.viewModel,
-                data
+                viewModel
             )
             viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    data.picIndexText.postValue("${position + 1}/${data.currentDataX.value?.imgs?.size}")
+                    indicateTextBean.data.postValue("${position + 1}/${currentData.imgs?.size}")
                 }
             })
         }

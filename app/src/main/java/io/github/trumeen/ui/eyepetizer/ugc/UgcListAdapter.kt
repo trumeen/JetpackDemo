@@ -5,16 +5,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.bean.DataX
 import io.github.trumeen.bean.ImageInfoBean
+import io.github.trumeen.bean.IndicateTextBean
 import io.github.trumeen.ui.base.MultipleTypeAdapter
 import io.github.trumeen.ui.base.SampleAdapter
 
 /**
- * Created by EnegyJ on 2020/9/25 15:38.
+ * Created by Trumeen on 2020/9/25 15:38.
  */
 class UgcListAdapter(mDatas: ObservableArrayList<ImageInfoBean>, var viewModel: UgcListViewModel) :
     MultipleTypeAdapter<ImageInfoBean>(mDatas) {
@@ -37,11 +39,11 @@ class UgcListAdapter(mDatas: ObservableArrayList<ImageInfoBean>, var viewModel: 
                             R.layout.item_ugc_picture_layout,
                             parent,
                             false
-                        ), BR.ugcBean
+                        ), BR.item
                     )
                 )
             }
-            UGC_PICTURE_BEAN_SIGNAL->{
+            UGC_PICTURE_BEAN_SIGNAL -> {
                 addType(
                     UGC_PICTURE_BEAN_SIGNAL, Pair(
                         DataBindingUtil.inflate<ViewDataBinding>(
@@ -49,7 +51,19 @@ class UgcListAdapter(mDatas: ObservableArrayList<ImageInfoBean>, var viewModel: 
                             R.layout.item_ugc_picture_signal_layout,
                             parent,
                             false
-                        ), BR.ugcBean
+                        ), BR.item
+                    )
+                )
+            }
+            UGC_VIDEO_BEAN -> {
+                addType(
+                    UGC_VIDEO_BEAN, Pair(
+                        DataBindingUtil.inflate<ViewDataBinding>(
+                            LayoutInflater.from(parent.context),
+                            R.layout.item_ugc_video_signal_layout,
+                            parent,
+                            false
+                        ), BR.item
                     )
                 )
             }
@@ -58,10 +72,15 @@ class UgcListAdapter(mDatas: ObservableArrayList<ImageInfoBean>, var viewModel: 
     }
 
     override fun onBindViewHolder(holder: SampleAdapter.SampleViewHolder, position: Int) {
-
-        holder.getBinding()
-            .setVariable(bindings[getItemViewType(position)]!!.second, viewModel)
-
+        holder.getBinding().apply {
+            setVariable(bindings[getItemViewType(position)]!!.second, datas[position])
+            setVariable(BR.viewModel, viewModel)
+            if (getItemViewType(position) == UGC_PICTURE_BEAN_MULTI) {
+                val indicateTextBean = IndicateTextBean(MutableLiveData())
+                indicateTextBean.data.value = "1/${datas[position].imgs?.size}"
+                setVariable(BR.indicat, indicateTextBean)
+            }
+        }
         holder.getBinding().executePendingBindings()
     }
 
@@ -70,7 +89,7 @@ class UgcListAdapter(mDatas: ObservableArrayList<ImageInfoBean>, var viewModel: 
         val item = datas[position]
         return when (item?.dateType) {
             "UgcPictureBean" -> {
-                if (item.imgs.size > 1) UGC_PICTURE_BEAN_MULTI
+                if (item.imgs!!.size > 1) UGC_PICTURE_BEAN_MULTI
                 else UGC_PICTURE_BEAN_SIGNAL
             }
             "UgcVideoBean" -> {
