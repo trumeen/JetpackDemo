@@ -15,7 +15,6 @@ import io.github.trumeen.ui.eyepetizer.EyepettizerViewModel
 import io.github.trumeen.ui.eyepetizer.ugc.UgcPictureAndVideoListActivity
 import io.github.trumeen.ui.eyepetizer.video.VideoPlayerActivity
 import kotlinx.android.parcel.Parcelize
-import java.net.URI.create
 
 const val VIDEO_INFO: String = "videoInfo"
 const val IMAGE_INFO: String = "imageInfo"
@@ -26,8 +25,13 @@ data class RecommendBean(
     val adExist: Boolean,
     val count: Int,
     val itemList: List<RecommendItemBean>,
-    val nextPageUrl: String,
-    val total: Int
+    val nextPageUrl: String?,
+    val total: Int,
+    val headerImage: String,
+    val brief: String,
+    val text: String,
+    val shareLink: String,
+    val id: Int
 )
 
 data class RecommendItemBean(

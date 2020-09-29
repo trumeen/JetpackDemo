@@ -116,4 +116,7 @@ interface VideoApi {
     @GET("v2/video/{path}")
     suspend fun getUgcResult(@Path("path") id: Int, @Query("resourceType") type: String): DataX
 
+    @GET("v3/lightTopics/internal/{path}")
+    suspend fun getTopicResult(@Path("path") id: Int): RecommendBean
+
 }

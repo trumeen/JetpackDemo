@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.github.trumeen">
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 获取GSM（2g）、WCDMA（联通3g）等网络状态的信息 -->
@@ -18,10 +19,22 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.eyepetizer.ugc.UgcPictureAndVideoListActivity"></activity>
-        <activity android:name=".ui.lls.ImagePreviewActivity" />
-        <activity android:name=".ui.lls.LLSCourseContentActivity" />
-        <activity android:name=".ui.lls.LLSMainActivity" />
+        <activity android:name=".ui.eyepetizer.lighttopic.LightTopicActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="lightTopic"
+                    android:pathPrefix="/detail"
+                    android:scheme="eyepetizer"
+                    tools:ignore="AppLinkUrlError" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".ui.eyepetizer.ugc.UgcPictureAndVideoListActivity" />
         <activity
             android:name=".ui.eyepetizer.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
