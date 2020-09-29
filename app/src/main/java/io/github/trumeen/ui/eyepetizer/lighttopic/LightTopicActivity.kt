@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.trumeen.BR
 import io.github.trumeen.R
 import io.github.trumeen.databinding.ActivityLightTopicBinding
+import io.github.trumeen.ui.base.BaseDataBindingActivity
 import io.github.trumeen.ui.base.BaseVmActivity
 import io.github.trumeen.ui.eyepetizer.fragment.ui.home.RecommendPagingAdapter
 import kotlinx.android.synthetic.main.activity_light_topic.*
@@ -19,14 +20,10 @@ import kotlinx.android.synthetic.main.activity_light_topic.recycler_view
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class LightTopicActivity : BaseVmActivity<LightTopicViewModel>() {
+class LightTopicActivity : BaseDataBindingActivity<LightTopicViewModel,ActivityLightTopicBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding =
-            DataBindingUtil.setContentView<ActivityLightTopicBinding>(this, layoutRes())
-        binding.setVariable(BR.viewModel, mViewModel)
-        binding.lifecycleOwner = this
         intent.data?.apply {
             if (query != null) {
                 val title = getQueryParameter("title")
